@@ -86,9 +86,10 @@ public class EvenementService implements IService<Evenement> {
     }
 
     @Override
-    public List<Evenement> recuperer() throws SQLException {
+    public List<Evenement> recuperer()  {
         List<Evenement> evenements = new ArrayList<>();
         String req = "select * from evenement";
+        try{
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery(req);
         while (rs.next()) {
@@ -106,6 +107,10 @@ public class EvenementService implements IService<Evenement> {
             evenements.add(p);
         }
         return evenements;
+        }catch(SQLException ex){
+        ex.printStackTrace();
+        }
+        return null;
     }
 
     public Evenement recupererById(int id) throws SQLException {

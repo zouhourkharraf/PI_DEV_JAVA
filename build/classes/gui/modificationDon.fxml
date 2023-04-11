@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModificationDonController">
+   <children>
+      <TextField fx:id="txttype" layoutX="248.0" layoutY="165.0" promptText="type don" />
+      <TextField fx:id="txtsomme" layoutX="248.0" layoutY="218.0" promptText="somme don" />
+      <Button fx:id="btnmodifier" layoutX="428.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleModifier" text="modifier" textFill="#a41e1e">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Text layoutX="168.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="event _id" />
+      <Text layoutX="168.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="type " />
+      <Text layoutX="168.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="somme " />
+      <ComboBox fx:id="cbxid" layoutX="248.0" layoutY="112.0" prefWidth="150.0" promptText="event id" />
+      <Text fill="#9e1414" layoutX="41.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modifier un don à un évènement :">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
