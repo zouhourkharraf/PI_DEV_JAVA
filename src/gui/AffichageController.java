@@ -1,0 +1,307 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gui;
+
+import entities.Don;
+import entities.Evenement;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+import util.MyDB;
+
+/**
+ * FXML Controller class
+ *
+ * @author user
+ */
+public class AffichageController implements Initializable {
+
+    @FXML
+   
+    TableView<Evenement> tvevents;
+
+    @FXML
+    private TableColumn<Evenement, Integer> cid;
+    @FXML
+    private TableColumn<Evenement, String> cnom;
+    @FXML
+    private TableColumn<Evenement, LocalDate> cdd;
+    @FXML
+    private TableColumn<Evenement, LocalDate> cdf;
+    @FXML
+    private TableColumn<Evenement, String> clieu;
+    @FXML
+    private TableColumn<Evenement, String> cdesc;
+    @FXML
+    private TableColumn<Evenement, String> cimg;
+    @FXML
+    private TableColumn<Evenement, Float> cnote;
+    @FXML
+    private Button refresh;
+    
+     private Connection cnx;
+    private Statement statement;
+    private PreparedStatement prepare;
+    private ResultSet result;
+    @FXML
+    private TableColumn<Evenement, Void> cSupprimer;
+    @FXML
+    private TableColumn<Evenement, Button> cModif;
+  
+
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+        /*try {
+            initTable();
+            refresh();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+        showRec();
+       
+    } catch (ParseException e) {
+    }*/
+        cSupprimer.setCellFactory(col -> new TableCell<Evenement, Void>() {
+    private final Button deleteButton = new Button("Supprimer");
+
+    {
+        deleteButton.setOnAction(event -> {
+            Evenement evenement = getTableView().getItems().get(getIndex());
+            // Code pour supprimer l'événement de la base de données
+            // et actualiser la table
+            try {
+                    deleteEvenement(evenement);
+                    refresh();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException ex) {
+                Logger.getLogger(AffichageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    @Override
+    protected void updateItem(Void item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty) {
+            setGraphic(null);
+        } else {
+            setGraphic(deleteButton);
+        }
+    }
+});
+        
+        cModif = new TableColumn<>("Modifier");
+     cModif.setPrefWidth(100);
+//cModifier.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+    cModif.setCellFactory(param -> new TableCell<Evenement, Button>() {
+    private final Button button = new Button("Modifier");
+
+    @Override
+    protected void updateItem(Button item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty) {
+            setGraphic(null);
+        } else {
+            setGraphic(button);
+            button.setOnAction(event -> {
+                Evenement evenement = getTableView().getItems().get(getIndex());
+                // Code pour ouvrir l'interface de modification avec le don sélectionné
+            });
+        }
+    }
+});
+
+       
+    } 
+    
+ private void deleteEvenement(Evenement evenement) throws SQLException {
+             Connection cnx = MyDB.getInstance().getCnx();
+    String query = "DELETE FROM evenement WHERE id=?";
+    PreparedStatement smt = cnx.prepareStatement(query);
+    smt.setInt(1, evenement.getId());
+    smt.executeUpdate();
+}
+ 
+  
+   @FXML
+  public  ObservableList<Evenement> getEventsList() throws ParseException {
+        Connection cnx = MyDB.getInstance().getCnx();
+        
+        ObservableList<Evenement> EventList = FXCollections.observableArrayList();
+        try {
+                String query2="SELECT * from evenement";
+                PreparedStatement smt = cnx.prepareStatement(query2);
+                Evenement event;
+                ResultSet rs= smt.executeQuery();
+                
+            while(rs.next()){
+              //  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+             //Date datedEv = (Date) dateFormat.parse(rs.getDate("dated_ev").toString());
+             //Date datefEv = (Date) dateFormat.parse(rs.getDate("datef_ev").toString());
+             LocalDate datedEv = LocalDate.parse(rs.getDate("dated_ev").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+             LocalDate datefEv = LocalDate.parse(rs.getDate("datef_ev").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+         event = new Evenement(rs.getInt("id"), rs.getString("nom_ev"),datedEv,datefEv,rs.getString("lieu_ev"), rs.getString("desc_ev"), rs.getString("image_ev"),rs.getFloat("note_ev"));
+                EventList.add(event);
+            }
+                System.out.println(EventList);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return EventList;
+   
+    }
+  
+//************************************
+     
+     @FXML
+         public void showRec() throws ParseException{
+             ObservableList<Evenement> list = getEventsList(); //tvevents.setItems(list);
+             tvevents.setItems(list);
+             cid.setCellValueFactory(new PropertyValueFactory<>("id"));
+             cnom.setCellValueFactory(new PropertyValueFactory<>("nom_ev"));
+             cdd.setCellValueFactory(new PropertyValueFactory<>("dated_ev"));
+             cdf.setCellValueFactory(new PropertyValueFactory<>("datef_ev"));
+             clieu.setCellValueFactory(new PropertyValueFactory<>("lieu_ev"));
+             cdesc.setCellValueFactory(new PropertyValueFactory<>("desc_ev"));
+             cimg.setCellValueFactory(new PropertyValueFactory<>("image_ev"));
+             cnote.setCellValueFactory(new PropertyValueFactory<>("note_ev"));
+             
+             //   list.remove();
+             //list.add();
+          
+                 Callback<TableColumn<Evenement, Void>, TableCell<Evenement, Void>> cellFactory = new Callback<TableColumn<Evenement, Void>, TableCell<Evenement, Void>>() {
+                 @Override
+                 public TableCell<Evenement, Void> call(final TableColumn<Evenement, Void> param) {
+                 final TableCell<Evenement, Void> cell = new TableCell<Evenement, Void>() {
+                 private final Button deleteButton = new Button("Supprimer");
+
+                 {
+                     deleteButton.setOnAction((ActionEvent event) -> {
+                         Evenement evenement = getTableView().getItems().get(getIndex());
+                         try {
+                             deleteEvenement(evenement);
+                         } catch (SQLException ex) {
+                             Logger.getLogger(AffichageController.class.getName()).log(Level.SEVERE, null, ex);
+                         }
+                     });
+                 }
+
+                 @Override
+                 public void updateItem(Void item, boolean empty) {
+                     super.updateItem(item, empty);
+                     if (empty) {
+                         setGraphic(null);
+                     } else {
+                         setGraphic(deleteButton);
+                     }
+                 }
+             };
+             return cell;
+         }
+     };
+   
+                 
+                 
+                //**********************
+                 
+                 cModif.setCellFactory(col -> {
+                 return new TableCell<Evenement, Button>() {
+                     private final Button editButton = new Button("Modifier");
+                     
+                     {
+                         editButton.setOnAction(event -> {
+                             Evenement evenement = getTableView().getItems().get(getIndex());
+                             // Ouvrir l'interface de modification avec le don sélectionné
+                             try {
+                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("modification.fxml"));
+                                 Parent root = (Parent) loader.load();
+                                 ModificationController controller = loader.getController();
+                                 controller.setEvenement(evenement);
+                                 Stage stage = new Stage();
+                                 stage.setScene(new Scene(root));
+                                 stage.show();
+                             } catch (IOException e) {
+                             }
+                         });
+                     }
+                     
+                     @Override
+                     protected void updateItem(Button item, boolean empty) {
+                         super.updateItem(item, empty);
+                         if (empty) {
+                             setGraphic(null);
+                         } else {
+                             setGraphic(editButton);
+                         }
+                     }
+                 };           });
+          tvevents.getColumns().addAll(cModif);
+     }
+         
+         
+ //******************************
+         
+     private void refresh() throws ParseException{
+       ObservableList<Evenement> list = getEventsList();
+        cid.setCellValueFactory(new PropertyValueFactory<>("id"));
+        cnom.setCellValueFactory(new PropertyValueFactory<>("nom_ev"));
+        cdd.setCellValueFactory(new PropertyValueFactory<>("dated_ev"));
+        cdf.setCellValueFactory(new PropertyValueFactory<>("datef_ev"));
+        clieu.setCellValueFactory(new PropertyValueFactory<>("lieu_ev"));
+        cdesc.setCellValueFactory(new PropertyValueFactory<>("desc_ev"));
+        cimg.setCellValueFactory(new PropertyValueFactory<>("image_ev"));
+        cnote.setCellValueFactory(new PropertyValueFactory<>("note_ev"));
+        tvevents.setItems(list);
+         
+       
+    }
+     
+    
+
+    private void initTable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+}
+
+    
