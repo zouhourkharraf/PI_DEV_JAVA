@@ -46,10 +46,27 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
         ps.executeUpdate();
         
     }
+    
+    /*
+    
+    @Override
+    public void modifier(Personne t) throws SQLException {
+        String req = "update personne set nom = ?, prenom = ?, age = ? where id = ?";
+        PreparedStatement ps = cnx.prepareStatement(req);
+
+        ps.setString(1, t.getNom());
+        ps.setString(2, t.getPrenom());
+        ps.setInt(3, t.getAge());
+        ps.setInt(4, t.getId());
+
+        ps.executeUpdate();
+
+    }
+    */
 
     @Override
     public void modifier_utilisateur(Utilisateur u) throws SQLException {
-          String req = "UPDATE utilisateur SET nom_util=?,prenom_util=?,pseudo_util=?,mot_de_passe_util=?,email_util=?,age_util=?,genre_util=?,role_util=? WHERE id=?";
+          String req = "update utilisateur set nom_util= ?,prenom_util= ?,pseudo_util= ?,mot_de_passe_util= ?,email_util= ?,age_util= ?,genre_util= ?,role_util=? where id= ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         
         ps.setString(1, u.getNom_util());
@@ -66,7 +83,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
 
     @Override
     public void supprimer_utilisateur(Utilisateur u) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -87,7 +104,6 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          utilisateur1.setGenre_util(rs.getString("genre_util"));
          utilisateur1.setRole_util(rs.getString("role_util"));
          
-         
          liste_utilisateurs.add(utilisateur1);
          
             // appartient à l'ancien projet
@@ -102,8 +118,49 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
       //      personnes.add(p);
         }
         return liste_utilisateurs;
-        
-        
     }
+        
+        //cette méthode permer de chercher un utilisateur par son email
+     public Utilisateur recuperer_utilisateur_par_email(String email2) throws SQLException
+     {
+         Utilisateur util=new Utilisateur();
+         String req="select * from utilisateur where email_util=?";
+         PreparedStatement st = cnx.prepareStatement(req);
+         st.setString(1, email2);
+         ResultSet rs = st.executeQuery();
+         rs.next();
+         util.setId(rs.getInt("id"));
+         util.setNom_util(rs.getString("nom_util"));
+         util.setPrenom_util(rs.getString("prenom_util"));
+         util.setPseudo_util(rs.getString("pseudo_util"));
+         util.setMot_de_passe_util(rs.getString("mot_de_passe_util"));
+         util.setEmail_util(rs.getString("email_util"));
+         util.setAge_util(rs.getInt("age_util"));
+         util.setGenre_util(rs.getString("genre_util"));
+         util.setRole_util(rs.getString("role_util"));
+      
+         return util;
+         
+     }   
+        
+     /*
+       String req = "select count(*) as nbr from personne where id = ?";
+        PreparedStatement st = cnx.prepareStatement(req);
+        st.setInt(1, id);
+        ResultSet rs = st.executeQuery();
+        Personne p = new Personne();
+        rs.next();
+        p.setId(rs.getInt("id"));
+        p.setAge(rs.getInt("age"));
+        p.setNom(rs.getString("nom"));
+        p.setPrenom(rs.getString("prenom"));
+        rs.getInt("nbr");
+
+        return p;
+     
+     */   
+     
+        
+    
     
 }
