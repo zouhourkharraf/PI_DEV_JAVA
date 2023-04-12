@@ -74,7 +74,22 @@ public class Test {
         }
       System.out.println("fin récupérer un utilisateur selon son email");
    */
+ 
+  //récupérer un utilisateur selon son pseudo
+  /*
+   System.out.println("récupérer un utilisateur selon son pseudo");
+    try {
+              Utilisateur utilisateur=util_service.recuperer_utilisateur_par_pseudo("benamerhajer5");
+              
+               System.out.println(utilisateur.toString());
+       
+       
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+      System.out.println("fin récupérer un utilisateur selon son pseudo");
    
+  */
         }
     
      

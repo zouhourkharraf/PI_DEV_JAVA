@@ -116,6 +116,17 @@ public class Utilisateur {
         this.role_util = role_util;
     }
     
+     //cette méthode permet de générer un pseudo à partir du nom,prénom et de l'ID de l'utilisateur passé en paramètres
+    public String GenererPseudo()
+    {
+      String nom=this.getNom_util().replace(" ",""); //le nom sans espaces
+      String prenom=this.getPrenom_util().replace(" ",""); //le prénom sans espaces
+       String id_string=String.valueOf(this.getId()); //convertir l'id en String
+  
+       return nom+prenom+id_string; 
+    }
+    
+    
    //toString
         @Override
     public String toString() {

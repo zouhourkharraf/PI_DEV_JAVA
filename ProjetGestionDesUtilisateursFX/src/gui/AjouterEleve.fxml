@@ -93,23 +93,32 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label fx:id="erreur_nom" layoutX="585.0" layoutY="193.0" prefHeight="41.0" prefWidth="314.0" textFill="RED">
+      <Label fx:id="erreur_nom" layoutX="585.0" layoutY="187.0" prefHeight="53.0" prefWidth="306.0" textFill="RED">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="erreur_prenom" layoutX="585.0" layoutY="267.0" prefHeight="41.0" prefWidth="314.0" textFill="RED" />
-      <Label fx:id="erreur_age" layoutX="585.0" layoutY="339.0" prefHeight="41.0" prefWidth="314.0" textFill="RED" />
+      <Label fx:id="erreur_age" layoutX="585.0" layoutY="333.0" prefHeight="53.0" prefWidth="314.0" textFill="RED" wrapText="true" />
       <Label fx:id="erreur_globale" layoutX="585.0" layoutY="115.0" prefHeight="41.0" prefWidth="314.0" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="erreur_email" layoutX="585.0" layoutY="445.0" prefHeight="41.0" prefWidth="314.0" textFill="RED" />
-      <Label fx:id="erreur_mp" layoutX="585.0" layoutY="518.0" prefHeight="53.0" prefWidth="314.0" textFill="RED" />
-      <Label fx:id="erreur_confirmation_mp" layoutX="585.0" layoutY="585.0" prefHeight="41.0" prefWidth="314.0" textFill="RED">
+      <Label fx:id="erreur_email" layoutX="585.0" layoutY="439.0" prefHeight="53.0" prefWidth="306.0" textFill="RED" />
+      <Label fx:id="erreur_mp" layoutX="585.0" layoutY="495.0" prefHeight="87.0" prefWidth="314.0" textFill="RED" wrapText="true" />
+      <Label fx:id="erreur_confirmation_mp" layoutX="585.0" layoutY="574.0" prefHeight="63.0" prefWidth="306.0" textFill="RED">
          <font>
             <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErreurPrenom" layoutX="585.0" layoutY="261.0" prefHeight="53.0" prefWidth="306.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErreurNomPrenom" layoutX="382.0" layoutY="309.0" prefHeight="30.0" prefWidth="286.0" textFill="RED">
+         <font>
+            <Font size="14.0" />
          </font>
       </Label>
    </children>

@@ -105,17 +105,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          utilisateur1.setRole_util(rs.getString("role_util"));
          
          liste_utilisateurs.add(utilisateur1);
-         
-            // appartient à l'ancien projet
-           /*
-            p.setId(rs.getInt("id"));
-            p.setAge(rs.getInt("age"));
-            p.setNom(rs.getString("nom"));
-            p.setPrenom(rs.getString("prenom"));
-*/
- // appartient à l'ancien projet
- 
-      //      personnes.add(p);
+        
         }
         return liste_utilisateurs;
     }
@@ -143,22 +133,29 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          
      }   
         
-     /*
-       String req = "select count(*) as nbr from personne where id = ?";
-        PreparedStatement st = cnx.prepareStatement(req);
-        st.setInt(1, id);
-        ResultSet rs = st.executeQuery();
-        Personne p = new Personne();
-        rs.next();
-        p.setId(rs.getInt("id"));
-        p.setAge(rs.getInt("age"));
-        p.setNom(rs.getString("nom"));
-        p.setPrenom(rs.getString("prenom"));
-        rs.getInt("nbr");
-
-        return p;
+    //cette méthode permer de chercher un utilisateur par son pseudo
+     public Utilisateur recuperer_utilisateur_par_pseudo(String pseudo2) throws SQLException
+     {
+         Utilisateur util=new Utilisateur();
+         String req="select * from utilisateur where pseudo_util=?";
+         PreparedStatement st = cnx.prepareStatement(req);
+         st.setString(1, pseudo2);
+         ResultSet rs = st.executeQuery();
+         rs.next();
+         util.setId(rs.getInt("id"));
+         util.setNom_util(rs.getString("nom_util"));
+         util.setPrenom_util(rs.getString("prenom_util"));
+         util.setPseudo_util(rs.getString("pseudo_util"));
+         util.setMot_de_passe_util(rs.getString("mot_de_passe_util"));
+         util.setEmail_util(rs.getString("email_util"));
+         util.setAge_util(rs.getInt("age_util"));
+         util.setGenre_util(rs.getString("genre_util"));
+         util.setRole_util(rs.getString("role_util"));
+      
+         return util;
+         
+     } 
      
-     */   
      
         
     

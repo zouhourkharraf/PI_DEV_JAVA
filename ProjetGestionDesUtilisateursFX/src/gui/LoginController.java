@@ -5,8 +5,10 @@
  */
 package gui;
 
+import entities.Utilisateur;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +16,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import services.ServicesUtilisateur;
 
 /**
  * FXML Controller class
@@ -34,6 +38,10 @@ public class LoginController implements Initializable {
     private Button bouton_incsi_eleve;
     @FXML
     private Button bouton_inscri_enseignant;
+    @FXML
+    private Label erreur_globale;
+    @FXML
+    private Label erreur_globale2;
 
     /**
      * Initializes the controller class.
@@ -45,13 +53,74 @@ public class LoginController implements Initializable {
 
     @FXML
     private void SeConnecter(ActionEvent event) {
-           try {
-          /*
+        
+          ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
+     if((champ_mp.getText().isEmpty()) && (champ_pseudo.getText().isEmpty()))
+     {
+        erreur_globale.setText("Les champs sont vides !!!");
+     }
+     else
+     {   
+         erreur_globale.setText("");
+         if(!(champ_mp.getText().isEmpty())&& (champ_pseudo.getText().isEmpty()))
+         {
+         erreur_globale.setText("Veuillez saisir votre pseudo !");
+         }
+       if(!(champ_pseudo.getText().isEmpty()))
+       {
+            
+           try{
+               erreur_globale.setText("");
+           if(util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText())==null)
+           {
+                erreur_globale2.setText("Ce pseudo n'existe pas");
+           }
+           else
+           {
+                erreur_globale2.setText("");
+            Utilisateur utilisateur1=util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText());
+              if(champ_mp.getText().compareTo(utilisateur1.getMot_de_passe_util()) != 0)
+               {
+                    erreur_globale2.setText("Mot de passe invalide !!!"); 
+               }
+              else
+              {
+                  try{
+                  if( (utilisateur1.getRole_util().compareTo("élève")==0) || (utilisateur1.getRole_util().compareTo("enseignant")==0) )
+                  {
+                   FXMLLoader loader = new FXMLLoader(getClass().getResource("PageUtilisateur.fxml"));
+                   Parent root = loader.load(); //Un container
+                   champ_pseudo.getScene().setRoot(root);
+                  }
+                  else
+                  {
+                   FXMLLoader loader = new FXMLLoader(getClass().getResource("PageAdministrateur.fxml"));  
+                   Parent root = loader.load(); //Un container
+                   champ_pseudo.getScene().setRoot(root);
+                  }
+                    } catch (IOException ex) 
+                    { System.out.println(ex.getMessage());}
+                      
+              }
+           }
+           }catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+       }
+     
+     }
+        
+    }
+    
+    /*
+    
+          try {
+          
                FXMLLoader loader = new FXMLLoader(getClass().getResource("AjouterPersonne.fxml"));
             Parent root = loader.load();
             AjouterPersonneController controller = loader.getController();
             controller.setUsername(usernameTF.getText());
-            usernameTF.getScene().setRoot(root);*/
+            usernameTF.getScene().setRoot(root);
           if(champ_pseudo.getText().compareTo("admin")==0)
           {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("PageAdministrateur.fxml"));  
@@ -67,7 +136,9 @@ public class LoginController implements Initializable {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-    }
+    
+    */
+    
 
     @FXML
     private void CreerCompteEleve(ActionEvent event) {
