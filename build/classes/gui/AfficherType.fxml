@@ -1,17 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 
-<AnchorPane id="AnchorPane" prefHeight="577.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherTypeController">
+<AnchorPane id="AnchorPane" fx:id="titlePane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherTypeController">
    <children>
-      <TableView fx:id="tableview" layoutX="105.0" layoutY="73.0" prefHeight="448.0" prefWidth="423.0">
+      <TableView fx:id="tableview" editable="true" layoutX="339.0" layoutY="41.0" onMouseClicked="#handleRowSelection" prefHeight="726.0" prefWidth="456.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="nomtypeCol" prefWidth="75.0" text="Nom type" />
-            <TableColumn fx:id="descriptionCol" prefWidth="271.99998779296874" text="Description" />
+          <TableColumn fx:id="nomtypeCol" prefWidth="175.19992065429688" text="Nom type" />
+            <TableColumn fx:id="descriptionCol" prefWidth="297.5999755859375" text="Description" />
         </columns>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+         <!--<effect>
+            <ColorAdjust />
+         </effect>-->
       </TableView>
+      <TitledPane fx:id="titlePaneAjout" animated="false" layoutX="50.0" layoutY="43.0" prefHeight="380.0" prefWidth="258.0" text="Ajouter un nouveau type">
+        <content>
+          <AnchorPane fx:id="titlePane" minHeight="0.0" minWidth="0.0" prefHeight="309.0" prefWidth="257.0">
+               <children>
+                  <TextField fx:id="nomTypeField" alignment="TOP_LEFT" layoutX="43.0" layoutY="14.0" prefHeight="26.0" prefWidth="170.0" promptText="Nom du type" />
+                  <TextField fx:id="descriptionField" layoutX="41.0" layoutY="91.0" prefHeight="130.0" prefWidth="174.0" promptText="Description du type" />
+                  <Button fx:id="boutonAjoutType" layoutX="75.0" layoutY="288.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="106.0" text="Ajouter" />
+                  <TextField layoutX="54.0" layoutY="56.0" visible="false" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane fx:id="titlePaneMod" animated="false" layoutX="45.0" layoutY="448.0" prefHeight="318.0" prefWidth="268.0" text="Modifier un type">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="nomTypeMod" alignment="TOP_LEFT" layoutX="55.0" layoutY="24.0" prefHeight="26.0" prefWidth="162.0" promptText="Nom du type" />
+                  <TextField fx:id="descriptionTypeMod" layoutX="55.0" layoutY="63.0" prefHeight="142.0" prefWidth="162.0" promptText="Description" />
+                  <Button fx:id="boutonModType" layoutX="82.0" layoutY="232.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="108.0" text="Modifier" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane fx:id="titlePaneDelete" animated="false" layoutX="848.0" layoutY="93.0" prefHeight="144.0" prefWidth="202.0" text="Supprimer un type">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="103.0" prefWidth="201.0">
+               <children>
+                  <TextField fx:id="deleteTypeField" alignment="CENTER" layoutX="26.0" layoutY="14.0" prefHeight="26.0" prefWidth="148.0" promptText="ID du type à Supprimer" />
+                  <Button fx:id="boutonDelType" layoutX="51.0" layoutY="53.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="98.0" text="Supprimer" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Button fx:id="boutonRedirect" layoutX="857.0" layoutY="318.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="191.0" text="page des activités" />
    </children>
+   <effect>
+      <DropShadow>
+         <color>
+            <Color red="0.34736841917037964" green="0.32807016372680664" blue="0.32807016372680664" />
+         </color></DropShadow>
+   </effect>
 </AnchorPane>

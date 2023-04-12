@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ShowActiviteController">
+   <children>
+      <TableView fx:id="tableview" layoutX="107.0" layoutY="37.0" prefHeight="200.0" prefWidth="864.0">
+        <columns>
+          <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="nomCol" prefWidth="71.20001220703125" text="Nom" />
+            <TableColumn fx:id="nbCol" prefWidth="88.0" text="Nombre" />
+            <TableColumn fx:id="positionCol" prefWidth="176.0" text="Position" />
+            <TableColumn fx:id="dateCol" prefWidth="109.5999755859375" text="Date" />
+            <TableColumn fx:id="typeCol" prefWidth="187.199951171875" text="Type" />
+        </columns>
+      </TableView>
+      <TitledPane animated="false" layoutX="107.0" layoutY="271.0" prefHeight="350.0" prefWidth="230.0" text="Ajouter activité">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="nomActField" layoutX="26.0" layoutY="21.0" promptText="Nom activite" />
+                  <TextField fx:id="nbField" layoutX="27.0" layoutY="61.0" promptText="Nb participants" />
+                  <TextField fx:id="positionField" layoutX="28.0" layoutY="106.0" promptText="Position" />
+                  <TextField fx:id="dateField" layoutX="28.0" layoutY="153.0" promptText="Date" />
+                  <TextField fx:id="typeField" layoutX="29.0" layoutY="198.0" promptText="typeField" />
+                  <Button fx:id="boutonAjout" layoutX="50.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="111.0" text="Ajouter" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane animated="false" layoutX="373.0" layoutY="271.0" prefHeight="343.0" prefWidth="246.0" text="Modifier activité">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="nomModField" layoutX="34.0" layoutY="74.0" promptText="Nom activité" />
+                  <TextField fx:id="nbModField" layoutX="34.0" layoutY="111.0" promptText="nb participants" />
+                  <TextField fx:id="positionModField" layoutX="34.0" layoutY="158.0" promptText="Position" />
+                  <TextField fx:id="dateModField" layoutX="34.0" layoutY="195.0" promptText="Date" />
+                  <Button fx:id="boutonMod" layoutX="57.0" layoutY="245.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="104.0" text="Modifier" />
+                  <TextField fx:id="idMod" layoutX="34.0" layoutY="22.0" promptText="ID activite" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <TitledPane fx:id="boutonRetour" animated="false" layoutX="635.0" layoutY="271.0" prefHeight="166.0" prefWidth="229.0" text="Supprimer activité">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="idSuppField" layoutX="26.0" layoutY="28.0" promptText="ID activité" />
+                  <Button fx:id="boutonSupprimer" layoutX="49.0" layoutY="78.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" text="Supprimer" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Button fx:id="boutonRet" layoutX="669.0" layoutY="472.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="177.0" text="Retour à la page des types" />
+   </children>
+</AnchorPane>

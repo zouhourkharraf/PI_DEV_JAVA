@@ -18,7 +18,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import util.MyDB;
-
+import java.util.Date;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import java.time.LocalDate;
 /**
  *
  * @author farah
@@ -33,29 +36,35 @@ public class ActiviteService implements IService<Activite> {
     
     @Override
     public void ajouter(Activite a) throws SQLException {
+        if (!validateInput(a.getNomAct(),a.getPositionAct(),a.getNbParticipants(),a.getDateAct(),a.getType())) {
+        return;
+    }
     String req = "INSERT INTO activite (nomact, positionact, dateact, nbparticipants, typeid) VALUES (?, ?, ?, ?, ?)";
     PreparedStatement st = cnx.prepareStatement(req);
     st.setString(1, a.getNomAct());
     st.setString(2, a.getPositionAct());
     st.setDate(3, new java.sql.Date(a.getDateAct().getTime()));
     st.setInt(4, a.getNbParticipants());
-    st.setInt(5, a.getType().getId());
+    st.setInt(5, a.getType());
+    
     st.executeUpdate();
     // Fermer la connexion à la base de données
-    st.close();
-    cnx.close();
+    //st.close();
+    //cnx.close();
     }
     
     @Override
     public void modifier(Activite a) throws SQLException {
-    String req = "UPDATE activite SET nomact = ?, positionact = ?, dateact = ?, nbparticipants = ?, typeid = ? WHERE id = ?";
+    String req = "UPDATE activite SET nomact = ?, positionact = ?, dateact = ?, nbparticipants = ? WHERE id = ?";
     PreparedStatement st = cnx.prepareStatement(req);
+
     st.setString(1, a.getNomAct());
     st.setString(2, a.getPositionAct());
     st.setDate(3, new java.sql.Date(a.getDateAct().getTime()));
     st.setInt(4, a.getNbParticipants());
-    st.setInt(5, a.getType().getId());
-    st.setInt(6, a.getId());
+    //st.setInt(5, a.getType());
+    st.setInt(5, a.getId());
+
     st.executeUpdate();
 }
     @Override
@@ -70,6 +79,8 @@ public class ActiviteService implements IService<Activite> {
     public List<Activite> recuperer() throws SQLException {
     List<Activite> activites = new ArrayList<>();
     String req = "select * from activite";
+    
+    //String req = "select id, nomact, positionact from activite";
     Statement st = cnx.createStatement();
     ResultSet rs = st.executeQuery(req);
     while(rs.next())
@@ -80,30 +91,102 @@ public class ActiviteService implements IService<Activite> {
         a.setPositionAct(rs.getString("positionact"));
         a.setDateAct(rs.getDate("dateact"));
         a.setNbParticipants(rs.getInt("nbparticipants"));
-
-        int typeId = rs.getInt("typeid");
-        Type type = recupererTypeById(typeId);
-        a.setType(type);
-
+        a.setType(rs.getInt("typeid"));
         activites.add(a);
     }
      return activites;
     }
 
-     public Type recupererTypeById(int id) throws SQLException{
-        String req = "select * from type where id = ?";
+     public Activite recupererActiviteById(int id) throws SQLException{
+        String req = "SELECT * FROM activite WHERE id = ?";
         PreparedStatement st = cnx.prepareStatement(req);
         st.setInt(1, id);
         ResultSet rs = st.executeQuery();
-        Type type = new Type();
+        Activite activite = new Activite();
        if (rs.next()) {
-        type = new Type();
-        type.setId(rs.getInt("id"));
-        type.setNomType(rs.getString("nomtype"));
-        type.setDescriptionType(rs.getString("descriptiontype"));
+        activite = new Activite();
+        activite.setId(rs.getInt("id"));
+        activite.setDateAct(rs.getDate("dateact"));
+        activite.setNbParticipants(rs.getInt("nbparticipants"));
+        activite.setPositionAct(rs.getString("positionact"));
+        activite.setType(rs.getInt("typeid"));
+        activite.setNomAct(rs.getString("nomact"));
     }
         
         
-        return type;
+        return activite;
     }
+     
+      public boolean validateInput(String nom, String position, int nb, Date date, int idtype){
+          if(nom.trim().isEmpty() || position.trim().isEmpty() || date == null){
+            Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez remplir tous les champs !");
+        alert.showAndWait();
+        return false;  
+          }
+          if(nb<=0){
+              Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("Nombre de participants doit être positif !");
+        alert.showAndWait();
+        return false;
+          }
+          Date currentDate = new Date();
+          if(date.before(currentDate)){
+              Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("La date doit être supérieure à la date actuelle !");
+        alert.showAndWait();
+        return false;
+          }
+          return true;
+      }
+     
+     /*
+     public boolean validateInput(String nom, String position, int nb, Date date, int idtype) {
+         // Vérifier que le nom n'est pas vide
+    if (nom == null || nom.isEmpty()) {
+        showAlert("Le champ nom est obligatoire.",Alert.AlertType.ERROR);
+        return false;
+    }
+    
+    // Vérifier que la position n'est pas vide
+    if (position == null || position.isEmpty()) {
+        showAlert("Le champ position est obligatoire.", Alert.AlertType.ERROR);
+        return false;
+    }
+    
+    // Vérifier que le nombre est positif
+    if (nb <= 0) {
+        showAlert("Le nombre doit être positif.",Alert.AlertType.ERROR);
+        return false;
+    }
+    
+    // Vérifier que la date est renseignée
+    if (date == null) {
+        showAlert("Le champ date est obligatoire.", Alert.AlertType.ERROR);
+        return false;
+    }
+    
+    // Vérifier que l'id de type est positif
+    if (idtype <= 0) {
+        showAlert("L'identifiant de type doit être positif.", Alert.AlertType.ERROR);
+        return false;
+    }
+    
+    // Si toutes les validations sont passées, retourner true
+    return true;
+    
+}
+     private void showAlert(String message, Alert.AlertType alertType) {
+    Alert alert = new Alert(alertType);
+    alert.setTitle("Erreur");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+}*/
 }

@@ -24,7 +24,7 @@ public class NewMainFX extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AfficherType.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Liste des types");
+            primaryStage.setTitle("Liste des types marra o5ra");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {

@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import util.MyDB;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  *
@@ -36,11 +38,18 @@ public class TypeService implements IService<Type> {
     }*/
     @Override
     public void ajouter(Type t) throws SQLException {
+        
+        if (!validateInput(t.getNomType(),t.getDescriptionType())) {
+        return;
+    }
+
+        
     String req = "INSERT INTO type (nomtype, descriptiontype) VALUES (?, ?)";
     PreparedStatement st = cnx.prepareStatement(req);
     st.setString(1, t.getNomType());
     st.setString(2, t.getDescriptionType());
     st.executeUpdate();
+    
 }
     
     @Override
@@ -56,10 +65,17 @@ public class TypeService implements IService<Type> {
     }
     @Override
     public void supprimer(int id) throws SQLException {
-    String req = "DELETE FROM type WHERE id = ?";
-    PreparedStatement st = cnx.prepareStatement(req);
-    st.setInt(1, id);
-    st.executeUpdate();
+//    String req = "DELETE FROM type WHERE id = ?";
+//    PreparedStatement st = cnx.prepareStatement(req);
+//    st.setInt(1, id);
+//    st.executeUpdate();
+String req = "DELETE FROM type WHERE id = ?";
+    try (PreparedStatement st = cnx.prepareStatement(req)) {
+        st.setInt(1, id);
+        st.executeUpdate();
+    } catch (SQLException ex) {
+        System.out.println("Erreur SQL lors de la suppression du type : " + ex.getMessage());
+    }
     }
     
     @Override
@@ -95,4 +111,16 @@ public class TypeService implements IService<Type> {
         
         return type;
     }
+    
+    public boolean validateInput(String nomType, String descriptionType) {
+    if (nomType.trim().isEmpty() || descriptionType.trim().isEmpty()) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("Veuillez remplir tous les champs !");
+        alert.showAndWait();
+        return false;
+    }
+    return true;
+}
 }

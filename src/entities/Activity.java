@@ -5,30 +5,24 @@
  */
 package entities;
 
-import java.util.Date;
 /**
  *
  * @author farah
  */
-public class Activite {
+
+import java.util.Date;
+public class Activity {
     private int id, nbparticipants;
     private String nomact, positionact;
     private Date dateact;
-    private int type;
     
-    public Activite(){
+    
+    public Activity(){
         //type = new Type(); 
     }
     
     
-    public Activite(String nomact, String positionact, Date dateact, int nbparticipants, int t){
-        this.nomact=nomact;
-        this.positionact=positionact;
-        this.dateact=dateact;
-        this.nbparticipants=nbparticipants;
-        this.type=t;
-    }
-    public Activite(String nomact, String positionact, Date dateact, int nbparticipants){
+    public Activity(String nomact, String positionact, Date dateact, int nbparticipants){
         this.nomact=nomact;
         this.positionact=positionact;
         this.dateact=dateact;
@@ -36,33 +30,33 @@ public class Activite {
         
     }
     
-    public Activite(String nomact, String positionact, Date dateact){
+    public Activity(String nomact, String positionact, Date dateact){
         this.nomact=nomact;
         this.positionact=positionact;
         this.dateact=dateact;
     }
     
-    public Activite(String nomact, String positionact,int nbparticipants){
+    public Activity(String nomact, String positionact,int nbparticipants){
         this.nomact=nomact;
         this.positionact=positionact;
         this.nbparticipants=nbparticipants;
     }
-    public Activite(String nomact, Date dateact, int nbparticipants){
+    public Activity(String nomact, Date dateact, int nbparticipants){
         this.nomact=nomact;
         this.dateact=dateact;
         this.nbparticipants=nbparticipants;
     }
     
-    public Activite(String nomact, String positionact){
+    public Activity(String nomact, String positionact){
         this.nomact=nomact;
         this.positionact=positionact;
     }
     
-    public Activite(String nomact, int nbparticipants){
+    public Activity(String nomact, int nbparticipants){
         this.nomact=nomact;
         this.nbparticipants=nbparticipants;
     }
-    public Activite(String nomact, Date dateact){
+    public Activity(String nomact, Date dateact){
         this.nomact=nomact;
         this.dateact=dateact;
     }
@@ -105,18 +99,11 @@ public class Activite {
         this.dateact=dateact;
     }
     
-    public int getType(){
-        return type;
-    }
     
-    public void setType(int type){
-        this.type=type;
-    }
     
     @Override
     public String toString() {
-        return "Activite{" + "id=" + id + ", nomAct=" + nomact + ", position=" + positionact + ", date=" + dateact + ",nb participants=" + nbparticipants + ",type= " +  type + '}';
+        return "Activite{" + "id=" + id + ", nomAct=" + nomact + ", position=" + positionact + ", date=" + dateact + ",nb participants=" + nbparticipants  + '}';
     }
-    
     
 }
