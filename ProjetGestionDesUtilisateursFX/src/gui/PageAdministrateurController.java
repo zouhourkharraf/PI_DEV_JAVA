@@ -7,7 +7,9 @@ package gui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -16,12 +18,22 @@ import javafx.fxml.Initializable;
  */
 public class PageAdministrateurController implements Initializable {
 
+    @FXML
+    private Label admin_connecte;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }  
+
+    void setAdmin_connecte(String pseudo_admin) {
+        admin_connecte.setText("Administrateur connecté : "+pseudo_admin);
+    }
+    
+    
+    
     
 }

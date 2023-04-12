@@ -76,10 +76,10 @@ public class Test {
    */
  
   //récupérer un utilisateur selon son pseudo
-  /*
+  
    System.out.println("récupérer un utilisateur selon son pseudo");
     try {
-              Utilisateur utilisateur=util_service.recuperer_utilisateur_par_pseudo("benamerhajer5");
+              Utilisateur utilisateur=util_service.recuperer_utilisateur_par_pseudo("benamerhkkkajer5");
               
                System.out.println(utilisateur.toString());
        
@@ -89,7 +89,7 @@ public class Test {
         }
       System.out.println("fin récupérer un utilisateur selon son pseudo");
    
-  */
+  
         }
     
      

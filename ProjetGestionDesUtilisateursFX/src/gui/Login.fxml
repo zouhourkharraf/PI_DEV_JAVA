@@ -46,7 +46,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="erreur_globale2" layoutX="573.0" layoutY="382.0" prefHeight="41.0" prefWidth="314.0" textFill="RED">
+      <Label fx:id="erreur_globale2" layoutX="294.0" layoutY="427.0" prefHeight="41.0" prefWidth="314.0" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>

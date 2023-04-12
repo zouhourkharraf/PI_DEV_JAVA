@@ -49,6 +49,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+          erreur_globale.setText("");
     }    
 
     @FXML
@@ -71,9 +72,11 @@ public class LoginController implements Initializable {
             
            try{
                erreur_globale.setText("");
-           if(util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText())==null)
+               Utilisateur util=util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText());
+           if(util==null)
            {
                 erreur_globale2.setText("Ce pseudo n'existe pas");
+              
            }
            else
            {
@@ -96,11 +99,13 @@ public class LoginController implements Initializable {
                   {
                    FXMLLoader loader = new FXMLLoader(getClass().getResource("PageAdministrateur.fxml"));  
                    Parent root = loader.load(); //Un container
+                   PageAdministrateurController admin_controller=loader.getController();
+                   admin_controller.setAdmin_connecte(champ_pseudo.getText());
                    champ_pseudo.getScene().setRoot(root);
                   }
                     } catch (IOException ex) 
                     { System.out.println(ex.getMessage());}
-                      
+                erreur_globale2.setText("");      
               }
            }
            }catch (SQLException ex) {
@@ -112,32 +117,6 @@ public class LoginController implements Initializable {
         
     }
     
-    /*
-    
-          try {
-          
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("AjouterPersonne.fxml"));
-            Parent root = loader.load();
-            AjouterPersonneController controller = loader.getController();
-            controller.setUsername(usernameTF.getText());
-            usernameTF.getScene().setRoot(root);
-          if(champ_pseudo.getText().compareTo("admin")==0)
-          {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("PageAdministrateur.fxml"));  
-                Parent root = loader.load(); //Un container
-                champ_pseudo.getScene().setRoot(root);
-          }
-          else
-          {
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("PageUtilisateur.fxml"));
-                Parent root = loader.load(); //Un container
-                champ_pseudo.getScene().setRoot(root);
-          }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    
-    */
     
 
     @FXML
