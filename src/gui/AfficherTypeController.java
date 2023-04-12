@@ -36,6 +36,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.control.Alert;
 
 
 /**
@@ -182,6 +183,14 @@ public class AfficherTypeController implements Initializable {
     
     public void deleteType(){
         String idType = deleteTypeField.getText();
+        if(idType.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("pas d' ID !");
+        alert.showAndWait();
+        return;
+        }
         TypeService ts = new TypeService();
         try{
             ts.supprimer(Integer.parseInt(idType));

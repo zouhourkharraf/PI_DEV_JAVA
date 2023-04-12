@@ -63,20 +63,41 @@ public class TypeService implements IService<Type> {
         
         ps.executeUpdate();
     }
+//    @Override
+//    public void supprimer(int id) throws SQLException {
+//
+//String req = "DELETE FROM type WHERE id = ?";
+//    try (PreparedStatement st = cnx.prepareStatement(req)) {
+//        st.setInt(1, id);
+//        st.executeUpdate();
+//    } catch (SQLException ex) {
+//        System.out.println("Erreur SQL lors de la suppression du type : " + ex.getMessage());
+//    }
+//    }
     @Override
     public void supprimer(int id) throws SQLException {
-//    String req = "DELETE FROM type WHERE id = ?";
-//    PreparedStatement st = cnx.prepareStatement(req);
-//    st.setInt(1, id);
-//    st.executeUpdate();
-String req = "DELETE FROM type WHERE id = ?";
-    try (PreparedStatement st = cnx.prepareStatement(req)) {
-        st.setInt(1, id);
-        st.executeUpdate();
-    } catch (SQLException ex) {
-        System.out.println("Erreur SQL lors de la suppression du type : " + ex.getMessage());
+    String verifReq = "select * from type where id = ?";
+    PreparedStatement verifPs = cnx.prepareStatement(verifReq);
+    verifPs.setInt(1, id);
+    ResultSet rs = verifPs.executeQuery();
+
+    if (!rs.next()) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("type n'existe pas !");
+        alert.showAndWait();
+        return ;
     }
-    }
+
+    String req = "delete from type where id = ?";
+    PreparedStatement ps = cnx.prepareStatement(req);
+    ps.setInt(1, id);
+    ps.executeUpdate();
+    System.out.println("Suppression effectuée avec succès.");
+}
+    
+    
     
     @Override
     public List<Type> recuperer() throws SQLException{

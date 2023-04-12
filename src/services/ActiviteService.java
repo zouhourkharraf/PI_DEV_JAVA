@@ -55,25 +55,68 @@ public class ActiviteService implements IService<Activite> {
     
     @Override
     public void modifier(Activite a) throws SQLException {
-    String req = "UPDATE activite SET nomact = ?, positionact = ?, dateact = ?, nbparticipants = ? WHERE id = ?";
-    PreparedStatement st = cnx.prepareStatement(req);
-
-    st.setString(1, a.getNomAct());
-    st.setString(2, a.getPositionAct());
-    st.setDate(3, new java.sql.Date(a.getDateAct().getTime()));
-    st.setInt(4, a.getNbParticipants());
-    //st.setInt(5, a.getType());
-    st.setInt(5, a.getId());
-
-    st.executeUpdate();
+    // Vérifier si l'ID existe
+    String req_select = "SELECT id FROM activite WHERE id = ?";
+    PreparedStatement st_select = cnx.prepareStatement(req_select);
+    st_select.setInt(1, a.getId());
+    ResultSet rs = st_select.executeQuery();
+    if (!rs.next()) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("Activité n'existe pas");
+        alert.showAndWait();
+        return;
+    }
+    
+    // Mettre à jour l'activité
+    String req_update = "UPDATE activite SET nomact = ?, positionact = ?, dateact = ?, nbparticipants = ? WHERE id = ?";
+    PreparedStatement st_update = cnx.prepareStatement(req_update);
+    st_update.setString(1, a.getNomAct());
+    st_update.setString(2, a.getPositionAct());
+    st_update.setDate(3, new java.sql.Date(a.getDateAct().getTime()));
+    st_update.setInt(4, a.getNbParticipants());
+    st_update.setInt(5, a.getId());
+    st_update.executeUpdate();
 }
+    
+//    @Override
+//    public void modifier(Activite a) throws SQLException {
+//    String req = "UPDATE activite SET nomact = ?, positionact = ?, dateact = ?, nbparticipants = ? WHERE id = ?";
+//    PreparedStatement st = cnx.prepareStatement(req);
+//
+//    st.setString(1, a.getNomAct());
+//    st.setString(2, a.getPositionAct());
+//    st.setDate(3, new java.sql.Date(a.getDateAct().getTime()));
+//    st.setInt(4, a.getNbParticipants());
+//    //st.setInt(5, a.getType());
+//    st.setInt(5, a.getId());
+//
+//    st.executeUpdate();
+//}
+
     @Override
     public void supprimer(int id) throws SQLException {
-    String req = "DELETE FROM activite WHERE id = ?";
-    PreparedStatement st = cnx.prepareStatement(req);
-    st.setInt(1, id);
-    st.executeUpdate();
+    String verifReq = "select * from activite where id = ?";
+    PreparedStatement verifPs = cnx.prepareStatement(verifReq);
+    verifPs.setInt(1, id);
+    ResultSet rs = verifPs.executeQuery();
+
+    if (!rs.next()) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("activite n'existe pas !");
+        alert.showAndWait();
+        return;
     }
+
+    String req = "delete from type where id = ?";
+    PreparedStatement ps = cnx.prepareStatement(req);
+    ps.setInt(1, id);
+    ps.executeUpdate();
+    System.out.println("Suppression effectuée avec succès.");
+}
     
      @Override
     public List<Activite> recuperer() throws SQLException {

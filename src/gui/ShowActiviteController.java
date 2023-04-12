@@ -42,6 +42,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 
 
@@ -133,6 +134,7 @@ boutonMod.setOnAction(e -> {
     try {
         updateActivite();
         boutonMod.setDisable(false);
+        
     } catch (ParseException ex) {
         Logger.getLogger(ShowActiviteController.class.getName()).log(Level.SEVERE, null, ex);
     } catch (SQLException ex) {
@@ -216,7 +218,15 @@ boutonMod.setOnAction(e -> {
     ActiviteService activiteService = new ActiviteService();
     Activite activite = activiteService.recupererActiviteById(id);
     
-    if (activite != null) {
+    if (activite == null) {
+        
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("l'activite n'existe pas");
+        alert.showAndWait();
+        
+    } else {
         activite.setNomAct(nomActivite);
         activite.setPositionAct(position);
         activite.setDateAct(date);
@@ -231,6 +241,38 @@ boutonMod.setOnAction(e -> {
         }
     }
 }
+
+    
+    
+    
+//    public void updateActivite() throws ParseException, SQLException {
+//    int id = Integer.parseInt(idMod.getText());
+//    String nomActivite = nomModField.getText();
+//    int nombreParticipants = Integer.parseInt(nbModField.getText());
+//    String position = positionModField.getText();
+//    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+//    String dateStr = dateModField.getText();
+//    Date date = format.parse(dateStr);
+//    //int typeId = Integer.parseInt(typeModField.getText());
+//    
+//    ActiviteService activiteService = new ActiviteService();
+//    Activite activite = activiteService.recupererActiviteById(id);
+//    
+//    if (activite != null) {
+//        activite.setNomAct(nomActivite);
+//        activite.setPositionAct(position);
+//        activite.setDateAct(date);
+//        //activite.setType(typeId);
+//        activite.setNbParticipants(nombreParticipants);
+//
+//        try {
+//            activiteService.modifier(activite);
+//            refresh();
+//        } catch(SQLException ex) {
+//            System.out.println("Erreur lors de la mise à jour de l'activité : " + ex.getMessage());
+//        }
+//    }
+//}
 
     
 //    public void updateActivite() throws ParseException, SQLException{
@@ -263,6 +305,14 @@ boutonMod.setOnAction(e -> {
         
         public void deleteActivite(){
             String idAct = idSuppField.getText();
+            if (idAct.isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur de saisie");
+        alert.setHeaderText(null);
+        alert.setContentText("pas d' ID !");
+        alert.showAndWait();
+        return;
+    }
             ActiviteService as = new ActiviteService();
             try{
                 as.supprimer(Integer.parseInt(idAct));
