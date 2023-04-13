@@ -5,15 +5,12 @@
  */
 package Service;
 
-import java.util.List;
+import Entite.Reclamation;
 
 /**
  *
  * @author winxspace
  */
-public interface Iservice<T> {
-    public void ajouter (T t) ; 
-        public void modifier (T t, int id ) ; 
-       public void supprimer(int id) throws Exception ; 
-        public List<T> afficher () ; 
+public interface MyListener {
+    public void onclickListener(Reclamation r);
 }

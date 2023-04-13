@@ -6,10 +6,11 @@
 package magicbook1;
 
 import Entite.Reclamation;
-import Entite.Reponse;
+import Entite.Repons;
 import Service.ServiceReclamation;
-import Service.ServiceReponse;
+import Service.ServiceRepons;
 import java.sql.Date;
+//import java.util.Date;
 
 /**
  *
@@ -22,11 +23,12 @@ public class MagicBook1 {
      */
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
-       // sr.modifier(r, 1);
-        //sr.supprimer(1);
-      //  sr.afficher();
-        Reclamation r= new Reclamation("test", "ttest", "bien", new Date(2023, 6, 6), 1, "yaya");
+       
+       /* Reclamation r= new Reclamation("proposition", "test", "moyen", new Date(2023, 7,3), 1, "Eyaa");
         ServiceReclamation sr=new ServiceReclamation();
+        // sr.modifier(r, 1);
+        sr.supprimer(24);
+        //sr.afficher();
         //sr.ajouter(r);
        
         Reponse re=new Reponse(new Date(2025, 5, 5), 2, "teet");
@@ -34,8 +36,8 @@ public class MagicBook1 {
        // sre.supprimer(19);
         /* sre.modifier(r, 1);
         sr.supprimer(1);*/
-        sre.ajouter(re);
+       // sre.ajouter(re);
         //sre.supprimer(2);
-    }
-    
+    }//
+   
 }
