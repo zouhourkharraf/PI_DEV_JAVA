@@ -24,7 +24,7 @@ public class Test {
      ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
    
     //affichage de tous les utilisateurs
-    
+    /*
                 try {
                       List<Utilisateur> liste_utilisateurs=util_service.recuperer_liste_utilisateur();
            for (int i = 0; i < liste_utilisateurs.size(); i++) {
@@ -35,7 +35,7 @@ public class Test {
             System.out.println(ex.getMessage());
         }
     
-    
+    */
     
      //ajout d'un tutilisateur
    /*
@@ -76,7 +76,7 @@ public class Test {
    */
  
   //récupérer un utilisateur selon son pseudo
-  
+  /*
    System.out.println("récupérer un utilisateur selon son pseudo");
     try {
               Utilisateur utilisateur=util_service.recuperer_utilisateur_par_pseudo("benamerhkkkajer5");
@@ -89,8 +89,39 @@ public class Test {
         }
       System.out.println("fin récupérer un utilisateur selon son pseudo");
    
+  */
+        
   
+   //récupérer un utilisateur selon son id
+  /*
+   System.out.println("récupérer un utilisateur selon son id");
+    try {
+              Utilisateur utilisateur=util_service.recuperer_utilisateur_par_id(7);
+              
+               System.out.println(utilisateur.toString());
+       
+       
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-    
-     
+      System.out.println("fin récupérer un utilisateur selon son id");
+   */
+  
+        
+  
+    //suppression 
+    /*
+       try {
+     Utilisateur utilisateur=util_service.recuperer_utilisateur_par_pseudo("hhhhhatem21");
+              util_service.supprimer_utilisateur(utilisateur);
+              
+             System.out.println("succès");
+       
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+   */    
+      
+   
+    }  
 }

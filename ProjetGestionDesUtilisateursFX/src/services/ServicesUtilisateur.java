@@ -47,23 +47,6 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
         
     }
     
-    /*
-    
-    @Override
-    public void modifier(Personne t) throws SQLException {
-        String req = "update personne set nom = ?, prenom = ?, age = ? where id = ?";
-        PreparedStatement ps = cnx.prepareStatement(req);
-
-        ps.setString(1, t.getNom());
-        ps.setString(2, t.getPrenom());
-        ps.setInt(3, t.getAge());
-        ps.setInt(4, t.getId());
-
-        ps.executeUpdate();
-
-    }
-    */
-
     @Override
     public void modifier_utilisateur(Utilisateur u) throws SQLException {
           String req = "update utilisateur set nom_util= ?,prenom_util= ?,pseudo_util= ?,mot_de_passe_util= ?,email_util= ?,age_util= ?,genre_util= ?,role_util=? where id= ?";
@@ -83,7 +66,20 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
 
     @Override
     public void supprimer_utilisateur(Utilisateur u) throws SQLException {
-     //   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
+     //   String id_string=String.valueOf(u.getId());
+        // String req = "delete from utilisateur where id="+id_string;
+       String req = "DELETE FROM utilisateur WHERE id=?";
+ 
+        PreparedStatement ps = cnx.prepareStatement(req);
+       ps.setInt(1, u.getId());
+ 
+         int rowsDeleted = ps.executeUpdate();
+   if (rowsDeleted > 0) {
+    System.out.println("A user was deleted successfully!");
+    
+}
+       
     }
 
     @Override
@@ -140,6 +136,28 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          String req="select * from utilisateur where pseudo_util=?";
          PreparedStatement st = cnx.prepareStatement(req);
          st.setString(1, pseudo2);
+         ResultSet rs = st.executeQuery();
+         rs.next();
+         util.setId(rs.getInt("id"));
+         util.setNom_util(rs.getString("nom_util"));
+         util.setPrenom_util(rs.getString("prenom_util"));
+         util.setPseudo_util(rs.getString("pseudo_util"));
+         util.setMot_de_passe_util(rs.getString("mot_de_passe_util"));
+         util.setEmail_util(rs.getString("email_util"));
+         util.setAge_util(rs.getInt("age_util"));
+         util.setGenre_util(rs.getString("genre_util"));
+         util.setRole_util(rs.getString("role_util"));
+      
+         return util;
+     }    
+                 
+    //cette méthode permer de chercher un utilisateur par son id
+     public Utilisateur recuperer_utilisateur_par_id(int id2) throws SQLException
+     {
+         Utilisateur util=new Utilisateur();
+         String req="select * from utilisateur where id=?";
+         PreparedStatement st = cnx.prepareStatement(req);
+         st.setInt(1, id2);
          ResultSet rs = st.executeQuery();
          rs.next();
          util.setId(rs.getInt("id"));

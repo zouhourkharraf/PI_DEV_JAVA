@@ -1,0 +1,23 @@
+.table-view .column-header-background{
+        -fx-background-color: white;
+        -fx-border-color: black;
+      
+       
+        
+        
+    }
+.table-view .column-header, .table-view .filler{
+      
+      
+         -fx-background-color:transparent;
+          -fx-text-fill: black;
+           -fx-size:15px;
+           
+           
+    }
+    
+.table-view .column-header .label {
+        -fx-text-fill: black ;
+        
+    }
+    

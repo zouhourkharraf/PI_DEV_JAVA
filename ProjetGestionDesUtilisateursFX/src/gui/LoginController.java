@@ -97,11 +97,11 @@ public class LoginController implements Initializable {
                   }
                   else
                   {
-                   FXMLLoader loader = new FXMLLoader(getClass().getResource("PageAdministrateur.fxml"));  
+                   FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));  
                    Parent root = loader.load(); //Un container
-                   PageAdministrateurController admin_controller=loader.getController();
-                   admin_controller.setAdmin_connecte(champ_pseudo.getText());
-                   champ_pseudo.getScene().setRoot(root);
+                   DashboardController dashboard_controller=loader.getController();
+                   dashboard_controller.setAdminConnecteeDashboard(champ_pseudo.getText());  
+                     champ_pseudo.getScene().setRoot(root);
                   }
                     } catch (IOException ex) 
                     { System.out.println(ex.getMessage());}
