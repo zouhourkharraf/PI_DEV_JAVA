@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -114,11 +115,13 @@ public class PageAdministrateurController implements Initializable {
 
     @FXML
     private void ModifierUtilisateur(MouseEvent event) {
+        
+        
        Utilisateur util_a_modifier=table_util.getSelectionModel().getSelectedItem();
-        System.out.println(util_a_modifier.toString());
-       if(util_a_modifier.getRole_util().compareTo("élève")==0)
+      //  System.out.println(util_a_modifier.toString());
+       if((util_a_modifier.getRole_util().compareTo("élève")==0) || (util_a_modifier.getRole_util().compareTo("enseignant")==0))
        {
-           //aller à la page mdifier élève et insérer les données de util_a_modifier dans le formulaire de la page
+           //aller à la page modifier élève et insérer les données de util_a_modifier dans le formulaire de la page
            try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierEleve.fxml"));  
                    Parent root = loader.load(); //Un container
@@ -130,6 +133,14 @@ public class PageAdministrateurController implements Initializable {
                     { System.out.println(ex.getMessage());}
            
 
+       }
+       else
+       {
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Magic Book | Erreur");
+                        alert.setHeaderText("Attention !");
+                        alert.setContentText("Vous ne pouvez pas modifier les informations d'un administrateur !");
+                        alert.show();
        }
     }
 

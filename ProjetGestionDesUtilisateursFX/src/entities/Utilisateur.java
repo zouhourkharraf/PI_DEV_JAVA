@@ -5,6 +5,8 @@
  */
 package entities;
 
+import java.util.Objects;
+
 /**
  *
  * @author MMD
@@ -131,6 +133,63 @@ public class Utilisateur {
         @Override
     public String toString() {
         return "Utilisateur{" + "id=" + id + ", age_util=" + age_util + ", nom_util=" + nom_util + ", prenom_util=" + prenom_util + ", pseudo_util=" + pseudo_util + ", mot_de_passe_util=" + mot_de_passe_util + ", email_util=" + email_util + ", genre_util=" + genre_util + ", role_util=" + role_util + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + this.age_util;
+        hash = 97 * hash + Objects.hashCode(this.nom_util);
+        hash = 97 * hash + Objects.hashCode(this.prenom_util);
+        hash = 97 * hash + Objects.hashCode(this.pseudo_util);
+        hash = 97 * hash + Objects.hashCode(this.mot_de_passe_util);
+        hash = 97 * hash + Objects.hashCode(this.email_util);
+        hash = 97 * hash + Objects.hashCode(this.genre_util);
+        hash = 97 * hash + Objects.hashCode(this.role_util);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Utilisateur other = (Utilisateur) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.age_util != other.age_util) {
+            return false;
+        }
+        if (!Objects.equals(this.nom_util, other.nom_util)) {
+            return false;
+        }
+        if (!Objects.equals(this.prenom_util, other.prenom_util)) {
+            return false;
+        }
+        if (!Objects.equals(this.pseudo_util, other.pseudo_util)) {
+            return false;
+        }
+        if (!Objects.equals(this.mot_de_passe_util, other.mot_de_passe_util)) {
+            return false;
+        }
+        if (!Objects.equals(this.email_util, other.email_util)) {
+            return false;
+        }
+        if (!Objects.equals(this.genre_util, other.genre_util)) {
+            return false;
+        }
+        if (!Objects.equals(this.role_util, other.role_util)) {
+            return false;
+        }
+        return true;
     }
     
     
