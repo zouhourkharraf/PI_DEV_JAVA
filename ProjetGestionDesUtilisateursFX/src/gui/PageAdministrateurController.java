@@ -113,12 +113,14 @@ public class PageAdministrateurController implements Initializable {
         }
     }
 
+    
+    
     @FXML
     private void ModifierUtilisateur(MouseEvent event) {
         
         
        Utilisateur util_a_modifier=table_util.getSelectionModel().getSelectedItem();
-      //  System.out.println(util_a_modifier.toString());
+      
        if((util_a_modifier.getRole_util().compareTo("élève")==0) || (util_a_modifier.getRole_util().compareTo("enseignant")==0))
        {
            //aller à la page modifier élève et insérer les données de util_a_modifier dans le formulaire de la page
@@ -147,6 +149,26 @@ public class PageAdministrateurController implements Initializable {
     @FXML
     private void SupprimerUtilisateur(MouseEvent event) {
           System.out.println("Supprimer");
+          if(table_util.getSelectionModel().isEmpty())
+          {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Magic Book | Erreur");
+                        alert.setHeaderText("Impossible !");
+                        alert.setContentText("Veuillez sélectionner un utilisateur !");
+                        alert.show();  
+          }
+          else
+          {
+             Utilisateur util_a_supprimer=table_util.getSelectionModel().getSelectedItem();
+        
+             try{
+                  ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
+                  util_service.supprimer_utilisateur(util_a_supprimer);           
+                    } catch (SQLException ex) {
+                   System.out.println(ex.getMessage());
+                     }
+             this.AfficherTable(); //actualiser l'affichage de la table
+          }
     }
 
     @FXML
