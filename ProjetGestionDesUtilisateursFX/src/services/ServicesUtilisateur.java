@@ -99,6 +99,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          utilisateur1.setAge_util(rs.getInt("age_util"));
          utilisateur1.setGenre_util(rs.getString("genre_util"));
          utilisateur1.setRole_util(rs.getString("role_util"));
+         utilisateur1.setDemande_suppression(rs.getString("demande_suppression"));
          
          liste_utilisateurs.add(utilisateur1);
         
@@ -147,7 +148,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          util.setAge_util(rs.getInt("age_util"));
          util.setGenre_util(rs.getString("genre_util"));
          util.setRole_util(rs.getString("role_util"));
-      
+         util.setDemande_suppression(rs.getString("demande_suppression"));
          return util;
      }    
                  
@@ -169,7 +170,8 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          util.setAge_util(rs.getInt("age_util"));
          util.setGenre_util(rs.getString("genre_util"));
          util.setRole_util(rs.getString("role_util"));
-      
+         util.setDemande_suppression(rs.getString("demande_suppression"));
+         
          return util;
          
      } 

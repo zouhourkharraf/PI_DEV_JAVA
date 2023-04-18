@@ -9,6 +9,7 @@ import entities.Utilisateur;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -56,8 +57,6 @@ public class PageAdministrateurController implements Initializable {
     @FXML
     private TableColumn<Utilisateur, String> colonne_genre;
     @FXML
-    private TableColumn<?, ?> colonne_modifier;
-    @FXML
     private TableView<Utilisateur> table_util;
     @FXML
     private Label admin_connecte;
@@ -69,6 +68,10 @@ public class PageAdministrateurController implements Initializable {
     private Button BoutonApprouver;
     @FXML
     private ImageView BoutonActualiser;
+    @FXML
+    private TableColumn<Utilisateur, String> colonne_demande_suppression;
+    @FXML
+    private Button BoutonDeconnexion;
 
     /**
      * Initializes the controller class.
@@ -91,6 +94,20 @@ public class PageAdministrateurController implements Initializable {
        ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
            List<Utilisateur> liste_utilisateurs=util_service.recuperer_liste_utilisateur();
            ObservableList<Utilisateur> obs=FXCollections.observableArrayList(liste_utilisateurs);
+           
+           /*
+             // modifier le valeur de l'attribut genre dans la liste qui contient les données déja réccupéré depuis la BD 'F'-->'Femme' et 'H'--->'Homme'
+             obs.forEach((utilisateur) -> {
+                 if(utilisateur.getGenre_util().compareTo("F")==0)
+                 {
+                     utilisateur.setGenre_util("Femme");
+                 }
+                 else
+                 {
+                     utilisateur.setGenre_util("Homme");
+                 }});
+           */
+    
            table_util.setItems(obs);
              
            colonne_role.setCellValueFactory(new PropertyValueFactory<>("role_util"));
@@ -103,8 +120,8 @@ public class PageAdministrateurController implements Initializable {
            colonne_age.setCellValueFactory(new PropertyValueFactory<>("age_util"));
 
            colonne_genre.setCellValueFactory(new PropertyValueFactory<>("genre_util"));
-           
- 
+        colonne_demande_suppression.setCellValueFactory(new PropertyValueFactory<>("demande_suppression"));
+        
              //obs.remove()
             //obs.add()
             
@@ -173,12 +190,26 @@ public class PageAdministrateurController implements Initializable {
 
     @FXML
     private void ApprouverDemande(ActionEvent event) {
-          System.out.println("approuver demande ");
+          System.out.println("approuver demande ");  //à faire
     }
 
     @FXML
     private void ActualiserPage(MouseEvent event) {
-          System.out.println("actualizer");
+          System.out.println("actualizer");  //à faire
+    }
+
+    @FXML
+    private void SeDeconnecter(ActionEvent event) {
+        
+        try{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            Parent root = loader.load(); ///le container
+             BoutonDeconnexion.getScene().setRoot(root);
+         
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
     }
     
     

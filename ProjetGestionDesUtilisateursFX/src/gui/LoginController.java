@@ -63,7 +63,7 @@ public class LoginController implements Initializable {
      else
      {   
          erreur_globale.setText("");
-         if(!(champ_mp.getText().isEmpty())&& (champ_pseudo.getText().isEmpty()))
+         if( (!(champ_mp.getText().isEmpty()))&& (champ_pseudo.getText().isEmpty()))
          {
          erreur_globale.setText("Veuillez saisir votre pseudo !");
          }
@@ -73,9 +73,9 @@ public class LoginController implements Initializable {
            try{
                erreur_globale.setText("");
                Utilisateur util=util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText());
-           if(util==null)
+           if(util==null) 
            {
-                erreur_globale2.setText("Ce pseudo n'existe pas");
+                erreur_globale.setText("Ce pseudo n'existe pas");
               
            }
            else
@@ -92,7 +92,9 @@ public class LoginController implements Initializable {
                   if( (utilisateur1.getRole_util().compareTo("élève")==0) || (utilisateur1.getRole_util().compareTo("enseignant")==0) )
                   {
                    FXMLLoader loader = new FXMLLoader(getClass().getResource("PageUtilisateur.fxml"));
-                   Parent root = loader.load(); //Un container
+                    Parent root = loader.load(); //Un container
+                   PageUtilisateurController page_utilisateur_controller=loader.getController();
+                   page_utilisateur_controller.setUtilisateurConnecte(champ_pseudo.getText());
                    champ_pseudo.getScene().setRoot(root);
                   }
                   else

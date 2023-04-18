@@ -12,7 +12,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PageAdministrateurController">
    <content>
       <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #FFFFFF;">
@@ -29,7 +28,7 @@
                   <TableColumn fx:id="colonne_email" maxWidth="1.7976931348623157E308" prefWidth="300.0" text="Email" />
                   <TableColumn fx:id="colonne_age" maxWidth="1.7976931348623157E308" prefWidth="92.0" text="Age" />
                   <TableColumn fx:id="colonne_genre" maxWidth="1.7976931348623157E308" prefWidth="120.0" text="Genre" />
-                  <TableColumn fx:id="colonne_modifier" prefWidth="184.0" text="Demande de suppression" />
+                  <TableColumn fx:id="colonne_demande_suppression" prefWidth="184.0" text="Demande de suppression" />
                </columns>
             </TableView>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#393935" height="80.0" layoutX="-46.0" stroke="#40403a" strokeType="INSIDE" width="2000.0" />
@@ -73,6 +72,11 @@
                   <Image url="@../images/actualiser.png" />
                </image>
             </ImageView>
+            <Button fx:id="BoutonDeconnexion" layoutX="699.0" layoutY="22.0" mnemonicParsing="false" onAction="#SeDeconnecter" prefHeight="18.0" prefWidth="157.0" style="-fx-background-color: #ffffff;" text="Déconnexion &gt;">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </content>
