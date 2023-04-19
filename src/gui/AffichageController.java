@@ -6,7 +6,14 @@
 package gui;
 
 import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import entities.Evenement;
@@ -330,29 +337,67 @@ PdfWriter.getInstance(document, new FileOutputStream("events.pdf"));
 // Open the document
 document.open();
 
+// Add the logo to the header
+Image logo = Image.getInstance("C:\\Users\\user\\OneDrive\\Documents\\NetBeansProjects\\PIDEV-MBV2\\src\\uploads\\logo2.jpg\\");
+logo.scaleAbsolute(72, 72); // set logo size
+logo.setAlignment(Element.ALIGN_CENTER);
+document.add(logo);
+
+// Add a paragraph before the table
+//document.add(new Paragraph("Liste des événements Magic Book \n\n"));
+
+// Create a centered paragraph with red text
+Paragraph title = new Paragraph("Liste des événements Magic Book", new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD, BaseColor.BLUE));
+title.setAlignment(Element.ALIGN_CENTER);
+
+// Add a blank line
+document.add(new Paragraph("\n"));
+
+// Add the title to the document
+document.add(title);
+
+// Add a blank line
+document.add(new Paragraph("\n"));
+
+
 // Create a table with four columns
 PdfPTable table = new PdfPTable(6);
 
-// Add table headers
-table.addCell("Nom ");
-table.addCell("Date deb");
-table.addCell("Date fin");
-table.addCell("Lieu");
-table.addCell("Description");
-table.addCell("image");
+/// Add table headers
+PdfPCell cell = new PdfPCell(new Phrase("Nom"));
+cell.setBackgroundColor(BaseColor.GRAY);
+table.addCell(cell);
 
+cell = new PdfPCell(new Phrase("Date deb"));
+cell.setBackgroundColor(BaseColor.GRAY);
+table.addCell(cell);
+
+cell = new PdfPCell(new Phrase("Date fin"));
+cell.setBackgroundColor(BaseColor.GRAY);
+table.addCell(cell);
+
+cell = new PdfPCell(new Phrase("Lieu"));
+cell.setBackgroundColor(BaseColor.GRAY);
+table.addCell(cell);
+
+cell = new PdfPCell(new Phrase("Description"));
+cell.setBackgroundColor(BaseColor.GRAY);
+table.addCell(cell);
+
+cell = new PdfPCell(new Phrase("Image"));
+cell.setBackgroundColor(BaseColor.GRAY);
+table.addCell(cell);
 
 // Add the information of all sponsors to the table
 for (Evenement s : events) {
-    table.addCell(s.getNom_ev());
+    table.addCell(new PdfPCell(new Phrase(s.getNom_ev()))); //customize this cell
     table.addCell(s.getDated_ev().toString());
     table.addCell(s.getDatef_ev().toString());
     table.addCell(s.getLieu_ev());
     table.addCell(s.getDesc_ev());
     table.addCell(s.getImage_ev());
-    
-   // table.addCell(s.getDatefinc().toString());
 }
+
 
 // Add the table to the document
 document.add(table);
