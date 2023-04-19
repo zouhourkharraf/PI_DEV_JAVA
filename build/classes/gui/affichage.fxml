@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="593.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AffichageController">
    <children>
-      <TableView fx:id="tvevents" onSort="#getEventsList" prefHeight="390.0" prefWidth="756.0">
+      <TableView fx:id="tvevents" onSort="#getEventsList" prefHeight="390.0" prefWidth="882.0">
         <columns>
           <TableColumn fx:id="cid" prefWidth="75.0" text="id" />
           <TableColumn fx:id="cnom" prefWidth="75.0" text="nom_ev" />
@@ -26,6 +26,10 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Button layoutX="551.0" layoutY="461.0" mnemonicParsing="false" onAction="#buttpdf" prefHeight="25.0" prefWidth="67.0" text="pdf" />
+      <Button layoutX="706.0" layoutY="458.0" mnemonicParsing="false" onAction="#buttpdf" prefHeight="30.0" prefWidth="106.0" text="exporter pdf" textFill="#901515">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

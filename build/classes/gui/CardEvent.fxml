@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="397.0" spacing="15.0" style="-fx-background-radius: 15;" styleClass="shadow" stylesheets="@../card.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CardEventController">
    <children>
       <ImageView fx:id="imageIV" fitHeight="155.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true">

@@ -7,6 +7,9 @@ package gui;
 
 //import com.mysql.jdbc.Constants;
 import entities.Evenement;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -17,21 +20,30 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import services.EvenementService;
+import util.Statics;
 
 /**
  * FXML Controller class
@@ -51,6 +63,8 @@ public class ShowAllController implements Initializable {
     private List<Evenement> listEvent;
     
     private EvenementService eventService = new EvenementService();
+    @FXML
+    private TextField tfRecherche;
     
 //    List<Participant> listParticipant;
 
@@ -77,61 +91,106 @@ public class ShowAllController implements Initializable {
   
        
             }
-    /*
     
-
-    void displayData() throws IOException {
-        mainVBox.getChildren().clear();
-
-        Collections.reverse(listEvent);
-
-        if (!listEvent.isEmpty()) {
-            for (Evenement event : listEvent) {
-
-                mainVBox.getChildren().add(makeEventModel(event));
-
-            }
-        } else {
-            StackPane stackPane = new StackPane();
-            stackPane.setAlignment(Pos.CENTER);
-            stackPane.setPrefHeight(200);
-            stackPane.getChildren().add(new Text("Aucune donnée"));
-            mainVBox.getChildren().add(stackPane);
-        }
-    }
     
-   // public static final String FXML_FRONT_MODEL_EVENT = "/PIDEV-MBV2/gui/card.fxml";
-
-    public Parent makeEventModel(
-            Evenement event
-    ) throws IOException {
-        
-        Parent parent = null;
-        //parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.FXML_FRONT_MODEL_EVENT)));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("card.fxml"));
-         Parent root = loader.load();
-         ShowAllController controller = loader.getController();
-
-        HBox innerContainer = ((HBox) ((AnchorPane) ((AnchorPane) parent).getChildren().get(0)).getChildren().get(0));
-        ((Text) innerContainer.lookup("#titreText")).setText("Nom : " + event.getNom_ev());
-        ((Text) innerContainer.lookup("#descriptionText")).setText("Description : " + event.getDesc_ev());
-       // Path selectedImagePath = FileSystems.getDefault().getPath(event.getImage_ev());
-        //if (selectedImagePath.toFile().exists()) {
-          //  ((ImageView) innerContainer.lookup("#imageIV")).setImage(new Image(selectedImagePath.toUri().toString()));
-        //}
-        Text participerText = ((Text) innerContainer.lookup("#participerText"));
-        Button participateBtn = ((Button) innerContainer.lookup("#participerBtn"));
-        participerText.setText("participer");
-      //  participateBtn.setOnAction((ignored) -> participer(event, participerText, participateBtn));
-        return parent;
+    
+    //***************recherche******************
+    
+      private Node createEventNode(Evenement event) throws FileNotFoundException {
+    // Créer un VBox pour contenir le nom et le prix de l'article
+     if(event == null) {
+        return null;
     }
+     else{
+    VBox articleBox = new VBox();
+          articleBox.setPrefSize(150, 150);
+                articleBox.setStyle("-fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-padding: 10px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);");
+              
+               // File file = new File("C:\\Users\\user\\OneDrive\\Documents\\NetBeansProjects\\PIDEV-MBV2\\src\\uploads\\"+event.getImage_ev());
+               // System.out.println(file);
+               // Image image = new Image(file.toURI().toString());
+                //System.out.println(image);
 
-    /*private void participer(Evenement event, Text text, Button participateBtn) {
-       // Participant participant = new Participant(LocalDate.now(), MainApp.session, new RelationObject(event.getId(), event.getTitre()));
-        //if (ParticipantService.getInstance().add(participant)) {
-            participateBtn.setVisible(false);
-            text.setText("Vous participer a cet evenement");
-        }*/
+    // Créer des labels pour le nom et le prix de l'article
+            Label namelabel=new Label(event.getNom_ev());    
+            namelabel.setFont(Font.font("Verdana",FontWeight.BOLD, 16));
+            namelabel.setAlignment(Pos.CENTER);
+            articleBox.getChildren().add(namelabel);
+            
+            Label lieulabel=new Label(event.getLieu_ev());    
+            lieulabel.setFont(Font.font("Verdana",FontWeight.BOLD, 12));
+            lieulabel.setAlignment(Pos.CENTER);
+            articleBox.getChildren().add(lieulabel);
+            
+            Label datedlabel = new Label(event.getDated_ev().toString());
+            datedlabel.setFont(Font.font("Verdana",FontWeight.BOLD, 12));
+            datedlabel.setAlignment(Pos.CENTER);
+            articleBox.getChildren().add(datedlabel);
+            
+            Label dateflabel = new Label(event.getDatef_ev().toString());
+            dateflabel.setFont(Font.font("Verdana",FontWeight.BOLD, 12));
+            dateflabel.setAlignment(Pos.CENTER);
+            articleBox.getChildren().add(dateflabel);
+            
+            Label Desclabel=new Label(event.getDesc_ev());    
+            Desclabel.setFont(Font.font("Verdana",FontWeight.BOLD, 10));
+            Desclabel.setAlignment(Pos.CENTER);
+            articleBox.getChildren().add(Desclabel);
+            
+             ImageView imageView;               
+                imageView = new ImageView(new Image(new FileInputStream("C:\\Users\\user\\OneDrive\\Documents\\NetBeansProjects\\PIDEV-MBV2\\src\\uploads\\" + event.getImage_ev())));
+                imageView.setFitWidth(150);
+                imageView.setFitHeight(100);
+                imageView.setPreserveRatio(true);
+                articleBox.getChildren().add(imageView);
+                
+           
+           
+    StackPane stackPane = new StackPane();
+    stackPane.getChildren().addAll(articleBox);
+
+    // Ajouter un style CSS au VBox pour qu'il soit bien présenté dans le FlowPane
+    articleBox.setStyle("-fx-padding: 10px; -fx-background-color: #f2f2f2; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-border-color: #cccccc; -fx-border-width: 1px;");
+
+    // Définir les contraintes de taille pour le VBox et l'ImageView
+    articleBox.setPrefWidth(150);
+    articleBox.setMaxWidth(150);
+    mainVBox.getChildren().add(articleBox);
+    mainVBox.setMargin(articleBox, new Insets(5, 5, 5, 5));
+
+    // Retourner le StackPane contenant l'ImageView et le VBox
+    return stackPane;
+     }
+}
       
+    @FXML
+private void recherche(ActionEvent event) {
+    // Ajouter un listener sur le champ de recherche pour effectuer la recherche à chaque modification du texte
+    tfRecherche.textProperty().addListener((observable, oldValue, newValue) -> {
+        EvenementService sp = new EvenementService();  
+        // Filtrer les réclamations en utilisant le nouveau texte de recherche
+        List<Evenement> eventrecherche = sp.recuperer().stream()
+            .filter(evenement ->
+                evenement.getNom_ev().toLowerCase().contains(newValue.toLowerCase())
+            )
+            .collect(Collectors.toList());
+
+        // Vider le FlowPane actuel pour afficher les evenements filtrés
+        mainVBox.getChildren().clear();
+        for (Evenement evenement : eventrecherche) {
+            Node articleNode = null;
+            try {
+                articleNode = createEventNode(evenement);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ShowAllController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (articleNode != null) {
+                mainVBox.getChildren().add(articleNode); // ajouter le nouveau noeud dans le FlowPane
+            }
+        }
+        mainVBox.layout();
+    });
+}
+
     
 }

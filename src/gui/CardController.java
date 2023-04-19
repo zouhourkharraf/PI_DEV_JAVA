@@ -45,13 +45,13 @@ public class CardController implements Initializable {
         public void setData(Evenement event) {
 
         File file = new File("C:\\Users\\user\\OneDrive\\Documents\\NetBeansProjects\\PIDEV-MBV2\\src\\uploads\\"+event.getImage_ev());
-            System.out.println(file);
+        System.out.println(file);
         Image image = new Image(file.toURI().toString());
         System.out.println(image);
         imageIV.setImage(image);
-            System.out.println("ccccccccccccccc");
+        System.out.println("ccccccccccccccc");
         titreText.setText(event.getNom_ev());
-        descriptionText.setText("ccccc");
+        descriptionText.setText(event.getDesc_ev());
 
     }
     
