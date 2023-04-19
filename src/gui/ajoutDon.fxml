@@ -11,7 +11,7 @@
    <children>
       <TextField fx:id="tftype" layoutX="238.0" layoutY="155.0" promptText="type don" />
       <TextField fx:id="tfsomme" layoutX="238.0" layoutY="208.0" promptText="somme don" />
-      <Button layoutX="418.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleAjouter" text="ajouter" textFill="#a41e1e">
+      <Button layoutX="372.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleAjouter" prefHeight="30.0" prefWidth="87.0" text="ajouter" textFill="#a41e1e">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
@@ -24,5 +24,10 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Text>
+      <Button layoutX="467.0" layoutY="266.0" mnemonicParsing="false" onAction="#AfficherDon" prefHeight="30.0" prefWidth="110.0" text="afficher Dons" textFill="#a41e1e">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

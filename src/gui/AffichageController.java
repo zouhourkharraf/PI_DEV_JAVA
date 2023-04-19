@@ -5,8 +5,13 @@
  */
 package gui;
 
-import entities.Don;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import entities.Evenement;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -17,6 +22,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +34,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -35,7 +43,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import services.EvenementService;
 import util.MyDB;
+
 
 /**
  * FXML Controller class
@@ -201,7 +211,7 @@ public class AffichageController implements Initializable {
              cdf.setCellValueFactory(new PropertyValueFactory<>("datef_ev"));
              clieu.setCellValueFactory(new PropertyValueFactory<>("lieu_ev"));
              cdesc.setCellValueFactory(new PropertyValueFactory<>("desc_ev"));
-             cimg.setCellValueFactory(new PropertyValueFactory<>("image_ev"));
+             cimg.setCellValueFactory(new PropertyValueFactory<>("image_ev"));            
              cnote.setCellValueFactory(new PropertyValueFactory<>("note_ev"));
              
              //   list.remove();
@@ -301,6 +311,74 @@ public class AffichageController implements Initializable {
     }
     
     
+    
+    /////////PDF****************  
+    
+    
+@FXML
+private void buttpdf(ActionEvent event) throws FileNotFoundException, DocumentException, SQLException, BadElementException, IOException {
+ 
+  
+try{
+        EvenementService eventService = new EvenementService();
+        List<Evenement> events = eventService.getAll();
+
+// Create a new PDF document
+com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+PdfWriter.getInstance(document, new FileOutputStream("events.pdf"));
+
+// Open the document
+document.open();
+
+// Create a table with four columns
+PdfPTable table = new PdfPTable(6);
+
+// Add table headers
+table.addCell("Nom ");
+table.addCell("Date deb");
+table.addCell("Date fin");
+table.addCell("Lieu");
+table.addCell("Description");
+table.addCell("image");
+
+
+// Add the information of all sponsors to the table
+for (Evenement s : events) {
+    table.addCell(s.getNom_ev());
+    table.addCell(s.getDated_ev().toString());
+    table.addCell(s.getDatef_ev().toString());
+    table.addCell(s.getLieu_ev());
+    table.addCell(s.getDesc_ev());
+    table.addCell(s.getImage_ev());
+    
+   // table.addCell(s.getDatefinc().toString());
+}
+
+// Add the table to the document
+document.add(table);
+
+// Close the document
+document.close(); 
+
+// Show a success message
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText("Impression réussie");
+        alert.setContentText("La liste des sponsors a été imprimée avec succès.");
+        alert.showAndWait();
+    }
+    catch (Exception e) {
+        // Show an error message if an exception occurs
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText("Erreur lors de l'impression");
+        alert.setContentText("Une erreur s'est produite lors de l'impression de la liste des sponsors.");
+        alert.showAndWait();
+  
+ 
+    
+    }
+    }
     
 }
 

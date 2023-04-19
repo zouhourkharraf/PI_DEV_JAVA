@@ -29,7 +29,7 @@
          </font></Button>
       <TextField fx:id="mdnote" layoutX="270.0" layoutY="297.0" promptText="note" />
       <Text layoutX="171.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="note" />
-      <Button fx:id="annuler" layoutX="510.0" layoutY="335.0" mnemonicParsing="false" text="annuler" textFill="#901515">
+      <Button fx:id="annuler" layoutX="510.0" layoutY="335.0" mnemonicParsing="false" onAction="#Annuler" text="annuler" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>

@@ -5,9 +5,9 @@
  */
 package services;
 
+import static com.oracle.nio.BufferSecrets.instance;
 import entities.Evenement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.Event;
+import static jdk.nashorn.internal.objects.Global.instance;
 import util.MyDB;
+import java.sql.*;
 
 /**
  *
@@ -26,18 +29,78 @@ import util.MyDB;
  */
 public class EvenementService implements IService<Evenement> {
 
+   private static EvenementService instance;
+    PreparedStatement preparedStatement;
     Connection cnx;
 
     public EvenementService() {
         cnx = MyDB.getInstance().getCnx();
     }
+    
+    public static EvenementService getInstance() {
+        if (instance == null) {
+            instance = new EvenementService();
+        }
+        return instance;
+    }
+
+    public List<Evenement> getAll() {
+        List<Evenement> listEvent = new ArrayList<>();
+        try {
+            preparedStatement = cnx.prepareStatement("SELECT * FROM evenement");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                listEvent.add(new Evenement(
+                        resultSet.getInt("id"),
+                        resultSet.getString("nom_ev"),
+                        LocalDate.parse(String.valueOf(resultSet.getDate("dated_ev"))),
+                        LocalDate.parse(String.valueOf(resultSet.getDate("datef_ev"))),
+                        resultSet.getString("lieu_ev"),
+                        resultSet.getString("desc_ev"),
+                        resultSet.getString("image_ev")
+                        // resultSet.getFloat("note_ev")
+                        
+
+                ));
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error (getAll) event : " + exception.getMessage());
+        }
+        return listEvent;
+    }
+
 
     @Override
     public void ajouter(Evenement t) throws SQLException {
-        String req = "insert into evenement(nom_ev,lieu_ev,dated_ev,datef_ev,lieu_ev,desc_ev,image_ev) values('" + t.getNom_ev()+ "','" + t.getDated_ev()+ "','" + t.getDatef_ev()+ "','" + t.getLieu_ev()+ "'," + t.getDesc_ev()+ "','" + t.getImage_ev()+ ")";
+        String req = "insert into evenement(nom_ev,lieu_ev,dated_ev,datef_ev,lieu_ev,desc_ev,image_ev) values('" + t.getNom_ev()+ "','" + t.getDated_ev()+ "','" + t.getDatef_ev()+ "','" + t.getLieu_ev()+ "','" + t.getDesc_ev()+ "','" + t.getImage_ev()+ ")";
         Statement st = cnx.createStatement();
         st.executeUpdate(req);
 
+    }
+    
+    public boolean add(Evenement event) {
+
+        String request = "INSERT INTO `evenement`(`nom_ev`, `dated_ev`, `datef_ev`, `lieu_ev`, `desc_ev`,`image_ev`) VALUES(?, ?, ?, ?, ?, ?)";
+        try {
+            preparedStatement = cnx.prepareStatement(request);
+
+            preparedStatement.setString(1, event.getNom_ev());
+            preparedStatement.setDate(2, Date.valueOf(event.getDated_ev()));
+            preparedStatement.setDate(3, Date.valueOf(event.getDatef_ev()));
+            preparedStatement.setString(4, event.getLieu_ev());
+            preparedStatement.setString(5, event.getDesc_ev());
+            preparedStatement.setString(6, event.getImage_ev());
+
+
+            preparedStatement.executeUpdate();
+            System.out.println("Event added");
+            return true;
+        } catch (SQLException exception) {
+            System.out.println("Error (add) event : " + exception.getMessage());
+        }
+        return false;
     }
 
     @Override
@@ -86,31 +149,33 @@ public class EvenementService implements IService<Evenement> {
     }
 
     @Override
-    public List<Evenement> recuperer()  {
-        List<Evenement> evenements = new ArrayList<>();
-        String req = "select * from evenement";
-        try{
-        Statement st = cnx.createStatement();
-        ResultSet rs = st.executeQuery(req);
-        while (rs.next()) {
-            Evenement p = new Evenement();
-            LocalDate datedEv = LocalDate.parse(rs.getDate("dated_ev").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        LocalDate datefEv = LocalDate.parse(rs.getDate("datef_ev").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            p.setId(rs.getInt("id"));
-            p.setNom_ev(rs.getString("nom_ev"));
-            p.setDated_ev(datedEv);
-            p.setDatef_ev(datefEv);
-            p.setLieu_ev(rs.getString("lieu_ev"));
-            p.setDesc_ev(rs.getString("desc_ev"));
-            p.setImage_ev(rs.getString("image_ev"));
-
-            evenements.add(p);
-        }
-        return evenements;
-        }catch(SQLException ex){
-        ex.printStackTrace();
+    public List<Evenement> recuperer(){
+        try {
+            List<Evenement> evenements = new ArrayList<>();
+            String req = "select * from evenement";
+            
+            Statement st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                Evenement p = new Evenement();
+                LocalDate datedEv = LocalDate.parse(rs.getDate("dated_ev").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                LocalDate datefEv = LocalDate.parse(rs.getDate("datef_ev").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                p.setId(rs.getInt("id"));
+                p.setNom_ev(rs.getString("nom_ev"));
+                p.setDated_ev(datedEv);
+                p.setDatef_ev(datefEv);
+                p.setLieu_ev(rs.getString("lieu_ev"));
+                p.setDesc_ev(rs.getString("desc_ev"));
+                p.setImage_ev(rs.getString("image_ev"));
+                
+                evenements.add(p);
+            }
+            return evenements;
+        } catch (SQLException ex) {
+            Logger.getLogger(EvenementService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+        
     }
 
     public Evenement recupererById(int id) throws SQLException {

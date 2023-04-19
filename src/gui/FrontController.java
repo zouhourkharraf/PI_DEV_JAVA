@@ -8,12 +8,16 @@ package gui;
 import entities.Evenement;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -27,7 +31,7 @@ import services.MyListener;
  */
 public class FrontController implements Initializable {
 
-    @FXML
+   @FXML
     private GridPane grid;
     
      EvenementService eventService=new EvenementService();
@@ -39,6 +43,7 @@ public class FrontController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -75,6 +80,7 @@ public class FrontController implements Initializable {
           column = 0;
           row++;
         }
+        Evenement evenement;
         grid.add(anchorPane, column++, row);
         GridPane.setMargin(anchorPane, new Insets(10));
         grid.setMinWidth(Region.USE_COMPUTED_SIZE);
@@ -84,7 +90,8 @@ public class FrontController implements Initializable {
         grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
         grid.setMaxHeight(Region.USE_PREF_SIZE);
         
-       
+
+            
       }
     } catch (IOException e) {
       e.printStackTrace();

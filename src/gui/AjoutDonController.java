@@ -116,6 +116,19 @@ public class AjoutDonController implements Initializable {
     
     return true;
 }
+     @FXML
+    private void AfficherDon(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("affichageDon.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     
 }

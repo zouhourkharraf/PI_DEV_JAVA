@@ -88,7 +88,7 @@ public class AjoutController implements Initializable {
             statement.setDate(3, datef_ev);
             statement.setString(4, tflieu.getText());           
             statement.setString(5, tfdesc.getText());
-            statement.setString(6, lien + "png");
+            statement.setString(6, lien + ".png");
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("");
             alert.setHeaderText("");

@@ -135,7 +135,20 @@ private void handleModifierE(ActionEvent event) throws IOException {
     }
 
   
-    
+    @FXML
+    private void Annuler(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("affichage.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 
 
 
