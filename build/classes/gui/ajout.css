@@ -5,3 +5,30 @@
 .mainFxmlClass {
 
 }
+
+.text-field {
+    -fx-background-color: #f5f5f5;
+    -fx-background-radius: 20px;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-padding: 8px 12px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-prompt-text-fill: #a9a9a9;
+}
+
+.text-field:focus {
+    -fx-border-color: #5e5e5e;
+    -fx-border-width: 2px;
+    -fx-background-color: #ffffff;
+    -fx-box-shadow: 0 0 5px #5e5e5e;
+    -fx-text-fill: #333333;
+}
+.text {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+    -fx-padding: 5px 8px;
+}

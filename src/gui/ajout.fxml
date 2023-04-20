@@ -9,39 +9,41 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjoutController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: pink;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjoutController">
     <stylesheets>
         <URL value="@ajout.css" />
     </stylesheets>
    <children>
       <Accordion layoutX="108.0" layoutY="43.0" />
-      <Accordion layoutX="191.0" layoutY="163.0" />
-      <Button fx:id="b1" accessibleRole="IMAGE_VIEW" layoutX="421.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleAjouter" text="ajouter" textFill="#901515">
+      <Accordion layoutX="191.0" layoutY="179.0" />
+      <Button fx:id="b1" accessibleRole="IMAGE_VIEW" layoutX="395.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleAjouter" prefHeight="29.0" prefWidth="90.0" stylesheets="@affichage.css" text="ajouter" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TextField fx:id="tfnom" layoutX="260.0" layoutY="73.0" promptText="nom" />
-      <TextField fx:id="tflieu" layoutX="260.0" layoutY="192.0" promptText="lieu" />
-      <TextField fx:id="tfdesc" layoutX="260.0" layoutY="232.0" promptText="description" />
-      <TextField fx:id="tfnote" layoutX="260.0" layoutY="311.0" promptText="note" />
-      <DatePicker fx:id="dpd" layoutX="260.0" layoutY="114.0" prefHeight="24.0" prefWidth="149.0" promptText="date début" />
-      <DatePicker fx:id="dpf" layoutX="260.0" layoutY="152.0" prefHeight="24.0" prefWidth="149.0" promptText="date fin" />
-      <Text layoutX="162.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom" wrappingWidth="36.158203125" />
-      <Text layoutX="162.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dated" />
-      <Text layoutX="162.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="datef" wrappingWidth="30.580079555511475" />
-      <Text layoutX="162.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="lieu" wrappingWidth="30.580079555511475" />
-      <Text layoutX="162.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="desc" wrappingWidth="36.158207058906555" />
-      <Text layoutX="162.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="image" />
-      <Text layoutX="162.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="note" wrappingWidth="32.68945813179016" />
-      <Button layoutX="500.0" layoutY="357.0" mnemonicParsing="false" onAction="#AfficherEvent" text="afficher" textFill="#901515">
+      <TextField fx:id="tfnom" layoutX="260.0" layoutY="65.0" prefHeight="38.0" prefWidth="270.0" promptText="nom">
+         <stylesheets>
+            <URL value="@ajout.css" />
+            <URL value="@ajout.css" />
+         </stylesheets></TextField>
+      <TextField fx:id="tflieu" layoutX="260.0" layoutY="207.0" prefHeight="38.0" prefWidth="270.0" promptText="lieu" />
+      <TextField fx:id="tfdesc" layoutX="260.0" layoutY="253.0" prefHeight="38.0" prefWidth="270.0" promptText="description" />
+      <DatePicker fx:id="dpd" layoutX="260.0" layoutY="112.0" prefHeight="38.0" prefWidth="270.0" promptText="date début" />
+      <DatePicker fx:id="dpf" layoutX="260.0" layoutY="160.0" prefHeight="38.0" prefWidth="270.0" promptText="date fin" />
+      <Text layoutX="40.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Nom de l'évènement  :" wrappingWidth="184.15820002555847" />
+      <Button layoutX="495.0" layoutY="350.0" mnemonicParsing="false" onAction="#AfficherEvent" prefHeight="29.0" prefWidth="90.0" stylesheets="@affichage.css" text="afficher" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Text fill="#b52932" layoutX="24.0" layoutY="37.0" stroke="#bc111d" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter un évènement : " wrappingWidth="184.158203125">
+      <Text fill="#759ac9" layoutX="172.0" layoutY="32.0" stroke="#17080a" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter un évènement : " wrappingWidth="256.158203125">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Text>
-      <Button fx:id="imageUpload" layoutX="266.0" layoutY="272.0" mnemonicParsing="false" onAction="#PhotoImportation" prefHeight="25.0" prefWidth="138.0" text="upload image " />
+      <Button fx:id="imageUpload" layoutX="260.0" layoutY="298.0" mnemonicParsing="false" onAction="#PhotoImportation" prefHeight="29.0" prefWidth="270.0" text="upload image " />
+      <Text layoutX="40.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Description                  :" wrappingWidth="184.15820002555847" />
+      <Text layoutX="40.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="télécharger une image :" wrappingWidth="184.15820002555847" />
+      <Text layoutX="40.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Date fin                       : " wrappingWidth="184.15820002555847" />
+      <Text layoutX="40.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Lieu de l'évènement    :" wrappingWidth="184.15820002555847" />
+      <Text layoutX="40.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Date début                 :" wrappingWidth="184.15820002555847" />
    </children>
 </AnchorPane>

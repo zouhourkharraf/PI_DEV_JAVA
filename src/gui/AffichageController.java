@@ -102,17 +102,7 @@ public class AffichageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        /*try {
-            initTable();
-            refresh();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-        showRec();
        
-    } catch (ParseException e) {
-    }*/
         cSupprimer.setCellFactory(col -> new TableCell<Evenement, Void>() {
     private final Button deleteButton = new Button("Supprimer");
 
@@ -158,7 +148,7 @@ public class AffichageController implements Initializable {
             setGraphic(button);
             button.setOnAction(event -> {
                 Evenement evenement = getTableView().getItems().get(getIndex());
-                // Code pour ouvrir l'interface de modification avec le don sélectionné
+                 //Code pour ouvrir l'interface de modification avec le don sélectionné
             });
         }
     }

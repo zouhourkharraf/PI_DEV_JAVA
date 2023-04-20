@@ -7,13 +7,9 @@ package gui;
 
 //import com.mysql.jdbc.Constants;
 import entities.Evenement;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,21 +25,17 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import services.EvenementService;
-import util.Statics;
+
 
 /**
  * FXML Controller class
@@ -91,7 +83,6 @@ public class ShowAllController implements Initializable {
   
        
             }
-    
     
     
     //***************recherche******************

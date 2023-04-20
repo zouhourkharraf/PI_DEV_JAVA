@@ -32,7 +32,7 @@ public class Home extends Application{
        // Parent root =FXMLLoader.load(getClass().getResource("Back.fxml"));
       
 
-           Parent root =FXMLLoader.load(getClass().getResource("ShowAll.fxml"));                     
+           Parent root =FXMLLoader.load(getClass().getResource("ajout.fxml"));                     
             Scene scene = new Scene(root);
             primaryStage.setTitle("magicbook");
             primaryStage.setTitle("magicbook application");

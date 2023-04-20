@@ -14,7 +14,6 @@
       <TextField fx:id="mdnom" layoutX="270.0" layoutY="58.0" promptText="nom" />
       <TextField fx:id="mdlieu" layoutX="270.0" layoutY="177.0" promptText="lieu" />
       <TextField fx:id="mddesc" layoutX="270.0" layoutY="217.0" promptText="description" />
-      <TextField fx:id="mdimg" layoutX="270.0" layoutY="257.0" promptText="télécharger une image" />
       <DatePicker fx:id="mdd" layoutX="270.0" layoutY="99.0" prefHeight="24.0" prefWidth="149.0" promptText="date début" />
       <DatePicker fx:id="mdf" layoutX="270.0" layoutY="137.0" prefHeight="24.0" prefWidth="149.0" promptText="date fin" />
       <Text layoutX="172.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom" wrappingWidth="36.158203125" />
@@ -38,5 +37,6 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Text>
+      <Button fx:id="imgUpload" layoutX="270.0" layoutY="257.0" mnemonicParsing="false" onAction="#PhotoImportation" prefHeight="25.0" prefWidth="149.0" text="upload image" />
    </children>
 </AnchorPane>

@@ -6,6 +6,8 @@
 package gui;
 
 import entities.Evenement;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -13,8 +15,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +28,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import util.MyDB;
 
 /**
@@ -41,8 +48,6 @@ public class ModificationController implements Initializable {
     @FXML
     private TextField mddesc;
     @FXML
-    private TextField mdimg;
-    @FXML
     private DatePicker mdd;
     @FXML
     private DatePicker mdf;
@@ -53,6 +58,11 @@ public class ModificationController implements Initializable {
     @FXML
     private Button annuler;
     private Evenement evenement;
+    @FXML
+    private Button imgUpload;
+    private File file;
+    private String lien = "";
+
 
     /**
      * Initializes the controller class.
@@ -99,7 +109,7 @@ private void handleModifierE(ActionEvent event) throws IOException {
 
         // Mettre à jour le don dans la base de données
         Connection cnx = MyDB.getInstance().getCnx();
-        String query = "UPDATE evenement SET nom_ev=?, dated_ev=?, datef_ev=?, lieu_ev=?, desc_ev=?, note_ev=? WHERE id=?";
+        String query = "UPDATE evenement SET nom_ev=?, dated_ev=?, datef_ev=?, lieu_ev=?, desc_ev=?,image_ev=?, note_ev=? WHERE id=?";
         PreparedStatement smt = cnx.prepareStatement(query);
         smt.setString(1, nom_ev);
         //LocalDate dated= LocalDate.now(); // or any other LocalDate object
@@ -110,11 +120,13 @@ private void handleModifierE(ActionEvent event) throws IOException {
         smt.setString(3, datef_ev_str);
         smt.setString(4, lieu_ev);
         smt.setString(5, desc_ev);
+        smt.setString(6, lien + ".png");
+
        // float note; // or any other float value
         String note_ev_str = Float.toString(note_ev); // convert float to String
-        smt.setString(6, note_ev_str); // set the 6th parameter with the String value
+        smt.setString(7, note_ev_str); // set the 6th parameter with the String value
 
-        smt.setInt(7, evenement.getId()); // Assumes getId() is a method that returns the ID of the current donation
+        smt.setInt(8, evenement.getId()); // Assumes getId() is a method that returns the ID of the current donation
         smt.executeUpdate();
 
         // Fermer la fenêtre de modification
@@ -147,6 +159,46 @@ private void handleModifierE(ActionEvent event) throws IOException {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+    
+    @FXML
+    private void PhotoImportation(ActionEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJPG
+                = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterjpg
+                = new FileChooser.ExtensionFilter("jpg files (*.jpg)", "*.jpg");
+        FileChooser.ExtensionFilter extFilterPNG
+                = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
+        FileChooser.ExtensionFilter extFilterpng
+                = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
+        fileChooser.getExtensionFilters()
+                .addAll(extFilterJPG, extFilterjpg, extFilterPNG, extFilterpng);
+        //Show open file dialog
+        file = fileChooser.showOpenDialog(null);
+
+        try {
+            BufferedImage image = ImageIO.read(file);
+            WritableImage imagee = SwingFXUtils.toFXImage(image, null);
+
+            try {
+                // save image to PNG file
+                this.lien = UUID.randomUUID().toString();
+                File f = new File("src\\uploads\\" + this.lien + ".png");
+                System.out.println(f.toURI().toString());
+                ImageIO.write(image, "PNG", f);
+                imgUpload.setText(file.getName());
+
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+//      
     }
 
 

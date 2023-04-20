@@ -3,15 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/CardEvent.fxml</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/card.fxml</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/AffichageController.java</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/AffichageDonController.java</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/CardEventController.java</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/CardController.java</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/AllEventsController.java</file>
-            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/ShowAllController.java</file>
             <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/Home.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/CardEventController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/AffichageDonController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/AllEventsController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/CardController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/card.fxml</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/ShowAllController.java</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/ShowAll.fxml</file>
+            <file>file:/C:/Users/user/OneDrive/Documents/NetBeansProjects/PIDEV-MBV2/src/gui/CardEvent.fxml</file>
         </group>
     </open-files>
 </project-private>
