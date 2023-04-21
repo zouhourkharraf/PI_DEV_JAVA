@@ -209,13 +209,15 @@ public class AjouterEleveController implements Initializable {
               { genre1="H"; }
               
               int age1=Integer.parseInt(champ_age.getText()); //convertir L'age saisi en int
-             Utilisateur utilisateur1=new Utilisateur(age1,champ_nom.getText(),champ_prenom.getText(),"",champ_mp.getText(),champ_email.getText(),genre1, "élève"); //création de l'objet utilisateur sans pseudo
+             Utilisateur utilisateur1=new Utilisateur(age1,champ_nom.getText(),champ_prenom.getText(),"",champ_mp.getText(),champ_email.getText(),genre1,"élève","non"); //création de l'objet utilisateur sans pseudo
              
               try 
               {     
                  util_service.ajouter_utilisateur(utilisateur1); //--> ajout de l'utilisateur utilisateur1
+                  System.out.println(utilisateur1.getDemande_suppression());
                  Utilisateur utilisateur2=util_service.recuperer_utilisateur_par_email(utilisateur1.getEmail_util()); //réccupérer l'utilisateur déja saisi pour qu'on puise générer son pseudo (à partir de id+nom+prénom) (càd on va le modifier on va lui ajouter le pseudo)
                  utilisateur2.setPseudo_util(utilisateur2.GenererPseudo()); //générer le pseudo de utilisateur2 et modifier la valeur de son pseudo qui est égale à ""
+                  System.out.println(utilisateur1.getDemande_suppression());
                  util_service.modifier_utilisateur(utilisateur2);
               
                         this.retour(new ActionEvent()); //retourner à la page d'authentification

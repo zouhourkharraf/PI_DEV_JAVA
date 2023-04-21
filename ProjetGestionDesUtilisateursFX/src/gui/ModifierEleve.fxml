@@ -24,7 +24,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Button fx:id="bouton_retour2" layoutX="727.0" layoutY="117.0" mnemonicParsing="false" onAction="#RetourVersDashboard" prefHeight="37.0" prefWidth="124.0" style="-fx-background-color: DAE626;" text="Retour" textFill="#0a4a54">
+            <Button fx:id="bouton_retour2" layoutX="727.0" layoutY="117.0" mnemonicParsing="false" onAction="#RetourVersPagePrecedente" prefHeight="37.0" prefWidth="124.0" style="-fx-background-color: DAE626;" text="Retour" textFill="#0a4a54">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
@@ -110,7 +110,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="AdminConnecte3" layoutX="24.0" layoutY="14.0" prefHeight="72.0" prefWidth="376.0" textFill="WHITE">
+            <Label fx:id="label_espace_precedent" layoutX="32.0" layoutY="565.0" prefHeight="41.0" prefWidth="238.0" />
+            <Label fx:id="AdminConnecte3" layoutX="41.0" layoutY="24.0" prefHeight="72.0" prefWidth="376.0" textFill="WHITE">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>

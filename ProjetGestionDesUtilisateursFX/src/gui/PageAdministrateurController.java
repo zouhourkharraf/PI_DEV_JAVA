@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SortEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -80,7 +81,8 @@ public class PageAdministrateurController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
    AfficherTable(); //appeler la méthode AfficherTable 
-         
+   BoutonApprouver.setVisible(false);
+   
     }  
 
     void setAdmin_connecte(String pseudo_admin_connecte) {
@@ -146,7 +148,7 @@ public class PageAdministrateurController implements Initializable {
                    Parent root = loader.load(); //Un container
                    ModifierEleveController modifier_eleve_controller=loader.getController();
                    //passer l'utilisateur à la fonction setFormData()
-                   modifier_eleve_controller.setFormData(util_a_modifier,admin_connecte.getText());
+                   modifier_eleve_controller.setFormData(util_a_modifier,admin_connecte.getText(),"DashboardAdmin");
                    admin_connecte.getScene().setRoot(root);            
                     } catch (IOException ex) 
                     { System.out.println(ex.getMessage());}
@@ -190,12 +192,32 @@ public class PageAdministrateurController implements Initializable {
 
     @FXML
     private void ApprouverDemande(ActionEvent event) {
-          System.out.println("approuver demande ");  //à faire
+         
+              Utilisateur utillisateur1=table_util.getSelectionModel().getSelectedItem();//réccupérer l'utilisateur selectionné
+          
+             try{
+                  ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
+                  util_service.supprimer_utilisateur(utillisateur1);           
+                    }catch (SQLException ex) {
+                   System.out.println(ex.getMessage());
+                     }
+              Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Magic Book | Opération administrateur");
+                        alert.setHeaderText("Approuver une demande de suppresssion : ");
+                        alert.setContentText("La suppression a été effectué avec succès !");
+                        alert.show();  
+             
+             
+             this.AfficherTable(); //actualiser l'affichage de la table
+       
+          
     }
 
+    
+    
     @FXML
     private void ActualiserPage(MouseEvent event) {
-          System.out.println("actualizer");  //à faire
+          this.AfficherTable(); //actualiser l'affichage de la table
     }
 
     @FXML
@@ -206,12 +228,28 @@ public class PageAdministrateurController implements Initializable {
             Parent root = loader.load(); ///le container
              BoutonDeconnexion.getScene().setRoot(root);
          
-        } catch (IOException ex) {
+        }catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
         
     }
-    
+
+    @FXML
+    private void afficher_bouton_approuver(MouseEvent event) {
+       if( table_util.getSelectionModel().getSelectedItem().getDemande_suppression().compareTo("oui")==0 ) //si l'utilisateur sélectionné sa demande de suppression égal à oui 
+       {
+       BoutonApprouver.setVisible(true); //on va afficher le bouton pour qu'on puisse approuver la demande ou pas
+       }
+       else
+       {
+       BoutonApprouver.setVisible(false);  //sinon on va cacher le bouton une autre fois
+       }
+           
+    }
+
+ 
+
+   
     
     
 }

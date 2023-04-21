@@ -7,12 +7,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" stylesheets="@AjouterStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PageUtilisateurController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cec12" height="97.0" layoutY="603.0" stroke="#6cec12" strokeType="INSIDE" width="900.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cec12" height="65.0" layoutY="635.0" stroke="#6cec12" strokeType="INSIDE" width="900.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cec12" height="131.0" layoutY="-6.0" stroke="#6cec12" strokeType="INSIDE" width="900.0" />
       <MenuButton fx:id="MenuButton1" layoutX="681.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" style="-fx-background-color: #6cec12;" text="nom utilisateur" textFill="#1f4c53">
         <items>
@@ -23,7 +24,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </MenuButton>
-      <Button fx:id="bouton_incsi_eleve" layoutX="171.0" layoutY="45.0" mnemonicParsing="false" onAction="#CreerCompteEleve" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #6CEC12;" text="Réclamations" textFill="#1f4c53">
+      <Button fx:id="bouton_incsi_eleve" layoutX="171.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #6CEC12;" text="Réclamations" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -33,24 +34,118 @@
             <Image url="@../images/logo_app.png" />
          </image>
       </ImageView>
-      <Button fx:id="bouton_incsi_eleve1" layoutX="319.0" layoutY="45.0" mnemonicParsing="false" onAction="#CreerCompteEleve" prefHeight="54.0" prefWidth="98.0" style="-fx-background-color: #6CEC12;" text="Cours" textFill="#1f4c53">
+      <Button fx:id="bouton_incsi_eleve1" layoutX="319.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="98.0" style="-fx-background-color: #6CEC12;" text="Cours" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_incsi_eleve2" layoutX="417.0" layoutY="45.0" mnemonicParsing="false" onAction="#CreerCompteEleve" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #6CEC12;" text="Formations" textFill="#1f4c53">
+      <Button fx:id="bouton_incsi_eleve2" layoutX="417.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #6CEC12;" text="Formations" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_incsi_eleve3" layoutX="565.0" layoutY="45.0" mnemonicParsing="false" onAction="#CreerCompteEleve" prefHeight="54.0" prefWidth="123.0" style="-fx-background-color: #6CEC12;" text="Activités" textFill="#1f4c53">
+      <Button fx:id="bouton_incsi_eleve3" layoutX="565.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="123.0" style="-fx-background-color: #6CEC12;" text="Activités" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Label fx:id="Label_espace" layoutX="386.0" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #338DB2;" textFill="WHITE">
+      <Label fx:id="Label_espace" layoutX="644.0" layoutY="14.0" prefHeight="35.0" prefWidth="243.0" style="-fx-background-color: #9af15c; -fx-background-radius: 50; -fx-alignment: centrer;" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
          <font>
-            <Font name="System Bold" size="19.0" />
+            <Font name="System Bold Italic" size="19.0" />
+         </font>
+      </Label>
+      <Rectangle fx:id="rectangle_vert" arcHeight="5.0" arcWidth="5.0" fill="#9af15c" height="469.0" layoutX="27.0" layoutY="150.0" stroke="#9af15c" strokeType="INSIDE" width="179.0" />
+      <Rectangle fx:id="rectangle_orange" arcHeight="5.0" arcWidth="5.0" fill="#f7dc6f" height="110.0" layoutX="230.0" layoutY="152.0" stroke="#f7dc6f" strokeType="INSIDE" width="646.0" />
+      <Rectangle fx:id="rectangle_blanc" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="341.0" layoutX="234.0" layoutY="277.0" stroke="WHITE" strokeType="INSIDE" width="639.0" />
+      <ImageView fx:id="image_util" fitHeight="179.0" fitWidth="179.0" layoutX="27.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="label_bonjour" layoutX="245.0" layoutY="152.0" prefHeight="30.0" prefWidth="524.0" text="Bonjour">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="24.0" />
+         </font></Label>
+      <Label fx:id="label_citation" layoutX="244.0" layoutY="177.0" prefHeight="60.0" prefWidth="620.0" wrapText="true">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="22.0" />
+         </font></Label>
+      <Label fx:id="label_info" layoutX="256.0" layoutY="288.0" prefHeight="27.0" prefWidth="243.0" text="Informations personnelles">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="label11" layoutX="265.0" layoutY="329.0" prefHeight="35.0" prefWidth="157.0" text="Nom :" textFill="#20a1d3">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="label22" layoutX="265.0" layoutY="399.0" prefHeight="35.0" prefWidth="157.0" text="Prénom :" textFill="#20a1d3">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="label33" layoutX="265.0" layoutY="469.0" prefHeight="35.0" prefWidth="157.0" text="Age :" textFill="#20a1d3">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="label44" layoutX="265.0" layoutY="539.0" prefHeight="35.0" prefWidth="157.0" text="Genre :" textFill="#20a1d3">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="label55" layoutX="565.0" layoutY="298.0" prefHeight="35.0" prefWidth="157.0" text="Pseudo : " textFill="#20a1d3">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="label66" layoutX="565.0" layoutY="368.0" prefHeight="35.0" prefWidth="157.0" text="Email :" textFill="#20a1d3">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_nom" layoutX="265.0" layoutY="364.0" prefHeight="35.0" prefWidth="200.0" textFill="#322d2d">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_prenom" layoutX="265.0" layoutY="434.0" prefHeight="35.0" prefWidth="200.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_age" layoutX="265.0" layoutY="504.0" prefHeight="35.0" prefWidth="200.0" />
+      <Label fx:id="label_genre" layoutX="265.0" layoutY="574.0" prefHeight="35.0" prefWidth="200.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_pseudo" layoutX="565.0" layoutY="333.0" prefHeight="35.0" prefWidth="234.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="label_email" layoutX="565.0" layoutY="403.0" prefHeight="35.0" prefWidth="243.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="bouton_modifier" layoutX="565.0" layoutY="445.0" mnemonicParsing="false" onAction="#ModifierUtilisateur" prefHeight="39.0" prefWidth="243.0" style="-fx-background-color: #338DB2;" stylesheets="@StyleBouton.css" text="Modifier mes informations" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="bouton_demande_supp" layoutX="565.0" layoutY="540.0" mnemonicParsing="false" onAction="#EnvoyerLaDemande" prefHeight="39.0" prefWidth="243.0" style="-fx-background-color: #338DB2;" stylesheets="@StyleBouton.css" text="envoyer la demande" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label fx:id="label_demande" layoutX="567.0" layoutY="490.0" prefHeight="43.0" prefWidth="243.0" text="Demande de suppression :">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Line fx:id="ligne1" endX="-4.0" endY="303.0" fill="BLACK" layoutX="507.0" layoutY="315.0" startX="-4.0" startY="-38.0" />
+      <Label fx:id="label_auteur_citation" layoutX="243.0" layoutY="231.0" prefHeight="30.0" prefWidth="620.0">
+         <font>
+            <Font name="Book Antiqua Bold Italic" size="24.0" />
          </font>
       </Label>
    </children>

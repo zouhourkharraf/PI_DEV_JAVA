@@ -56,6 +56,20 @@ public class Utilisateur {
         this.role_util = role_util;
     }
 
+    //Constructeur sans id et avec demande de suppression
+      public Utilisateur(int age_util, String nom_util, String prenom_util, String pseudo_util, String mot_de_passe_util, String email_util, String genre_util, String role_util,String demande_suppression) 
+      {
+        this.age_util = age_util;
+        this.nom_util = nom_util;
+        this.prenom_util = prenom_util;
+        this.pseudo_util = pseudo_util;
+        this.mot_de_passe_util = mot_de_passe_util;
+        this.email_util = email_util;
+        this.genre_util = genre_util;
+        this.role_util = role_util;
+        this.demande_suppression=demande_suppression;
+    }      
+
       // Getters
     public int getId() {
         return id;

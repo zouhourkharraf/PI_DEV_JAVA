@@ -39,15 +39,16 @@ public class Test {
     
      //ajout d'un tutilisateur
    /*
-     Utilisateur util=new Utilisateur(14,"hajer","hhhhh","hajerhhhh12","777777","hajer_hajer@gmail.com","F","élève");
+     Utilisateur util;
+        util = new Utilisateur(9,"mmmmmm","maeiem","zz44","777777","hajer_hajer@gmail.com","F","élève","non");
               try {
                      
            util_service.ajouter_utilisateur(util);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        */
-   
+       
+   */
    //modification d'un utilisateur
    /*
    Utilisateur util2=new Utilisateur(7,17,"hajer","malki","hajerhhhh7","123456789","hajer_hajer@gmail.com","F","enseignant");
@@ -120,7 +121,7 @@ public class Test {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-   */    
+   */  
       
    
     }  

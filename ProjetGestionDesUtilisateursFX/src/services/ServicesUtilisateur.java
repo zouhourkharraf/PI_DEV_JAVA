@@ -32,7 +32,8 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
     public void ajouter_utilisateur(Utilisateur u) throws SQLException {
              
      
-        String req = "INSERT INTO utilisateur(nom_util,prenom_util,pseudo_util,mot_de_passe_util,email_util,age_util,genre_util,role_util) VALUES (?,?,?,?,?,?,?,?)";
+        String req;
+         req = "INSERT INTO utilisateur(nom_util,prenom_util,pseudo_util,mot_de_passe_util,email_util,age_util,genre_util,role_util,demande_suppression) VALUES (?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = cnx.prepareStatement(req);
         ps.setString(1, u.getNom_util());
         ps.setString(2, u.getPrenom_util());
@@ -42,6 +43,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
         ps.setInt(6, u.getAge_util());
         ps.setString(7, u.getGenre_util());
         ps.setString(8, u.getRole_util());
+        ps.setString(9, u.getDemande_suppression());
         
         ps.executeUpdate();
         
@@ -49,7 +51,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
     
     @Override
     public void modifier_utilisateur(Utilisateur u) throws SQLException {
-          String req = "update utilisateur set nom_util= ?,prenom_util= ?,pseudo_util= ?,mot_de_passe_util= ?,email_util= ?,age_util= ?,genre_util= ?,role_util=? where id= ?";
+         String req = "update utilisateur set nom_util= ?,prenom_util= ?,pseudo_util= ?,mot_de_passe_util= ?,email_util= ?,age_util= ?,genre_util= ?,role_util= ? ,demande_suppression= ? where id= ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         
         ps.setString(1, u.getNom_util());
@@ -60,7 +62,8 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
         ps.setInt(6, u.getAge_util());
         ps.setString(7, u.getGenre_util());
         ps.setString(8, u.getRole_util());
-         ps.setInt(9, u.getId());
+        ps.setString(9, u.getDemande_suppression());
+         ps.setInt(10, u.getId());
         ps.executeUpdate();
     }
 
@@ -125,7 +128,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          util.setAge_util(rs.getInt("age_util"));
          util.setGenre_util(rs.getString("genre_util"));
          util.setRole_util(rs.getString("role_util"));
-      
+         util.setDemande_suppression(rs.getString("demande_suppression"));
          return util;
          
      }   
@@ -149,6 +152,7 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          util.setGenre_util(rs.getString("genre_util"));
          util.setRole_util(rs.getString("role_util"));
          util.setDemande_suppression(rs.getString("demande_suppression"));
+         
          return util;
      }    
                  

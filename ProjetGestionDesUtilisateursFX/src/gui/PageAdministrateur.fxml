@@ -17,7 +17,7 @@
       <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #FFFFFF;">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="SILVER" height="78.0" layoutX="17.0" layoutY="598.0" stroke="BLACK" strokeType="INSIDE" width="839.0" />
-            <TableView fx:id="table_util" layoutX="19.0" layoutY="168.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="420.0" prefWidth="1777.0" stylesheets="@PageAdministrateur.css">
+            <TableView fx:id="table_util" layoutX="19.0" layoutY="168.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#afficher_bouton_approuver" prefHeight="420.0" prefWidth="1777.0" stylesheets="@PageAdministrateur.css">
                <columns>
                   <TableColumn fx:id="colonne_role" editable="false" prefWidth="159.0" text="Rôle" />
                   <TableColumn fx:id="colonne_id" maxWidth="150.0" minWidth="0.0" prefWidth="68.0" text="ID" />
@@ -67,7 +67,7 @@
                   <Font name="System Bold" size="19.0" />
                </font>
             </Text>
-            <ImageView fx:id="BoutonActualiser" fitHeight="64.0" fitWidth="51.0" layoutX="752.0" layoutY="611.0" onMouseClicked="#ActualiserPage" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="BoutonActualiser" fitHeight="64.0" fitWidth="51.0" layoutX="752.0" layoutY="611.0" onDragDetected="#ActualiserPage" onMouseClicked="#ActualiserPage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/actualiser.png" />
                </image>

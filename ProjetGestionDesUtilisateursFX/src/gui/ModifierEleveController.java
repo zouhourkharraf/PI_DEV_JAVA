@@ -63,11 +63,17 @@ public class ModifierEleveController implements Initializable {
     @FXML
     private Label ErreurNomPrenom;
     @FXML
-    private Label AdminConnecte3;
-    
-Utilisateur utilisateur_a_modifier;
-    @FXML
     private Label titre1;
+    @FXML
+    private Label AdminConnecte3;
+    @FXML
+    private Label label_espace_precedent;
+    
+   Utilisateur utilisateur_a_modifier;
+ 
+   Boolean modification=false;  
+   Utilisateur utilisateur_modifie; //cet attibut va contenir l'utlisateur qu'on modifié ses informations(une modification validé)
+    
     /**
      * Initializes the controller class.
      * @param url
@@ -75,26 +81,51 @@ Utilisateur utilisateur_a_modifier;
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        AdminConnecte3.setVisible(false);
+      AdminConnecte3.setVisible(false);
+      label_espace_precedent.setVisible(false);
         erreur_globale.setText("");
      
         
     }    
 
-    @FXML
-    private void RetourVersDashboard(ActionEvent event) {
-            try{
+     @FXML
+    private void RetourVersPagePrecedente(ActionEvent event) {
+        
+      if(label_espace_precedent.getText().compareTo("DashboardAdmin") == 0 ) //si l'espace précédent est le dashboard admin
+      {
+          //---> on va retourner vers le dashboard admin
+        try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("PageAdministrateur.fxml")); 
              Parent root = loader.load(); //Un container
              PageAdministrateurController page_admin_controller=loader.getController();
              page_admin_controller.setAdmin_connecte(AdminConnecte3.getText());
-             //actualiser l'affichage de la table
-          //   page_admin_controller.AfficherTable();
                    AdminConnecte3.getScene().setRoot(root);
                     }catch (IOException ex) 
                     { System.out.println(ex.getMessage());}
+      } 
+      else //si l'espace précédent est l'espace utilisateur
+      {
+          //---> on va retourner vers l'espace utilisateur
+       try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PageUtilisateur.fxml")); 
+             Parent root = loader.load(); //Un container
+             PageUtilisateurController page_utilisateur_controller=loader.getController();
+             if(modification == false) //càd si on va retourner à l'espace utilisateur sans avoir validé la modification de cet utilisateur
+             { //----> on va retourner le même pseudo(le pseudo de l'utilisateur qui a appeler cette page)         
+             page_utilisateur_controller.setUtilisateurConnecte(AdminConnecte3.getText());
+             }  
+             else  //--> sinon càd si modifcation==true (on a effectué une modification sur l'utilisateur)
+             {
+                 page_utilisateur_controller.setUtilisateurConnecte(utilisateur_modifie.getPseudo_util());
+             }  
+                 
+                   AdminConnecte3.getScene().setRoot(root);
+                    }catch (IOException ex) 
+                    { System.out.println(ex.getMessage());}
+      }   
         
     }
+
 
     @FXML
     private void ModifierEleve(ActionEvent event) {
@@ -206,6 +237,7 @@ Utilisateur utilisateur_a_modifier;
         erreur_globale.setText("Veuillez renseigner tous les champs !!!");
         valid=false;
         } 
+          // *******   Fin des contrôles de saisies
          
            // si le formulaire est validé on va modifier l'élève
           if(valid)
@@ -223,7 +255,13 @@ Utilisateur utilisateur_a_modifier;
               Utilisateur util3=util_service.recuperer_utilisateur_par_email(util2.getEmail_util()); //réccupérer l'utilisateur déja saisi pour qu'on puise générer son pseudo (à partir de id+nom+prénom) (càd on va le modifier on va lui ajouter le pseudo)
                  util2.setPseudo_util(util2.GenererPseudo()); //générer le pseudo de utilisateur2 et modifier la valeur de son pseudo qui est égale à ""
                  util_service.modifier_utilisateur(util2);
-              this.RetourVersDashboard(new ActionEvent()); //retourner à la page d'authentification
+                 modification=true; //indiquer qu'on effectué une modification sur cet utilisateur (cette atrribut on va utilisateur que si la page précédente est l'espace utilisateur )
+               utilisateur_modifie=util_service.recuperer_utilisateur_par_pseudo(util2.getPseudo_util()); //enregister l'utillisateur qu'on a modifié
+                 /*     Parent root = loader.load(); //Un container
+                PageUtilisateurController page_utilisateur_controller=loader.getController();
+                page_utilisateur_controller.setUtilisateurConnecte(AdminConnecte3.getText());  
+              */  
+              this.RetourVersPagePrecedente(new ActionEvent()); //retourner à la page précédente en appelent la méhthode du controleur RetourVersPagePrecedente()
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Magic Book | Modifier Élève");
                         alert.setHeaderText("Notification !");
@@ -248,14 +286,15 @@ Utilisateur utilisateur_a_modifier;
       
     }
     
-    public void setFormData(Utilisateur util,String admin_connecte)
+    public void setFormData(Utilisateur util,String admin_connecte,String nom_espace)
     {
         
     champ_nom.setText(util.getNom_util());
     champ_prenom.setText(util.getPrenom_util());
     champ_age.setText(String.valueOf(util.getAge_util()));
     champ_email.setText(util.getEmail_util());
-    AdminConnecte3.setText(admin_connecte);
+    AdminConnecte3.setText(admin_connecte); //on utilise ce label pour qu'on puisse retourner vers l'espace de l'utilisateur connecté (qu'il soit util ou admin) dés qu'on termine l'opération de modification
+    label_espace_precedent.setText(nom_espace); //enregistrer l'espace précédent à cette page dans le label "label_espace_precedent"
     
       utilisateur_a_modifier=util; 
        if(utilisateur_a_modifier.getRole_util().compareTo("élève")==0)
@@ -268,4 +307,6 @@ Utilisateur utilisateur_a_modifier;
         }
     
     }
+
+   
 }
