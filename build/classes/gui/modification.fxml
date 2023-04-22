@@ -8,27 +8,27 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModificationController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModificationController">
    <children>
       <Accordion layoutX="201.0" layoutY="148.0" />
-      <TextField fx:id="mdnom" layoutX="270.0" layoutY="58.0" promptText="nom" />
-      <TextField fx:id="mdlieu" layoutX="270.0" layoutY="177.0" promptText="lieu" />
-      <TextField fx:id="mddesc" layoutX="270.0" layoutY="217.0" promptText="description" />
-      <DatePicker fx:id="mdd" layoutX="270.0" layoutY="99.0" prefHeight="24.0" prefWidth="149.0" promptText="date début" />
-      <DatePicker fx:id="mdf" layoutX="270.0" layoutY="137.0" prefHeight="24.0" prefWidth="149.0" promptText="date fin" />
+      <TextField fx:id="mdnom" layoutX="270.0" layoutY="58.0" promptText="nom" stylesheets="@ajout.css" />
+      <TextField fx:id="mdlieu" layoutX="270.0" layoutY="177.0" promptText="lieu" stylesheets="@ajout.css" />
+      <TextField fx:id="mddesc" layoutX="270.0" layoutY="217.0" promptText="description" stylesheets="@ajout.css" />
+      <DatePicker fx:id="mdd" layoutX="270.0" layoutY="99.0" prefHeight="38.0" prefWidth="182.0" promptText="date début" stylesheets="@ajout.css" />
+      <DatePicker fx:id="mdf" layoutX="270.0" layoutY="137.0" prefHeight="38.0" prefWidth="182.0" promptText="date fin" stylesheets="@ajout.css" />
       <Text layoutX="172.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="nom" wrappingWidth="36.158203125" />
       <Text layoutX="172.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="dated" />
       <Text layoutX="172.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="datef" wrappingWidth="30.580079555511475" />
       <Text layoutX="172.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="lieu" wrappingWidth="30.580079555511475" />
       <Text layoutX="172.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="desc" wrappingWidth="36.158207058906555" />
       <Text layoutX="172.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="image" />
-      <Button fx:id="modif" layoutX="426.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleModifierE" text="modifier" textFill="#901515">
+      <Button fx:id="modif" layoutX="431.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleModifierE" stylesheets="@affichage.css" text="modifier" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TextField fx:id="mdnote" layoutX="270.0" layoutY="297.0" promptText="note" />
+      <TextField fx:id="mdnote" layoutX="270.0" layoutY="297.0" promptText="note" stylesheets="@ajout.css" />
       <Text layoutX="171.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="note" />
-      <Button fx:id="annuler" layoutX="510.0" layoutY="335.0" mnemonicParsing="false" onAction="#Annuler" text="annuler" textFill="#901515">
+      <Button fx:id="annuler" layoutX="515.0" layoutY="345.0" mnemonicParsing="false" onAction="#Annuler" stylesheets="@affichage.css" text="annuler" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
@@ -37,6 +37,6 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Text>
-      <Button fx:id="imgUpload" layoutX="270.0" layoutY="257.0" mnemonicParsing="false" onAction="#PhotoImportation" prefHeight="25.0" prefWidth="149.0" text="upload image" />
+      <Button fx:id="imgUpload" layoutX="270.0" layoutY="257.0" mnemonicParsing="false" onAction="#PhotoImportation" prefHeight="27.0" prefWidth="185.0" stylesheets="@ajout.css" text="upload image" />
    </children>
 </AnchorPane>

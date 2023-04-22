@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="593.0" prefWidth="1018.0" style="-fx-background-color: pink; -fx-background-image: ;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AffichageController">
+<AnchorPane id="AnchorPane" prefHeight="744.0" prefWidth="1789.0" style="-fx-background-color: pink; -fx-background-image: ;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AffichageController">
    <children>
-      <TableView fx:id="tvevents" layoutX="14.0" layoutY="26.0" onSort="#getEventsList" prefHeight="475.0" prefWidth="994.0" stylesheets="@affichage.css">
+      <TableView fx:id="tvevents" layoutX="112.0" layoutY="32.0" onSort="#getEventsList" prefHeight="475.0" prefWidth="1143.0" stylesheets="@affichage.css">
         <columns>
           <TableColumn fx:id="cid" prefWidth="100.0" text="id" />
           <TableColumn fx:id="cnom" prefWidth="100.0" text="nom_ev" />
@@ -21,11 +21,16 @@
             <TableColumn fx:id="cSupprimer" prefWidth="100.0" text="Supprimer" />
         </columns>
       </TableView>
-      <Button fx:id="refresh" layoutX="756.0" layoutY="516.0" mnemonicParsing="false" onAction="#showRec" prefHeight="30.0" prefWidth="106.0" stylesheets="@affichage.css" text="refresh" textFill="#901515">
+      <Button fx:id="refresh" layoutX="810.0" layoutY="534.0" mnemonicParsing="false" onAction="#showRec" prefHeight="42.0" prefWidth="130.0" stylesheets="@affichage.css" text="refresh" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Button layoutX="874.0" layoutY="516.0" mnemonicParsing="false" onAction="#buttpdf" prefHeight="30.0" prefWidth="106.0" stylesheets="@affichage.css" text="exporter pdf" textFill="#901515">
+      <Button layoutX="961.0" layoutY="534.0" mnemonicParsing="false" onAction="#buttpdf" prefHeight="42.0" prefWidth="130.0" stylesheets="@affichage.css" text="exporter pdf" textFill="#901515">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="refresh1" layoutX="1115.0" layoutY="534.0" mnemonicParsing="false" onAction="#statEv" prefHeight="42.0" prefWidth="130.0" stylesheets="@affichage.css" text="Stat" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

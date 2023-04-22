@@ -32,3 +32,36 @@
     -fx-text-fill: #333333;
     -fx-padding: 5px 8px;
 }
+
+/* Set the font family, size, and color of the text */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Add a drop shadow to the text */
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Add a subtle underline to links */
+a {
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+}
+
+/* Make the first letter of paragraphs larger */
+p:first-letter {
+  font-size: 150%;
+  font-weight: bold;
+  float: left;
+  margin-right: 10px;
+}
+
+/* Add a highlight to selected text */
+::selection {
+  background-color: #f9d5e5;
+  color: #333;
+}
+

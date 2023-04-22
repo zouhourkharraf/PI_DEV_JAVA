@@ -7,27 +7,36 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjoutDonController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjoutDonController">
    <children>
-      <TextField fx:id="tftype" layoutX="238.0" layoutY="155.0" promptText="type don" />
-      <TextField fx:id="tfsomme" layoutX="238.0" layoutY="208.0" promptText="somme don" />
-      <Button layoutX="372.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleAjouter" prefHeight="30.0" prefWidth="87.0" text="ajouter" textFill="#a41e1e">
+      <TextField fx:id="tftype" layoutX="238.0" layoutY="155.0" promptText="type don" stylesheets="@ajout.css" />
+      <TextField fx:id="tfsomme" layoutX="238.0" layoutY="208.0" promptText="somme don" stylesheets="@ajout.css" />
+      <Button layoutX="335.0" layoutY="298.0" mnemonicParsing="false" onAction="#handleAjouter" prefHeight="38.0" prefWidth="117.0" stylesheets="@affichage.css" text="ajouter" textFill="#a41e1e">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <Text layoutX="158.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="event _id" />
-      <Text layoutX="158.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="type " />
-      <Text layoutX="158.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="somme " />
-      <ComboBox fx:id="cbeventid" layoutX="238.0" layoutY="102.0" prefWidth="150.0" promptText="event id" />
-      <Text fill="#9e1414" layoutX="31.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter un don à un évènement :">
+      <Text layoutX="100.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event _id       :">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
-         </font>
-      </Text>
-      <Button layoutX="467.0" layoutY="266.0" mnemonicParsing="false" onAction="#AfficherDon" prefHeight="30.0" prefWidth="110.0" text="afficher Dons" textFill="#a41e1e">
+            <Font size="18.0" />
+         </font></Text>
+      <Text layoutX="101.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type don      :">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <Text layoutX="101.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Somme don  :">
+         <font>
+            <Font size="18.0" />
+         </font></Text>
+      <ComboBox fx:id="cbeventid" layoutX="238.0" layoutY="102.0" prefHeight="27.0" prefWidth="185.0" promptText="event id" stylesheets="@ajout.css" />
+      <Button layoutX="460.0" layoutY="298.0" mnemonicParsing="false" onAction="#AfficherDon" prefHeight="38.0" prefWidth="117.0" stylesheets="@affichage.css" text="afficher Dons" textFill="#a41e1e">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <Text fill="#759ac9" layoutX="119.0" layoutY="49.0" stroke="#17080a" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajouter un don à un évènement : " wrappingWidth="362.158203125">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

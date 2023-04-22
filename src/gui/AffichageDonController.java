@@ -265,4 +265,19 @@ cModifier.setCellFactory(param -> new TableCell<Don, Button>() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @FXML
+    private void stat(ActionEvent event) {
+        
+         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("statDon.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+            // e.printStackTrace();
+        }
+    }
+    
+    
 }

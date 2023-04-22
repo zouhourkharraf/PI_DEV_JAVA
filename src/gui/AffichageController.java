@@ -90,8 +90,9 @@ public class AffichageController implements Initializable {
     private ResultSet result;
     @FXML
     private TableColumn<Evenement, Void> cSupprimer;
-    @FXML
     private TableColumn<Evenement, Button> cModif;
+    @FXML
+    private Button refresh1;
   
 
     /**
@@ -414,6 +415,21 @@ document.close();
     
     }
     }
+
+@FXML
+    private void statEv(ActionEvent event) {
+        
+         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("statEv.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+            // e.printStackTrace();
+        }
+    }
+    
     
 }
 

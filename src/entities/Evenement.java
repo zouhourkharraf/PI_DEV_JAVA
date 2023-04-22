@@ -17,7 +17,8 @@ public class Evenement {
     private String nom_ev,lieu_ev,desc_ev,image_ev;
     LocalDate dated_ev,datef_ev;
     private float note_ev;
-
+    
+    
     public Evenement() {
     }
 
@@ -131,6 +132,10 @@ public class Evenement {
     public void setNote_ev(float note_ev) {
         this.note_ev = note_ev;
     }
+
+    
+    
+    
 
     public Evenement(int id, String nom_ev, String lieu_ev, String desc_ev, String image_ev, float note_ev) {
         this.id = id;
