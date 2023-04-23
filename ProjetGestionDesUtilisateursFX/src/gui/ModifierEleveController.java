@@ -248,7 +248,7 @@ public class ModifierEleveController implements Initializable {
               { genre1="H"; }
               
            int age1=Integer.parseInt(champ_age.getText()); //convertir L'age saisi en int
-     Utilisateur util2=new Utilisateur(utilisateur_a_modifier.getId(),age1,champ_nom.getText(),champ_prenom.getText(),"",utilisateur_a_modifier.getMot_de_passe_util(),champ_email.getText(), genre1,utilisateur_a_modifier.getRole_util());
+     Utilisateur util2=new Utilisateur(utilisateur_a_modifier.getId(),age1,champ_nom.getText(),champ_prenom.getText(),"",utilisateur_a_modifier.getMot_de_passe_util(),champ_email.getText(), genre1,utilisateur_a_modifier.getRole_util(),utilisateur_a_modifier.getDemande_suppression());
               try {
                      
          util_service.modifier_utilisateur(util2);
@@ -257,10 +257,7 @@ public class ModifierEleveController implements Initializable {
                  util_service.modifier_utilisateur(util2);
                  modification=true; //indiquer qu'on effectué une modification sur cet utilisateur (cette atrribut on va utilisateur que si la page précédente est l'espace utilisateur )
                utilisateur_modifie=util_service.recuperer_utilisateur_par_pseudo(util2.getPseudo_util()); //enregister l'utillisateur qu'on a modifié
-                 /*     Parent root = loader.load(); //Un container
-                PageUtilisateurController page_utilisateur_controller=loader.getController();
-                page_utilisateur_controller.setUtilisateurConnecte(AdminConnecte3.getText());  
-              */  
+               
               this.RetourVersPagePrecedente(new ActionEvent()); //retourner à la page précédente en appelent la méhthode du controleur RetourVersPagePrecedente()
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Magic Book | Modifier Élève");

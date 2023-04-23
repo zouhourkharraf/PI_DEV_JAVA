@@ -141,7 +141,9 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          PreparedStatement st = cnx.prepareStatement(req);
          st.setString(1, pseudo2);
          ResultSet rs = st.executeQuery();
-         rs.next();
+         
+         if(rs.next())
+         {
          util.setId(rs.getInt("id"));
          util.setNom_util(rs.getString("nom_util"));
          util.setPrenom_util(rs.getString("prenom_util"));
@@ -152,7 +154,11 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          util.setGenre_util(rs.getString("genre_util"));
          util.setRole_util(rs.getString("role_util"));
          util.setDemande_suppression(rs.getString("demande_suppression"));
-         
+         }
+         else
+         {
+           util=null;
+         }
          return util;
      }    
                  
@@ -180,8 +186,75 @@ public class ServicesUtilisateur implements InterfaceServiceUtilisateur<Utilisat
          
      } 
      
+    // ***************************** Méthodes du métier filtage des données ****************************************** 
      
+   //  cette méthode permet de réccuoérer la liste des utilisateurs qui le role "role"
+       public List<Utilisateur> recuperer_liste_utilisateur_selon_role(String role) throws SQLException {
+          List<Utilisateur> liste_utilisateurs = new ArrayList<>();
+        String req = "select * from utilisateur where role_util='"+role+"'";
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            Utilisateur utilisateur1 = new Utilisateur();
+         utilisateur1.setId(rs.getInt("id"));
+         utilisateur1.setNom_util(rs.getString("nom_util"));
+         utilisateur1.setPrenom_util(rs.getString("prenom_util"));
+         utilisateur1.setPseudo_util(rs.getString("pseudo_util"));
+         utilisateur1.setMot_de_passe_util(rs.getString("mot_de_passe_util"));
+         utilisateur1.setEmail_util(rs.getString("email_util"));
+         utilisateur1.setAge_util(rs.getInt("age_util"));
+         utilisateur1.setGenre_util(rs.getString("genre_util"));
+         utilisateur1.setRole_util(rs.getString("role_util"));
+         utilisateur1.setDemande_suppression(rs.getString("demande_suppression"));
+         
+         liste_utilisateurs.add(utilisateur1);
         
+        }
+        return liste_utilisateurs;
+    }   
+       
+     
+    //  cette méthode permet de réccuoérer les paramètres d'age passés en paramètres
+       public List<Utilisateur> recuperer_liste_utilisateur_selon_age(String age_min,String age_max,String age_min_seulement,String age_max_seulement) throws SQLException {
+          List<Utilisateur> liste_utilisateurs = new ArrayList<>();
+          String req="";
+          if(age_min_seulement.compareTo("") !=0 ) //---> si age_min_seulement n'est pas une chaine vide  donc on doit retouner les utilisateurs ayant comme age minnimale "age_min_seulement"
+          {
+           req = "select * from utilisateur where age_util>="+age_min_seulement;  //définir la requête
+          }
+          if(age_max_seulement.compareTo("") !=0)  //---> si age_max_seulement n'est pas une chaine vide donc on doit retouner les utilisateurs ayant comme age maximale "age_max_seulement"
+          {
+           req = "select * from utilisateur where age_util<="+age_max_seulement;  //définir la requête
+          } 
+          if( (age_min.compareTo("") !=0) && (age_max.compareTo("") !=0) ) //---> si age_min et age_max s ne sont pas vides(sont défini)  retouner les utilisateurs ayant un age entre age_min et age_max
+          {
+          req = "select * from utilisateur where age_util>="+age_min+" AND age_util<="+age_max;  //définir la requête
+          }
+     //   String req = "select * from utilisateur where role_util='"+role+"'";
+        Statement st = cnx.createStatement();
+        ResultSet rs = st.executeQuery(req);
+        while (rs.next()) {
+            Utilisateur utilisateur1 = new Utilisateur();
+         utilisateur1.setId(rs.getInt("id"));
+         utilisateur1.setNom_util(rs.getString("nom_util"));
+         utilisateur1.setPrenom_util(rs.getString("prenom_util"));
+         utilisateur1.setPseudo_util(rs.getString("pseudo_util"));
+         utilisateur1.setMot_de_passe_util(rs.getString("mot_de_passe_util"));
+         utilisateur1.setEmail_util(rs.getString("email_util"));
+         utilisateur1.setAge_util(rs.getInt("age_util"));
+         utilisateur1.setGenre_util(rs.getString("genre_util"));
+         utilisateur1.setRole_util(rs.getString("role_util"));
+         utilisateur1.setDemande_suppression(rs.getString("demande_suppression"));
+         
+         liste_utilisateurs.add(utilisateur1);
+        
+        }
+        return liste_utilisateurs;
+    }       
+     
+     
+     // ***************************** FIN Méthodes du métier filtage des données ****************************************** 
+   
     
     
 }

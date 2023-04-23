@@ -294,8 +294,11 @@ public class PageUtilisateurController implements Initializable {
              
               try {
                Utilisateur utilisateur_connecte = util_service.recuperer_utilisateur_par_pseudo(MenuButton1.getText());  
+               
+                 System.out.println(utilisateur_connecte.toString());
                if(utilisateur_connecte.getDemande_suppression().compareTo("oui")==0 )
                {
+                 
                              Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Magic Book | Opération en attente");
                         alert.setHeaderText("Vous avez déja envoyé une demande");

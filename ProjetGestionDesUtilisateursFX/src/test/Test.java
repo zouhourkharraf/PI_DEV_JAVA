@@ -37,6 +37,36 @@ public class Test {
     
     */
     
+/*
+    //affichage des utilisateurs selon role 
+    
+                try {
+                      List<Utilisateur> liste_utilisateurs=util_service.recuperer_liste_utilisateur_selon_role("administrateur");
+           for (int i = 0; i < liste_utilisateurs.size(); i++) {
+               System.out.println(liste_utilisateurs.get(i).toString());
+           }
+        //    System.out.println(ps.recupererById(3));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    //testé -----------> ça marche
+   */
+    
+ //affichage des utilisateurs selon age
+    /*
+                try {
+                      List<Utilisateur> liste_utilisateurs=util_service.recuperer_liste_utilisateur_selon_age("14","18","","");
+           for (int i = 0; i < liste_utilisateurs.size(); i++) {
+               System.out.println(liste_utilisateurs.get(i).toString());
+           }
+        //    System.out.println(ps.recupererById(3));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    //testé -----------> ça marche pour tous les cas (age_min,age_max,age_min_seulement,age_max_seulement)
+
+    */
+
      //ajout d'un tutilisateur
    /*
      Utilisateur util;

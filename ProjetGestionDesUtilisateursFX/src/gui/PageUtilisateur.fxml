@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,9 +14,15 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" stylesheets="@AjouterStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PageUtilisateurController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cec12" height="65.0" layoutY="635.0" stroke="#6cec12" strokeType="INSIDE" width="900.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cec12" height="131.0" layoutY="-6.0" stroke="#6cec12" strokeType="INSIDE" width="900.0" />
-      <MenuButton fx:id="MenuButton1" layoutX="681.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" style="-fx-background-color: #6cec12;" text="nom utilisateur" textFill="#1f4c53">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cec12" height="65.0" layoutY="635.0" stroke="#6cec12" strokeType="INSIDE" width="900.0">
+         <effect>
+            <Glow />
+         </effect></Rectangle>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#6cec12" height="131.0" layoutY="-6.0" stroke="#6cec12" strokeType="INSIDE" width="900.0">
+         <effect>
+            <Glow />
+         </effect></Rectangle>
+      <MenuButton id="line" fx:id="MenuButton1" layoutX="681.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="nom utilisateur" textFill="#1f4c53">
         <items>
           <MenuItem fx:id="choix_profil" mnemonicParsing="false" onAction="#AfficherProfil" text="Profil" />
           <MenuItem fx:id="choix_deconnexion" mnemonicParsing="false" onAction="#SeDeconnecter" text="Déconnexion" />
@@ -24,7 +31,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </MenuButton>
-      <Button fx:id="bouton_incsi_eleve" layoutX="171.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #6CEC12;" text="Réclamations" textFill="#1f4c53">
+      <Button fx:id="bouton_incsi_eleve" layoutX="171.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: transparent;" text="Réclamations" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -34,17 +41,17 @@
             <Image url="@../images/logo_app.png" />
          </image>
       </ImageView>
-      <Button fx:id="bouton_incsi_eleve1" layoutX="319.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="98.0" style="-fx-background-color: #6CEC12;" text="Cours" textFill="#1f4c53">
+      <Button fx:id="bouton_incsi_eleve1" layoutX="319.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="98.0" style="-fx-background-color: transparent;" text="Cours" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_incsi_eleve2" layoutX="417.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: #6CEC12;" text="Formations" textFill="#1f4c53">
+      <Button fx:id="bouton_incsi_eleve2" layoutX="417.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="148.0" style="-fx-background-color: transparent;" text="Formations" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_incsi_eleve3" layoutX="565.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="123.0" style="-fx-background-color: #6CEC12;" text="Activités" textFill="#1f4c53">
+      <Button id="windows" fx:id="bouton_incsi_eleve3" layoutX="565.0" layoutY="45.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="123.0" style="-fx-background-color: transparent;" text="Activités" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -53,6 +60,9 @@
          <font>
             <Font name="System Bold Italic" size="19.0" />
          </font>
+         <effect>
+            <Glow />
+         </effect>
       </Label>
       <Rectangle fx:id="rectangle_vert" arcHeight="5.0" arcWidth="5.0" fill="#9af15c" height="469.0" layoutX="27.0" layoutY="150.0" stroke="#9af15c" strokeType="INSIDE" width="179.0" />
       <Rectangle fx:id="rectangle_orange" arcHeight="5.0" arcWidth="5.0" fill="#f7dc6f" height="110.0" layoutX="230.0" layoutY="152.0" stroke="#f7dc6f" strokeType="INSIDE" width="646.0" />
@@ -127,12 +137,12 @@
             <Font name="Arial Rounded MT Bold" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="bouton_modifier" layoutX="565.0" layoutY="445.0" mnemonicParsing="false" onAction="#ModifierUtilisateur" prefHeight="39.0" prefWidth="243.0" style="-fx-background-color: #338DB2;" stylesheets="@StyleBouton.css" text="Modifier mes informations" textFill="WHITE">
+      <Button id="line" fx:id="bouton_modifier" layoutX="565.0" layoutY="445.0" mnemonicParsing="false" onAction="#ModifierUtilisateur" prefHeight="39.0" prefWidth="243.0" style="-fx-background-color: #338DB2;" stylesheets="@StyleBouton.css" text="Modifier mes informations" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_demande_supp" layoutX="565.0" layoutY="540.0" mnemonicParsing="false" onAction="#EnvoyerLaDemande" prefHeight="39.0" prefWidth="243.0" style="-fx-background-color: #338DB2;" stylesheets="@StyleBouton.css" text="envoyer la demande" textFill="WHITE">
+      <Button id="line" fx:id="bouton_demande_supp" layoutX="565.0" layoutY="540.0" mnemonicParsing="false" onAction="#EnvoyerLaDemande" prefHeight="39.0" prefWidth="243.0" style="-fx-background-color: #338DB2;" stylesheets="@StyleBouton.css" text="envoyer la demande" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

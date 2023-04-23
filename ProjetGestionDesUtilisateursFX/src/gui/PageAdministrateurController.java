@@ -9,7 +9,6 @@ import entities.Utilisateur;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,13 +20,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.SortEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import services.ServicesUtilisateur;
 
 
@@ -73,7 +75,38 @@ public class PageAdministrateurController implements Initializable {
     private TableColumn<Utilisateur, String> colonne_demande_suppression;
     @FXML
     private Button BoutonDeconnexion;
-
+    @FXML
+    private Hyperlink lien_filter_par;
+    @FXML
+    private Hyperlink critere_role;
+    @FXML
+    private Hyperlink critere_age;
+    @FXML
+    private ChoiceBox<String> ChoiseBoxRole;
+    @FXML
+    private TextField champ_age_min;
+    @FXML
+    private TextField champ_age_max;
+    @FXML
+    private Button BoutonFiltrer;
+    @FXML
+    private Button BoutonAnnuler;
+    @FXML
+    private Text titre_resultat1;
+    @FXML
+    private Label titre_resultat2;
+    @FXML
+    private Label label_resultat_role;
+    @FXML
+    private Label label_resultat_age_min;
+    @FXML
+    private Label label_resultat_age_max;
+    @FXML
+    private Label erreur_filtre;
+    
+    boolean CliqueSurLeLienRole=false; //cette varible globale indique si on a cliqué sur le lien rôle ou pas
+    boolean CliqueSurLeLienAge=false; //cette varible globale indique si on a cliqué sur le lien age ou pas
+    
     /**
      * Initializes the controller class.
      */
@@ -82,6 +115,31 @@ public class PageAdministrateurController implements Initializable {
         
    AfficherTable(); //appeler la méthode AfficherTable 
    BoutonApprouver.setVisible(false);
+  
+   //initialiser les choix du ChoiseBox du filtage par rôle
+   ChoiseBoxRole.getItems().addAll("tous les utilisateurs","administrateur","enseignant","élève");
+   ChoiseBoxRole.getSelectionModel().selectFirst(); //définir le chois par défuat ---> "tous les utilisateurs"
+   
+   // cacher les options et les opération du filtrage des données
+    critere_role.setVisible(false);
+    critere_age.setVisible(false);
+    ChoiseBoxRole.setVisible(false);
+    champ_age_min.setVisible(false);
+    champ_age_max.setVisible(false);
+    BoutonFiltrer.setVisible(false);
+    BoutonAnnuler.setVisible(false);
+    titre_resultat1.setVisible(false);
+   titre_resultat2.setVisible(false);
+    label_resultat_role.setVisible(false);
+  label_resultat_age_min.setVisible(false);
+   label_resultat_age_max.setVisible(false);
+ erreur_filtre.setVisible(false);
+   // FIN cacher les options et les opération du filtrage des données
+   
+   
+   
+   
+   
    
     }  
 
@@ -217,7 +275,8 @@ public class PageAdministrateurController implements Initializable {
     
     @FXML
     private void ActualiserPage(MouseEvent event) {
-          this.AfficherTable(); //actualiser l'affichage de la table
+          //appler la méthode AnnulerFiltre(ActionEvent event) de ce controlleur
+          AnnulerFiltre(new ActionEvent());
     }
 
     @FXML
@@ -245,6 +304,208 @@ public class PageAdministrateurController implements Initializable {
        BoutonApprouver.setVisible(false);  //sinon on va cacher le bouton une autre fois
        }
            
+    }
+
+    @FXML
+    private void CliquerSurLeLienFiltrer(ActionEvent event) {
+        //on va afficher les deux critères du filtre
+        critere_role.setVisible(true);
+        critere_age.setVisible(true);
+        
+        
+    }
+
+    @FXML
+    private void CliquerSurLeLienRole(ActionEvent event) {
+        //on va afficher la liste de choix des roles
+        ChoiseBoxRole.setVisible(true);
+        BoutonFiltrer.setVisible(true);
+        CliqueSurLeLienRole=true;
+       
+    }
+
+    @FXML
+    private void CliquerSurLeLienAge(ActionEvent event) {
+        //on va afficher les champs pour définir agemin et agemax
+        champ_age_min.setVisible(true);
+         champ_age_max.setVisible(true);
+          BoutonFiltrer.setVisible(true);
+          CliqueSurLeLienAge=true;
+       
+    }
+
+    @FXML
+    private void Filtrer(ActionEvent event) {
+        //afficher le bouton Annuler pour qu'on puisse annuler le filtre
+        BoutonAnnuler.setVisible(true);
+        
+        erreur_filtre.setVisible(true);
+        
+        //initialiser les variables qui vont contenir les résultat
+         String role_choisi=""; //cette variable va contenir le role choisi 
+         String age_max_choisi="",age_min_choisi=""; //ces 2 variables vont contenir l'age minimamle et l'age maximale choisis dans le cas ou l'utilisateur a rempli les 2 champs(agemin et agemax)
+         String age_min_seuleument="";
+         String age_max_seuleument="";
+         
+            
+          titre_resultat2.setText("");
+          label_resultat_age_min.setText("");
+          label_resultat_age_min.setVisible(false);
+          label_resultat_age_max.setText("");
+          label_resultat_age_max.setVisible(false);
+         erreur_filtre.setText(""); 
+          
+        //traiter le critère role ( affichage des résultat dans la zone des résultat + réccupération du choix dans la variable "role_choisi" )
+      if(CliqueSurLeLienRole)
+      {
+      titre_resultat1.setVisible(true);
+      label_resultat_role.setVisible(true);
+      role_choisi=ChoiseBoxRole.getValue();
+      label_resultat_role.setText(role_choisi);
+      }
+   
+       //traiter le critère age ( affichage des résultat dans la zone des résultat  + réccupération des choix )
+      if(CliqueSurLeLienAge)
+      {
+        
+       // ***********************  Afficher l'age minimale et l'age maximale choisi selon les champs que l'utilisateur a rempli 
+       if( (!champ_age_min.getText().isEmpty()) && (!champ_age_max.getText().isEmpty()) ) //si l'utilisateur a défini age_min et age_max
+       {
+          if(Integer.parseInt(champ_age_min.getText()) < 5 )
+             { erreur_filtre.setText("l'age minimale est 5 ans"); }
+            else
+             {
+               if(Integer.parseInt(champ_age_max.getText()) < 5 )
+             { erreur_filtre.setText("l'age minimale est 5 ans"); }
+              else
+               {
+                   if(Integer.parseInt(champ_age_max.getText()) < Integer.parseInt(champ_age_min.getText()) )
+             { erreur_filtre.setText("Bornes invalides"); }
+                   else
+                   {
+                       erreur_filtre.setText("");
+         titre_resultat2.setVisible(true); //afficher titre_resultat2 
+         titre_resultat2.setText("Entre           et            ans"); //afficher la valeur adéquate
+         
+            //afficher les label de agemin et agemax
+         label_resultat_age_min.setVisible(true);
+         label_resultat_age_min.setLayoutX(571);
+         label_resultat_age_max.setVisible(true);
+           //afficher l'age min et l'age max choisi   
+         label_resultat_age_min.setText( champ_age_min.getText() );                        
+         label_resultat_age_max.setText( champ_age_max.getText() ); 
+         //enregistrer l'age minimale et l'age maximales choisies
+         age_min_choisi=champ_age_min.getText();
+         age_max_choisi=champ_age_max.getText();
+                   }
+               }
+             }
+       }
+       else
+       {
+          
+           //vider le titre du résultat et les labels de résultat  
+         titre_resultat2.setText("");
+         label_resultat_age_min.setText("");  
+         titre_resultat2.setVisible(true);
+         
+         
+         label_resultat_age_max.setText("");  
+         label_resultat_age_max.setVisible(false); //parceque dans les deux opération suivantes on va utiliser qu'un seul label le label "label_resultat_age_min"
+         
+         if(  (!(champ_age_min.getText().isEmpty()) ) && (champ_age_max.getText().isEmpty()) ) // ****** si l'utilisateur a défini age_min seulement
+         {
+            if(Integer.parseInt(champ_age_min.getText()) < 5 )
+             { erreur_filtre.setText("l'age minimale est 5 ans"); }
+            else
+             {
+              erreur_filtre.setText(""); 
+              label_resultat_age_min.setVisible(true);
+             titre_resultat2.setText("Plus que             ans");
+             label_resultat_age_min.setLayoutX(610); //décaler le label pour qu'il soit adapté au nouveau titre
+             label_resultat_age_min.setText(champ_age_min.getText());
+             age_min_seuleument=champ_age_min.getText();
+             }    
+         }
+         else
+         {   
+         if( (!champ_age_max.getText().isEmpty()) && (champ_age_min.getText().isEmpty()) ) // ******* si l'utilisateur a défini age_max seulement
+         {
+                if(Integer.parseInt(champ_age_max.getText()) < 5 )
+                { erreur_filtre.setText("l'age minimale est 5 ans"); }
+                else
+                {
+                 erreur_filtre.setText("");
+                 label_resultat_age_min.setVisible(true);
+                 titre_resultat2.setText("Moins de           ans");
+                 label_resultat_age_min.setLayoutX(610); //décaler le label pour qu'il soit adapté au nouveau titre
+                 label_resultat_age_min.setText(champ_age_max.getText());
+                 age_max_seuleument=champ_age_max.getText();
+                }
+         }
+         
+          //si l'utilisateur a cliqué sur le lien age mais n'a rempli aucun champ
+         else
+          {
+             //réinitialiser les valuers et les posistion des labels et du titre(pour le résultat age) et les cacher
+           titre_resultat2.setText("");
+           titre_resultat2.setVisible(false);
+           
+           label_resultat_age_min.setText("");
+           label_resultat_age_max.setText("");
+           
+           label_resultat_age_min.setVisible(false);
+           label_resultat_age_max.setVisible(false);
+           label_resultat_age_min.setLayoutX(571);
+          
+            //réinitialiser les valeurs des variables qui enregisrent les choix
+           age_min_choisi="";
+           age_max_choisi="";
+           age_min_seuleument="";
+           age_max_seuleument="";
+          }    
+         }
+          // ***********************  FIN Afficher l'age minimale et l'age maximale choisi selon les champs que l'utilisateur a rempli  
+          
+       }
+    //afficher le résultat dans la table
+       
+       
+       
+    
+       
+      }
+       
+ 
+      
+      
+       
+       
+       
+       
+      
+    }
+
+    @FXML //cette méthode permet d'annuler tous les filtres appliqués et d'afficher la table sans filtre
+    private void AnnulerFiltre(ActionEvent event) {
+       // cacher les options et les opération du filtrage des données
+    critere_role.setVisible(false);
+    critere_age.setVisible(false);
+    ChoiseBoxRole.setVisible(false);
+    champ_age_min.setVisible(false);
+    champ_age_max.setVisible(false);
+    BoutonFiltrer.setVisible(false);
+    BoutonAnnuler.setVisible(false);
+    titre_resultat1.setVisible(false);
+   titre_resultat2.setVisible(false);
+    label_resultat_role.setVisible(false);
+  label_resultat_age_min.setVisible(false);
+   label_resultat_age_max.setVisible(false);
+  erreur_filtre.setVisible(false);
+  // FIN cacher les options et les opération du filtrage des données    
+   
+   // afficher tous les utilisateurs 
+      AfficherTable(); //appeler la méthode AfficherTable     
     }
 
  
