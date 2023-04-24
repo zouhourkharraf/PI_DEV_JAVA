@@ -26,6 +26,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,11 +58,24 @@ public class ShowAllController implements Initializable {
     private EvenementService eventService = new EvenementService();
     @FXML
     private TextField tfRecherche;
+    private ActionEvent event;
+    @FXML
+    private Pagination pagination;
+    //private int itemsPerPage = 4; // Change this number to adjust the number of items per page
+    //Evenement evenement;
+    private int itemsPerPage = 5;
+private List<Evenement> allEvents;
+private int pageCount;
+
     
 //    List<Participant> listParticipant;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        recherche(event);
+        recherche2(event);
+        
         try {
             listEvent = new ArrayList<>(eventService.recuperer());
             System.out.println(listEvent);
@@ -80,10 +94,16 @@ public class ShowAllController implements Initializable {
             }
         } catch (Exception e) {
         }
-  
-       
-            }
+        
+        
+        //***********pagination********************
+        
+        
+        
+    }
     
+    
+   
     
     //***************recherche******************
     
@@ -154,7 +174,6 @@ public class ShowAllController implements Initializable {
      }
 }
       
-    @FXML
 private void recherche(ActionEvent event) {
     // Ajouter un listener sur le champ de recherche pour effectuer la recherche à chaque modification du texte
     tfRecherche.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -168,7 +187,7 @@ private void recherche(ActionEvent event) {
 
         // Vider le FlowPane actuel pour afficher les evenements filtrés
         mainVBox.getChildren().clear();
-        for (Evenement evenement : eventrecherche) {
+       for (Evenement evenement : eventrecherche) {
             Node articleNode = null;
             try {
                 articleNode = createEventNode(evenement);
@@ -179,9 +198,41 @@ private void recherche(ActionEvent event) {
                 mainVBox.getChildren().add(articleNode); // ajouter le nouveau noeud dans le FlowPane
             }
         }
+       
         mainVBox.layout();
     });
 }
+
+private void recherche2(ActionEvent event) {
+    // Ajouter un listener sur le champ de recherche pour effectuer la recherche à chaque modification du texte
+    tfRecherche.textProperty().addListener((observable, oldValue, newValue) -> {
+        EvenementService sp = new EvenementService();  
+        // Filtrer les réclamations en utilisant le nouveau texte de recherche
+        List<Evenement> eventrecherche = sp.recuperer().stream()
+            .filter(evenement ->
+                evenement.getLieu_ev().toLowerCase().contains(newValue.toLowerCase())
+            )
+            .collect(Collectors.toList());
+
+        // Vider le FlowPane actuel pour afficher les evenements filtrés
+        mainVBox.getChildren().clear();
+       for (Evenement evenement : eventrecherche) {
+            Node articleNode = null;
+            try {
+                articleNode = createEventNode(evenement);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ShowAllController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (articleNode != null) {
+                mainVBox.getChildren().add(articleNode); // ajouter le nouveau noeud dans le FlowPane
+            }
+        }
+       
+        mainVBox.layout();
+    });
+}
+
+    
 
     
 }

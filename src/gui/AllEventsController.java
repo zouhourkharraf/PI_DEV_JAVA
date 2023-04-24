@@ -43,7 +43,7 @@ public class AllEventsController implements Initializable {
             for(Evenement event:listEvent ){
                 System.out.println(event);
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("card.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("Card.fxml"));
                    try {
                     VBox vBox = fxmlLoader.load();
                     CardController listoffreContoller = fxmlLoader.getController();

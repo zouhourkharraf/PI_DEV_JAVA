@@ -6,6 +6,10 @@
 package entities;
 
 import java.time.LocalDate;
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapView;
+
+
 
 /**
  *
@@ -17,6 +21,17 @@ public class Evenement {
     private String nom_ev,lieu_ev,desc_ev,image_ev;
     LocalDate dated_ev,datef_ev;
     private float note_ev;
+    private MapView mapView;
+    
+    public Evenement(String lieu_ev) {
+        this.lieu_ev = lieu_ev;
+        this.mapView = new MapView();
+      //  this.mapView = new GoogleMapView();
+
+
+        mapView.setPrefSize(600, 400);
+        mapView.setAddress(lieu_ev);
+    }
     
     
     public Evenement() {
@@ -61,6 +76,12 @@ public class Evenement {
         this.image_ev = image_ev;        
         this.note_ev = note_ev;
     }
+
+    public Evenement(float note_ev) {
+        this.note_ev = note_ev;
+    }
+    
+    
 
     public Evenement(int aInt, String string, String toString, String toString0) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -154,6 +175,10 @@ public class Evenement {
     }
 
     public Object getDate(String dated_ev) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Object getMapView() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

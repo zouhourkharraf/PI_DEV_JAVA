@@ -400,7 +400,7 @@ document.close();
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText("Impression réussie");
-        alert.setContentText("La liste des sponsors a été imprimée avec succès.");
+        alert.setContentText("La liste des évènements a été imprimée avec succès.");
         alert.showAndWait();
     }
     catch (Exception e) {
@@ -408,7 +408,7 @@ document.close();
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Erreur");
         alert.setHeaderText("Erreur lors de l'impression");
-        alert.setContentText("Une erreur s'est produite lors de l'impression de la liste des sponsors.");
+        alert.setContentText("Une erreur s'est produite lors de l'impression de la liste des évènements.");
         alert.showAndWait();
   
  

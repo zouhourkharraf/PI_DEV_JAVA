@@ -16,7 +16,6 @@ import java.text.ParseException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -55,8 +55,9 @@ public class AffichageDonController implements Initializable {
     private Button drefresh;
     @FXML
     private TableColumn<Don, Void> cSupprimer2;
-    @FXML
     private TableColumn<Don, Button> cModifier;
+    @FXML
+    private Pagination pagination;
   
 
     /**
@@ -64,6 +65,8 @@ public class AffichageDonController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+      
         // 
         cSupprimer2.setCellFactory(col -> new TableCell<Don, Void>() {
     private final Button deleteButton = new Button("Supprimer");
@@ -119,6 +122,30 @@ cModifier.setCellFactory(param -> new TableCell<Don, Button>() {
     }
 });
 
+           
+     /*   try {
+            pagination.setPageCount((int) Math.ceil((double) getDonsList().size() / itemsPerPage));
+        } catch (ParseException ex) {
+            Logger.getLogger(AffichageDonController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    pagination.setPageFactory(pageIndex -> {
+        int fromIndex = pageIndex * itemsPerPage;
+      int toIndex = 0;
+            try {
+                toIndex = Math.min(fromIndex + itemsPerPage, getDonsList().size());
+            } catch (ParseException ex) {
+                Logger.getLogger(AffichageDonController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                tvdons.setItems(FXCollections.observableArrayList(getDonsList().subList(fromIndex, toIndex)));
+            } catch (ParseException ex) {
+                Logger.getLogger(AffichageDonController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return tvdons;
+    });*/
+    
+    
+
 
        
     } 
@@ -128,6 +155,7 @@ cModifier.setCellFactory(param -> new TableCell<Don, Button>() {
      @FXML
   public  ObservableList<Don> getDonsList() throws ParseException {
         Connection cnx = MyDB.getInstance().getCnx();
+
         
         ObservableList<Don> DonList = FXCollections.observableArrayList();
         try {
@@ -139,15 +167,16 @@ cModifier.setCellFactory(param -> new TableCell<Don, Button>() {
             while(rs.next()){
                don = new Don(rs.getInt("id"),rs.getInt("evenement_id"), rs.getString("type_don"),rs.getInt("somme_don"));
                 DonList.add(don);
+                
             }
                 System.out.println(DonList);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
-        return DonList;
-   
-    }
+        
+         
+             return DonList;
+            }
   
 //************************************
      

@@ -10,21 +10,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.Rating?>
 
 <VBox fx:id="VboxId" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="306.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.CardController">
    <children>
       <AnchorPane prefHeight="296.0" prefWidth="511.0" stylesheets="@../../../utils/MainStyle.css">
          <children>
-            <AnchorPane layoutX="19.0" layoutY="22.0" prefHeight="275.0" prefWidth="474.0" style="-fx-background-color: white;" styleClass="window-rounded" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="22.0">
+            <AnchorPane layoutX="19.0" layoutY="22.0" prefHeight="257.0" prefWidth="469.0" style="-fx-background-color: white;" styleClass="window-rounded" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="22.0">
                <effect>
                   <DropShadow blurType="GAUSSIAN" color="#00000033" height="50.0" radius="24.5" width="50.0" />
                </effect>
                <children>
-                  <HBox prefHeight="147.0" prefWidth="503.0" AnchorPane.bottomAnchor="99.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-52.0" AnchorPane.topAnchor="0.0">
+                  <HBox prefHeight="218.0" prefWidth="526.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-52.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ImageView fx:id="imageIV" fitHeight="145.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="imageIV" fitHeight="157.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../uploads/e9f2f78c-f31b-40eb-b7ba-b91b7718a642.png" />
                                  </image>
@@ -36,26 +37,36 @@
                         </VBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <VBox prefHeight="236.0" prefWidth="263.0" spacing="10.0">
+                              <VBox prefHeight="199.0" prefWidth="147.0" spacing="10.0">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="10.0" top="30.0" />
                                  </HBox.margin>
                                  <children>
                                     <Text fx:id="titreText" text="Titre" wrappingWidth="190">
                                        <font>
-                                          <Font name="System Bold" size="15.0" />
+                                          <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Text>
                                     <Text fx:id="descriptionText" text="Description" wrappingWidth="190">
                                        <font>
-                                          <Font name="System Bold" size="15.0" />
+                                          <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Text>
-                                    <Button fx:id="participerBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="113.0" styleClass="light-button" stylesheets="@affichage.css" text="Participer">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="30.0" right="40.0" top="50.0" />
-                                       </VBox.margin>
-                                    </Button>
+                                    <Text fx:id="descriptionText1" text="Description" wrappingWidth="190">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="descriptionText2" text="Description" wrappingWidth="190">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="descriptionText3" text="Description" wrappingWidth="190">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" />
@@ -65,7 +76,12 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <Button fx:id="bloc" layoutX="348.0" layoutY="184.0" mnemonicParsing="false" text="location" />
+                  <Button fx:id="participerBtn" layoutX="331.0" layoutY="199.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="45.0" prefWidth="124.0" styleClass="light-button" stylesheets="@affichage.css" text="Participer">
+                     <font>
+                        <Font name="Arial Black" size="14.0" />
+                     </font>
+                  </Button>
+                  <Rating fx:id="rating" layoutX="58.0" layoutY="199.0" prefHeight="33.0" prefWidth="176.0" />
                </children>
             </AnchorPane>
          </children>
