@@ -134,6 +134,8 @@ public class AffichageController implements Initializable {
     }
 });
         
+        //*********modif***************
+        
         cModif = new TableColumn<>("Modifier");
      cModif.setPrefWidth(100);
 //cModifier.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
