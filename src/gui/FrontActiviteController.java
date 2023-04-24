@@ -20,6 +20,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +53,9 @@ import java.sql.ResultSet;
 
 import javafx.util.Callback;
 import javafx.scene.control.TableCell;
+import javax.swing.JOptionPane;
+
+import util.MyDB;
 
 
 
@@ -121,7 +129,9 @@ public class FrontActiviteController implements Initializable {
                 setGraphic(button);
                 button.setOnAction(event -> {
                     Activite activite = getTableView().getItems().get(getIndex());
-                    activiteService.participerActivite(activite);
+                    //activiteService.participerActivite(activite);
+                    participerActivite(activite);
+                    //tableviewFront.refresh();
                 });
             }
         }
@@ -151,13 +161,137 @@ public class FrontActiviteController implements Initializable {
     } catch(SQLException ex) {
         System.out.println(ex);
     }
+    }
+    
+    
+    
+    public void participerActivite(Activite activite) {
+    try {
+        Connection cnx = MyDB.getInstance().getCnx();
+        int utilisateur_id = 11;
+        String query = "SELECT COUNT(*) FROM utilisateur_activite WHERE utilisateur_id=? AND activite_id=?";
+        PreparedStatement pst = cnx.prepareStatement(query);
+        pst.setInt(1, utilisateur_id);
+        pst.setInt(2, activite.getId());
+        ResultSet rs = pst.executeQuery();
+        if (rs.next() && rs.getInt(1) > 0) {
+            JOptionPane.showMessageDialog(null, "Erreur!!  Vous avez déjà participé à cette activité !", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+        } else {
+            query = "SELECT nbparticipants FROM activite WHERE id=?";
+            pst = cnx.prepareStatement(query);
+            pst.setInt(1, activite.getId());
+            rs = pst.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                query = "INSERT INTO utilisateur_activite (utilisateur_id, activite_id) VALUES (?, ?)";
+                pst = cnx.prepareStatement(query);
+                pst.setInt(1, utilisateur_id);
+                pst.setInt(2, activite.getId());
+                pst.executeUpdate();
+                query = "UPDATE activite SET nbparticipants = nbparticipants - 1 WHERE id = ?";
+                pst = cnx.prepareStatement(query);
+                pst.setInt(1, activite.getId());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Succés! Vous avez participé à l'activité " + activite.getNomAct() + " !", "Message de confirmation", JOptionPane.INFORMATION_MESSAGE);
+                chargerDonnees();
+                tableviewFront.refresh();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erreur!! Le nombre de participants maximum a été atteint pour cette activité !", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println(ex);
+    }
 }
 
-}
+    
+    
+//     public void participerActivite(Activite activite) {
+//    try {
+//        Connection cnx;
+//        cnx = MyDB.getInstance().getCnx();
+//        int utilisateur_id = 10;
+//        String query = "SELECT COUNT(*) FROM utilisateur_activite WHERE utilisateur_id=? AND activite_id=?";
+//        PreparedStatement pst = cnx.prepareStatement(query);
+//        pst.setInt(1, utilisateur_id);
+//        pst.setInt(2, activite.getId());
+//        ResultSet rs = pst.executeQuery();
+//        if (rs.next() && rs.getInt(1) > 0) {
+//            //System.out.println("Vous avez déjà participé à cette activité !");
+//            JOptionPane.showMessageDialog(null, "Erreur!!  Vous avez déjà participé à cette activité !", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
+//        } else {
+//            query = "INSERT INTO utilisateur_activite (utilisateur_id, activite_id) VALUES (?, ?)";
+//            pst = cnx.prepareStatement(query);
+//            pst.setInt(1, utilisateur_id);
+//            pst.setInt(2, activite.getId());
+//            pst.executeUpdate();
+//            
+//
+//               query = "UPDATE activite SET nbparticipants = nbparticipants - 1 WHERE id = ?";
+//            pst = cnx.prepareStatement(query);
+//            pst.setInt(1, activite.getId());
+//            pst.executeUpdate();
+//            
+//            
+//            JOptionPane.showMessageDialog(null, "Succés! Vous avez  participé à l'activité " + activite.getNomAct() + " !", "Message de confirmation", JOptionPane.INFORMATION_MESSAGE);
+//            chargerDonnees();
+//            tableviewFront.refresh();
+//        }
+//    } catch (SQLException ex) {
+//        System.out.println(ex);
+//    }
+//   }
+     
+     @FXML
+     public void chargerDonnees(){
+         try{
+             Connection cnx = MyDB.getInstance().getCnx();
+              String query = "SELECT a.*, t.nomtype, t.descriptiontype \n" +
+              "FROM activite a \n" +
+              "LEFT JOIN type t ON a.typeid = t.id";
+              PreparedStatement pst = cnx.prepareStatement(query);
+              ResultSet rs = pst.executeQuery();
 
+             ObservableList<Activite> activites = FXCollections.observableArrayList();
+             while(rs.next()) {
+//                Activite a = new Activite();
+//                a.setId(rs.getInt("id"));
+//                a.setNomAct(rs.getString("nomact"));
+//                a.setPositionAct(rs.getString("positionact"));
+//                a.setDateAct(rs.getDate("dateact"));
+//                a.setNbParticipants(rs.getInt("nbparticipants"));
+//                a.setType(rs.getInt("typeid"));
+//                a.setNomType(rs.getString("nomtype"));
+//                a.setDescriptionType(rs.getString("descriptiontype"));
+//                activites.add(a);
+                  int id = rs.getInt("id");
+                  String nomact = rs.getString("nomact");
+                  String positionact = rs.getString("positionact");
+                  Date dateact = rs.getDate("dateact");
+                  int nbparticipants = rs.getInt("nbparticipants");
+                  int typeid = rs.getInt("typeid");
+                  String nomtype = rs.getString("nomtype");
+                  String descriptiontype = rs.getString("descriptiontype");
+                  activites.add(new Activite(id,nomact,positionact,dateact,nbparticipants,typeid,nomtype,descriptiontype));
+            }
+             
+             tableviewFront.setItems(activites);
         
-    
-    
+        nomFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomAct()));
+        nbFront.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNbParticipants()).asObject());
+        positionFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPositionAct()));
+        dateFront.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDateAct()));
+        typeFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomType()));
+        descriptionFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescriptionType()));
+             
+
+         }catch(SQLException ex){
+             System.out.println(ex);
+         }
+     }
+
+}
+
+ 
         
     
 

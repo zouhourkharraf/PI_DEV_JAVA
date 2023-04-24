@@ -68,6 +68,15 @@ public class Activite {
         this.dateact=dateact;
     }
     
+    public Activite( int id, String nomact,String positionact,Date dateact,int nbparticipants,int  typeid, String nomtype,String descriptiontype){
+        this.id=id;
+        this.nomact=nomact;
+        this.dateact=dateact;
+        this.nbparticipants=nbparticipants;
+        this.nomType=nomtype;
+        this.descriptionType=descriptiontype;
+    }
+    
      public int getId() {
         return id;
     }

@@ -23,6 +23,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
+
+import javafx.scene.control.TableView;
 /**
  *
  * @author farah
@@ -226,8 +228,8 @@ public class ActiviteService implements IService<Activite> {
     List<Activite> activites = new ArrayList<>();
     //String req = "SELECT a.*, t.nomtype, t.descriptiontype FROM activite a JOIN type t ON a.typeid = t.id";
     String req = "SELECT a.*, t.nomtype, t.descriptiontype \n" +
-"FROM activite a \n" +
-"LEFT JOIN type t ON a.typeid = t.id";
+    "FROM activite a \n" +
+    "LEFT JOIN type t ON a.typeid = t.id";
     Statement st = cnx.createStatement();
     ResultSet rs = st.executeQuery(req);
     while(rs.next()) {
@@ -245,61 +247,46 @@ public class ActiviteService implements IService<Activite> {
     return activites;
     }  
      
-//    public void participerActivite(Activite activite) {
+
+
+     
+//     public void participerActivite(Activite activite) {
 //    try {
-//        //Connection cnx = MyDB.getInstance().getConnection();
-//        // Vérifier si l'utilisateur a déjà participé à l'activité
-//        int idUtilisateur = 2;
-//        String query = "SELECT COUNT(*) FROM utilisateur_activite WHERE id_utilisateur=? AND id_activite=?";
+//        int utilisateur_id = 5;
+//        String query = "SELECT COUNT(*) FROM utilisateur_activite WHERE utilisateur_id=? AND activite_id=?";
 //        PreparedStatement pst = cnx.prepareStatement(query);
-//        pst.setInt(1, idUtilisateur); // Remplacer idUtilisateur par l'ID de l'utilisateur connecté
-//        //pst.setInt(1, 2); // Remplacer idUtilisateur par l'ID de l'utilisateur connecté
+//        pst.setInt(1, utilisateur_id);
 //        pst.setInt(2, activite.getId());
 //        ResultSet rs = pst.executeQuery();
 //        if (rs.next() && rs.getInt(1) > 0) {
-//            // L'utilisateur a déjà participé à l'activité, afficher un message d'erreur ou faire une autre action
-//            System.out.println("Vous avez déjà participé à cette activité !");
+//            //System.out.println("Vous avez déjà participé à cette activité !");
+//            JOptionPane.showMessageDialog(null, "Erreur!!  Vous avez déjà participé à cette activité !", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
 //        } else {
-//            // L'utilisateur n'a pas encore participé à l'activité, ajouter une ligne dans la table utilisateur_activite
-//            query = "INSERT INTO utilisateur_activite (id_utilisateur, id_activite) VALUES (?, ?)";
+//            query = "INSERT INTO utilisateur_activite (utilisateur_id, activite_id) VALUES (?, ?)";
 //            pst = cnx.prepareStatement(query);
-//            pst.setInt(1, idUtilisateur); // Remplacer idUtilisateur par l'ID de l'utilisateur connecté
-//           // pst.setInt(1, 2); // Remplacer idUtilisateur par l'ID de l'utilisateur connecté
+//            pst.setInt(1, utilisateur_id);
 //            pst.setInt(2, activite.getId());
 //            pst.executeUpdate();
-//            // Afficher un message de confirmation ou faire une autre action
-//            System.out.println("Vous avez participé à l'activité " + activite.getNomAct() + " !");
+//            //System.out.println("Vous avez participé à l'activité " + activite.getNomAct() + " !");
+//            
+////            query = "UPDATE activite SET nbparticipants=? WHERE id=?";
+////            pst = cnx.prepareStatement(query);
+////            //pst.setInt(1, nbparticipants - 1);
+////            pst.setInt(1, activite.getNbParticipants() - 1);
+////            pst.setInt(2, activite.getId());
+////            pst.executeUpdate();
+//
+//               query = "UPDATE activite SET nbparticipants = nbparticipants - 1 WHERE id = ?";
+//            pst = cnx.prepareStatement(query);
+//            pst.setInt(1, activite.getId());
+//            pst.executeUpdate();
+//            
+//            JOptionPane.showMessageDialog(null, "Succés! Vous avez  participé à l'activité " + activite.getNomAct() + " !", "Message de confirmation", JOptionPane.INFORMATION_MESSAGE);
 //        }
 //    } catch (SQLException ex) {
 //        System.out.println(ex);
 //    }
 //}
-
-     
-     public void participerActivite(Activite activite) {
-    try {
-        int utilisateur_id = 2;
-        String query = "SELECT COUNT(*) FROM utilisateur_activite WHERE utilisateur_id=? AND activite_id=?";
-        PreparedStatement pst = cnx.prepareStatement(query);
-        pst.setInt(1, utilisateur_id);
-        pst.setInt(2, activite.getId());
-        ResultSet rs = pst.executeQuery();
-        if (rs.next() && rs.getInt(1) > 0) {
-            //System.out.println("Vous avez déjà participé à cette activité !");
-            JOptionPane.showMessageDialog(null, "Erreur!!  Vous avez déjà participé à cette activité !", "Message d'erreur", JOptionPane.ERROR_MESSAGE);
-        } else {
-            query = "INSERT INTO utilisateur_activite (utilisateur_id, activite_id) VALUES (?, ?)";
-            pst = cnx.prepareStatement(query);
-            pst.setInt(1, utilisateur_id);
-            pst.setInt(2, activite.getId());
-            pst.executeUpdate();
-            //System.out.println("Vous avez participé à l'activité " + activite.getNomAct() + " !");
-            JOptionPane.showMessageDialog(null, "Succés! Vous avez  participé à l'activité " + activite.getNomAct() + " !", "Message de confirmation", JOptionPane.INFORMATION_MESSAGE);
-        }
-    } catch (SQLException ex) {
-        System.out.println(ex);
-    }
-}
 
 
 }
