@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
 
-<AnchorPane id="AnchorPane" fx:id="titlePane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherTypeController">
+<AnchorPane id="AnchorPane" fx:id="titlePane" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: LightSalmon;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherTypeController">
    <children>
       <TableView fx:id="tableview" editable="true" layoutX="339.0" layoutY="41.0" onMouseClicked="#handleRowSelection" prefHeight="726.0" prefWidth="456.0">
         <columns>

@@ -53,6 +53,9 @@ public class ActiviteService implements IService<Activite> {
     //cnx.close();
     }
     
+    
+    
+    
     @Override
     public void modifier(Activite a) throws SQLException {
     // Vérifier si l'ID existe
@@ -70,13 +73,17 @@ public class ActiviteService implements IService<Activite> {
     }
     
     // Mettre à jour l'activité
-    String req_update = "UPDATE activite SET nomact = ?, positionact = ?, dateact = ?, nbparticipants = ? WHERE id = ?";
+    String req_update = "UPDATE activite SET nomact = ?, positionact = ?, dateact = ?, nbparticipants = ?, typeid = ? WHERE id = ?";
     PreparedStatement st_update = cnx.prepareStatement(req_update);
     st_update.setString(1, a.getNomAct());
     st_update.setString(2, a.getPositionAct());
     st_update.setDate(3, new java.sql.Date(a.getDateAct().getTime()));
     st_update.setInt(4, a.getNbParticipants());
-    st_update.setInt(5, a.getId());
+    st_update.setInt(5, a.getType());
+    st_update.setInt(6, a.getId());
+    if (!validateInput(a.getNomAct(),a.getPositionAct(),a.getNbParticipants(),a.getDateAct(),a.getType())) {
+        return;
+    }
     st_update.executeUpdate();
 }
     
@@ -89,7 +96,7 @@ public class ActiviteService implements IService<Activite> {
 //    st.setString(2, a.getPositionAct());
 //    st.setDate(3, new java.sql.Date(a.getDateAct().getTime()));
 //    st.setInt(4, a.getNbParticipants());
-//    //st.setInt(5, a.getType());
+//    st.setInt(5, a.getType());
 //    st.setInt(5, a.getId());
 //
 //    st.executeUpdate();
@@ -118,6 +125,7 @@ public class ActiviteService implements IService<Activite> {
     System.out.println("Suppression effectuée avec succès.");
 }
     
+    
      @Override
     public List<Activite> recuperer() throws SQLException {
     List<Activite> activites = new ArrayList<>();
@@ -139,14 +147,17 @@ public class ActiviteService implements IService<Activite> {
     }
      return activites;
     }
-
-     public Activite recupererActiviteById(int id) throws SQLException{
-        String req = "SELECT * FROM activite WHERE id = ?";
-        PreparedStatement st = cnx.prepareStatement(req);
-        st.setInt(1, id);
-        ResultSet rs = st.executeQuery();
-        Activite activite = new Activite();
-       if (rs.next()) {
+    
+    
+    
+    
+    public Activite recupererActiviteById(int id) throws SQLException{
+    String req = "SELECT a.*, t.nomtype, t.descriptiontype FROM activite a JOIN type t ON a.typeid = t.id WHERE a.id = ?";
+    PreparedStatement st = cnx.prepareStatement(req);
+    st.setInt(1, id);
+    ResultSet rs = st.executeQuery();
+    Activite activite = new Activite();
+    if (rs.next()) {
         activite = new Activite();
         activite.setId(rs.getInt("id"));
         activite.setDateAct(rs.getDate("dateact"));
@@ -154,11 +165,32 @@ public class ActiviteService implements IService<Activite> {
         activite.setPositionAct(rs.getString("positionact"));
         activite.setType(rs.getInt("typeid"));
         activite.setNomAct(rs.getString("nomact"));
+        activite.setNomType(rs.getString("nomtype"));
+        activite.setDescriptionType(rs.getString("descriptiontype"));
     }
-        
-        
-        return activite;
-    }
+    return activite;
+}
+
+
+//     public Activite recupererActiviteById(int id) throws SQLException{
+//        String req = "SELECT * FROM activite WHERE id = ?";
+//        PreparedStatement st = cnx.prepareStatement(req);
+//        st.setInt(1, id);
+//        ResultSet rs = st.executeQuery();
+//        Activite activite = new Activite();
+//       if (rs.next()) {
+//        activite = new Activite();
+//        activite.setId(rs.getInt("id"));
+//        activite.setDateAct(rs.getDate("dateact"));
+//        activite.setNbParticipants(rs.getInt("nbparticipants"));
+//        activite.setPositionAct(rs.getString("positionact"));
+//        activite.setType(rs.getInt("typeid"));
+//        activite.setNomAct(rs.getString("nomact"));
+//    }
+//        
+//        
+//        return activite;
+//    }
      
       public boolean validateInput(String nom, String position, int nb, Date date, int idtype){
           if(nom.trim().isEmpty() || position.trim().isEmpty() || date == null){
@@ -188,48 +220,27 @@ public class ActiviteService implements IService<Activite> {
           }
           return true;
       }
-     
-     /*
-     public boolean validateInput(String nom, String position, int nb, Date date, int idtype) {
-         // Vérifier que le nom n'est pas vide
-    if (nom == null || nom.isEmpty()) {
-        showAlert("Le champ nom est obligatoire.",Alert.AlertType.ERROR);
-        return false;
+      
+     public List<Activite> recupererActType() throws SQLException {
+    List<Activite> activites = new ArrayList<>();
+    //String req = "SELECT a.*, t.nomtype, t.descriptiontype FROM activite a JOIN type t ON a.typeid = t.id";
+    String req = "SELECT a.*, t.nomtype, t.descriptiontype \n" +
+"FROM activite a \n" +
+"LEFT JOIN type t ON a.typeid = t.id";
+    Statement st = cnx.createStatement();
+    ResultSet rs = st.executeQuery(req);
+    while(rs.next()) {
+        Activite a = new Activite();
+        a.setId(rs.getInt("id"));
+        a.setNomAct(rs.getString("nomact"));
+        a.setPositionAct(rs.getString("positionact"));
+        a.setDateAct(rs.getDate("dateact"));
+        a.setNbParticipants(rs.getInt("nbparticipants"));
+        a.setType(rs.getInt("typeid"));
+        a.setNomType(rs.getString("nomtype"));
+        a.setDescriptionType(rs.getString("descriptiontype"));
+        activites.add(a);
     }
-    
-    // Vérifier que la position n'est pas vide
-    if (position == null || position.isEmpty()) {
-        showAlert("Le champ position est obligatoire.", Alert.AlertType.ERROR);
-        return false;
-    }
-    
-    // Vérifier que le nombre est positif
-    if (nb <= 0) {
-        showAlert("Le nombre doit être positif.",Alert.AlertType.ERROR);
-        return false;
-    }
-    
-    // Vérifier que la date est renseignée
-    if (date == null) {
-        showAlert("Le champ date est obligatoire.", Alert.AlertType.ERROR);
-        return false;
-    }
-    
-    // Vérifier que l'id de type est positif
-    if (idtype <= 0) {
-        showAlert("L'identifiant de type doit être positif.", Alert.AlertType.ERROR);
-        return false;
-    }
-    
-    // Si toutes les validations sont passées, retourner true
-    return true;
-    
-}
-     private void showAlert(String message, Alert.AlertType alertType) {
-    Alert alert = new Alert(alertType);
-    alert.setTitle("Erreur");
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
-}*/
+    return activites;
+    }  
 }

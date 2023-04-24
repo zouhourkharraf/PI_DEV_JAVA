@@ -15,7 +15,8 @@ public class Activite {
     private String nomact, positionact;
     private Date dateact;
     private int type;
-    
+    private String nomType;
+    private String descriptionType;
     public Activite(){
         //type = new Type(); 
     }
@@ -111,6 +112,25 @@ public class Activite {
     
     public void setType(int type){
         this.type=type;
+    }
+    
+  
+
+    // Méthodes pour accéder aux informations sur les types
+    public String getNomType() {
+        return nomType;
+    }
+
+    public void setNomType(String nomType) {
+        this.nomType = nomType;
+    }
+
+    public String getDescriptionType() {
+        return descriptionType;
+    }
+
+    public void setDescriptionType(String descriptionType) {
+        this.descriptionType = descriptionType;
     }
     
     @Override

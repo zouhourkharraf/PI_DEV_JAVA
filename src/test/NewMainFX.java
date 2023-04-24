@@ -21,10 +21,10 @@ public class NewMainFX extends Application {
     public void start(Stage primaryStage) throws Exception
     {
        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/AfficherType.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../gui/FrontActivite.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Liste des types marra o5ra");
+            primaryStage.setTitle("Admin: Gestion des activités");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
@@ -35,6 +35,7 @@ public class NewMainFX extends Application {
      /**
      * @param args the command line arguments
      */
+    
     
     public static void main(String[] args) {
         launch(args);

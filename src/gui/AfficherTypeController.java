@@ -91,10 +91,6 @@ public class AfficherTypeController implements Initializable {
     private Button boutonDelType;
     @FXML
     private Button boutonRedirect;
-    @FXML
-    private TextField nomErreur;
-    @FXML
-    private TextField erreurDes;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -223,7 +219,6 @@ public class AfficherTypeController implements Initializable {
     }
     
     
-    @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("ShowActivite.fxml"));
     Scene scene = new Scene(root);

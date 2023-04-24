@@ -54,6 +54,10 @@ public class TypeService implements IService<Type> {
     
     @Override
     public void modifier(Type t) throws SQLException{
+        
+        if (!validateInput(t.getNomType(), t.getDescriptionType())) {
+        return;
+    }
         String req = "update type set nomtype = ?, descriptiontype = ? where id = ?";
         PreparedStatement ps = cnx.prepareStatement(req);
         
@@ -131,6 +135,30 @@ public class TypeService implements IService<Type> {
         
         
         return type;
+    }
+    
+    public String getNomTypeById(int id) throws SQLException{
+         String req = "select nomtype from type where id = ?";
+    PreparedStatement st = cnx.prepareStatement(req);
+    st.setInt(1, id);
+    ResultSet rs = st.executeQuery();
+    String nomType = "";
+    if (rs.next()) {
+        nomType = rs.getString("nomtype");
+    }
+    return nomType;
+      }
+    
+    public String getDescriptionById(int id) throws SQLException{
+        String req = "select descriptiontype from type where id = ?";
+        PreparedStatement st = cnx.prepareStatement(req);
+    st.setInt(1, id);
+    ResultSet rs = st.executeQuery();
+    String descriptionType = "";
+    if (rs.next()) {
+        descriptionType = rs.getString("descriptiontype");
+    }
+    return descriptionType;
     }
     
     public boolean validateInput(String nomType, String descriptionType) {

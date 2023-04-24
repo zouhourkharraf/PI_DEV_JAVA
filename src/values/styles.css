@@ -1,0 +1,14 @@
+.profile-layout{
+    -fx-background-color: #EBC95E;
+    border-radius: 0px 0px 50px 50px;
+}
+
+.vbox{
+    -fx-background-border: 0 0 10 10;
+    -fx-background-raduis: 0 0 10 10;
+    -fx-background-color: #EBC95E;
+}
+
+.profile-color{
+    -fx-background-color: white;
+}

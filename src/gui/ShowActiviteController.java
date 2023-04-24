@@ -14,6 +14,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import java.text.ParseException;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 import entities.Activite;
 import entities.Activity;
 import services.ActivityService;
@@ -43,6 +47,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 
 
@@ -101,9 +106,17 @@ public class ShowActiviteController implements Initializable {
     private TitledPane boutonRetour;
     @FXML
     private Button boutonRet;
+    @FXML
+    private TextField typeModField;
+    @FXML
+    private DatePicker dateMod;
+    @FXML
+    private DatePicker dateAjout;
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -115,7 +128,8 @@ public class ShowActiviteController implements Initializable {
                 addActivite();
                 boutonAjout.setDisable(false);
             } catch (ParseException ex) {
-                Logger.getLogger(ShowActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(ShowActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
              
              
@@ -136,9 +150,11 @@ boutonMod.setOnAction(e -> {
         boutonMod.setDisable(false);
         
     } catch (ParseException ex) {
-        Logger.getLogger(ShowActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        //Logger.getLogger(ShowActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println(ex);
     } catch (SQLException ex) {
-        Logger.getLogger(ShowActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        //Logger.getLogger(ShowActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println(ex);
     }
     
 });
@@ -165,18 +181,22 @@ boutonMod.setOnAction(e -> {
             ActiviteService as = new ActiviteService();
             List<Activite> activites = as.recuperer();
             ObservableList<Activite> obs = FXCollections.observableArrayList(activites);
-            //tableview.setItems(obs);
-            idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-            nomCol.setCellValueFactory(new PropertyValueFactory<>("nomact"));
-            nbCol.setCellValueFactory(new PropertyValueFactory<>("nbparticipants"));
-            positionCol.setCellValueFactory(new PropertyValueFactory<>("positionact"));
-            dateCol.setCellValueFactory(new PropertyValueFactory<>("dateact"));
-            typeCol.setCellValueFactory(new PropertyValueFactory<>("typeid"));
             tableview.setItems(obs);
+
+            idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+            nomCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomAct()));
+            nbCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNbParticipants()).asObject());
+           positionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPositionAct()));
+            dateCol.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDateAct()));
+            
+            typeCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getType()).asObject());
+//            tableview.setItems(obs);
         }catch(SQLException ex){
              System.out.println(ex.getMessage());
         }
     }
+    
+    
     
     public void addActivite() throws ParseException{
         String nomact = nomActField.getText();
@@ -193,6 +213,9 @@ boutonMod.setOnAction(e -> {
     date = null;
 }
         int typeid = typeField.getText().isEmpty() ? 0 : Integer.parseInt(typeField.getText());
+        
+        
+        
         Activite activite = new Activite(nomact, position, date, nbparticipants,typeid );
         ActiviteService as = new ActiviteService();
         try{
@@ -204,44 +227,80 @@ boutonMod.setOnAction(e -> {
         }
         
     }
-    
     public void updateActivite() throws ParseException, SQLException {
-    int id = Integer.parseInt(idMod.getText());
-    String nomActivite = nomModField.getText();
-    int nombreParticipants = Integer.parseInt(nbModField.getText());
-    String position = positionModField.getText();
-    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-    String dateStr = dateModField.getText();
-    Date date = format.parse(dateStr);
-    //int typeId = Integer.parseInt(typeModField.getText());
     
-    ActiviteService activiteService = new ActiviteService();
-    Activite activite = activiteService.recupererActiviteById(id);
-    
-    if (activite == null) {
+        //int id = Integer.parseInt(idMod.getText());
+        String nomActivite = nomModField.getText();
+        int nombreParticipants = Integer.parseInt(nbModField.getText());
+        String position = positionModField.getText();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String dateStr = dateModField.getText();
+        Date date = format.parse(dateStr);
+        int typeId = Integer.parseInt(typeModField.getText());
         
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur de saisie");
-        alert.setHeaderText(null);
-        alert.setContentText("l'activite n'existe pas");
-        alert.showAndWait();
+        Activite selectedItem = tableview.getSelectionModel().getSelectedItem();
         
-    } else {
-        activite.setNomAct(nomActivite);
-        activite.setPositionAct(position);
-        activite.setDateAct(date);
-        //activite.setType(typeId);
-        activite.setNbParticipants(nombreParticipants);
-
-        try {
-            activiteService.modifier(activite);
-            refresh();
-        } catch(SQLException ex) {
-            System.out.println("Erreur lors de la mise à jour de l'activité : " + ex.getMessage());
+        if(selectedItem != null)
+        {
+            selectedItem.setNomAct(nomActivite);
+            selectedItem.setNbParticipants(nombreParticipants);
+            selectedItem.setDateAct(date);
+            selectedItem.setPositionAct(position);
+            selectedItem.setType(typeId);
+            ActiviteService as = new ActiviteService();
+            try{
+                as.modifier(selectedItem);
+                refresh();
+            }catch(SQLException ex){
+                System.out.println(ex);
+            }
+            
         }
+        
+       
+        
     }
-}
+    
+    
+//    public void updateActivite() throws ParseException, SQLException {
+//    int id = Integer.parseInt(idMod.getText());
+//    String nomActivite = nomModField.getText();
+//    int nombreParticipants = Integer.parseInt(nbModField.getText());
+//    String position = positionModField.getText();
+//    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+//    String dateStr = dateModField.getText();
+//    Date date = format.parse(dateStr);
+//    int typeId = Integer.parseInt(typeModField.getText());
+//    
+//    ActiviteService activiteService = new ActiviteService();
+//    Activite activite = activiteService.recupererActiviteById(id);
+//    
+//    if (activite == null) {
+//        
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Erreur de saisie");
+//        alert.setHeaderText(null);
+//        alert.setContentText("l'activite n'existe pas");
+//        alert.showAndWait();
+//        
+//    } else {
+//        activite.setNomAct(nomActivite);
+//        activite.setPositionAct(position);
+//        activite.setDateAct(date);
+//        //activite.setType(typeId);
+//        activite.setNbParticipants(nombreParticipants);
+//
+//        try {
+//            activiteService.modifier(activite);
+//            refresh();
+//        } catch(SQLException ex) {
+//            System.out.println("Erreur lors de la mise à jour de l'activité : " + ex.getMessage());
+//        }
+//    }
+//}
 
+    
+    
     
     
     
@@ -351,7 +410,6 @@ boutonMod.setOnAction(e -> {
 //    stage.setScene(scene);
 //    stage.show();
 //}
-   @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
     Parent root = FXMLLoader.load(getClass().getResource("AfficherType.fxml"));
     Scene scene = new Scene(root);
@@ -359,6 +417,23 @@ boutonMod.setOnAction(e -> {
     stage.setScene(scene);
     stage.show();
 }
+    
+    @FXML
+    private void handleRowSelection() {
+    Activite selectedItem = tableview.getSelectionModel().getSelectedItem();
+    if (selectedItem != null) {
+        nomModField.setText(selectedItem.getNomAct());
+        //nbField.setText(selectedItem.getNbParticipants());
+        nbModField.setText(String.valueOf(selectedItem.getNbParticipants()));
+        positionModField.setText(selectedItem.getPositionAct());
+        dateModField.setText(String.valueOf(selectedItem.getDateAct()));
+        typeModField.setText(String.valueOf(selectedItem.getType()));
+        
+        
+        anchor.setVisible(true);
+       
+    }
+    }
 
     
     

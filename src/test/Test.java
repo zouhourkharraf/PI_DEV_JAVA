@@ -26,15 +26,16 @@ public class Test {
    
 //    public static void main(String[] args){
 //        
-//        ActiviteService as = new ActiviteService();
-//        try {
-//            List<Activite> activites = as.recuperer();
-//            for (Activite a : activites) {
-//                System.out.println(a.toString());
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Erreur lors de la récupération des activités : " + e.getMessage());
-//        }
+////        ActiviteService as = new ActiviteService();
+////        try {
+////            List<Activite> activites = as.recuperer();
+////            for (Activite a : activites) {
+////                System.out.println(a.toString());
+////            }
+////        } catch (SQLException e) {
+////            System.out.println("Erreur lors de la récupération des activités : " + e.getMessage());
+////        }
 //    
+//   // System.out.println("javafx.version: " + System.getProperty("javafx.version"));
 //    }
 }
