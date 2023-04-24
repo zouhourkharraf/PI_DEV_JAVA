@@ -46,6 +46,9 @@ import util.MyDB;
 //import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javafx.util.Callback;
+import javafx.scene.control.TableCell;
+
 
 
 /**
@@ -79,49 +82,53 @@ public class FrontActiviteController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /*
+        participerButton.setCellFactory(column -> new TableCell<Activite, Button>() {
+        final Button button = new Button("Participer");
+
+        @Override
+        protected void updateItem(Button item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(button);
+               button.setOnAction(event -> {
+                try {
+                    Activite activite = getTableView().getItems().get(getIndex());
+                    participerActivite(activite);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrontActiviteController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            }
+        }
+    });
         
         afficherListeActivites();
+*/
+         ActiviteService activiteService = new ActiviteService();
+        
+        participerButton.setCellFactory(column -> new TableCell<Activite, Button>() {
+        final Button button = new Button("Participer");
+
+        @Override
+        protected void updateItem(Button item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(button);
+                button.setOnAction(event -> {
+                    Activite activite = getTableView().getItems().get(getIndex());
+                    activiteService.participerActivite(activite);
+                });
+            }
+        }
+    });
+
+    afficherListeActivites();
     }
-    
-//    public void afficherListeActivites(){
-//    try{
-//        ActiviteService as = new ActiviteService();
-//        List<Activite> activites = as.recupererTous();
-//        ObservableList<Activite> obs = FXCollections.observableArrayList(activites);
-//        tableviewFront.setItems(obs);
-//        nomFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomAct()));
-//        nbFront.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNbParticipants()).asObject());
-//        positionFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPositionAct()));
-//        dateFront.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDateAct()));
-//        typeFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType().getNomType()));
-//        descriptionFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType().getDescriptionType()));
-//    }catch(SQLException ex){
-//        System.out.println(ex);
-//    }
-//}
-    
-    
-
-//    public void afficherListeActivites(){
-//    try{
-//        ActiviteService as = new ActiviteService();
-//        List<Activite> activites = as.recuperer();
-//        ObservableList<Activite> obs = FXCollections.observableArrayList(activites);
-//        tableviewFront.setItems(obs);
-//        nomFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomAct()));
-//        nbFront.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNbParticipants()).asObject());
-//        positionFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPositionAct()));
-//        dateFront.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDateAct()));
-//        typeFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomType()));
-//        descriptionFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescriptionType()));
-//    } catch(SQLException ex){
-//        System.out.println(ex);
-//    }
-//}
-
-    
-    
-    
     
     public void afficherListeActivites() {
     try {
@@ -138,6 +145,9 @@ public class FrontActiviteController implements Initializable {
         dateFront.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDateAct()));
         typeFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomType()));
         descriptionFront.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescriptionType()));
+        
+
+        
     } catch(SQLException ex) {
         System.out.println(ex);
     }
@@ -150,4 +160,4 @@ public class FrontActiviteController implements Initializable {
     
         
     
-}
+
