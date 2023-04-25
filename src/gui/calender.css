@@ -1,0 +1,51 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24 avr. 2023, 19:21:19
+    Author     : user
+*/
+
+.flow-pane {
+  padding: 10px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.flow-pane .day {
+  width: calc(100% / 7);
+  text-align: center;
+  padding: 10px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.flow-pane .weekend {
+  color: #f00;
+}
+
+.flow-pane .current-day {
+  background-color: #f0f0f0;
+}
+
+.flow-pane .other-month {
+  color: #bbb;
+}
+
+.flow-pane .event {
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.flow-pane .event a {
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+}
+

@@ -52,17 +52,17 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="descriptionText1" text="Description" wrappingWidth="190">
+                                    <Text fx:id="lieuText" text="Description" wrappingWidth="190">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="descriptionText2" text="Description" wrappingWidth="190">
+                                    <Text fx:id="datedText" text="Description" wrappingWidth="190">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Text>
-                                    <Text fx:id="descriptionText3" text="Description" wrappingWidth="190">
+                                    <Text fx:id="datefText" text="Description" wrappingWidth="190">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>

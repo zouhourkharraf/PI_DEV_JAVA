@@ -52,8 +52,6 @@ public class AjoutController implements Initializable {
     private TextField tfdesc;
     private TextField tfimg;
     @FXML
-    private TextField tfnote;
-    @FXML
     private DatePicker dpd;
     @FXML
     private DatePicker dpf;
@@ -61,6 +59,8 @@ public class AjoutController implements Initializable {
     private Button imageUpload;
     private File file;
     private String lien = "";
+    @FXML
+    private Button aff;
 
     /**
      * Initializes the controller class.
@@ -108,7 +108,7 @@ public class AjoutController implements Initializable {
 
     private boolean validateInput() {
         // Vérifier si tous les champs sont remplis
-        if (tfnom.getText().isEmpty() || tflieu.getText().isEmpty() || tfdesc.getText().isEmpty() || lien.isEmpty() || dpd.getValue() == null || dpf.getValue() == null || tfnote.getText().isEmpty()) {
+        if (tfnom.getText().isEmpty() || tflieu.getText().isEmpty() || tfdesc.getText().isEmpty() || dpd.getValue() == null || dpf.getValue() == null ) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Erreur de saisie");
             alert.setHeaderText("");
@@ -145,7 +145,7 @@ public class AjoutController implements Initializable {
 
     @FXML
     private void AfficherEvent(ActionEvent event) {
-        try {
+       /* try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("affichage.fxml"));
             Parent root = loader.load();
 
@@ -154,7 +154,17 @@ public class AjoutController implements Initializable {
             stage.show();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
-        }
+        }*/
+        
+        
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/affichage.fxml"));
+
+            Parent root = loader.load();
+            aff.getScene().setRoot(root);
+        } catch (IOException ex) {
+            Logger.getLogger(AjoutController.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     @FXML

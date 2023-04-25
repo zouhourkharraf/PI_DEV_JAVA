@@ -25,6 +25,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TextField;
@@ -35,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import services.EvenementService;
 
 
@@ -63,9 +67,11 @@ public class ShowAllController implements Initializable {
     private Pagination pagination;
     //private int itemsPerPage = 4; // Change this number to adjust the number of items per page
     //Evenement evenement;
-    private int itemsPerPage = 5;
+ //   private final int itemsPerPage = 5;
 private List<Evenement> allEvents;
-private int pageCount;
+//private int pageCount;
+    @FXML
+    private Button sort;
 
     
 //    List<Participant> listParticipant;
@@ -73,7 +79,7 @@ private int pageCount;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        recherche(event);
+       //recherche(event);
         recherche2(event);
         
         try {
@@ -95,12 +101,13 @@ private int pageCount;
         } catch (Exception e) {
         }
         
+    
+        
         
         //***********pagination********************
         
-        
-        
-    }
+}
+
     
     
    
@@ -232,7 +239,18 @@ private void recherche2(ActionEvent event) {
     });
 }
 
-    
+@FXML
+    private void calendrier(ActionEvent event) {
+        
+         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("calender.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (IOException e) {
+            // e.printStackTrace();
+        }
+    }
 
-    
 }

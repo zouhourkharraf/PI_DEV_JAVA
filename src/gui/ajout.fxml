@@ -30,7 +30,7 @@
       <DatePicker fx:id="dpd" layoutX="260.0" layoutY="112.0" prefHeight="38.0" prefWidth="270.0" promptText="date début" />
       <DatePicker fx:id="dpf" layoutX="260.0" layoutY="160.0" prefHeight="38.0" prefWidth="270.0" promptText="date fin" />
       <Text layoutX="40.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Nom de l'évènement  :" wrappingWidth="184.15820002555847" />
-      <Button layoutX="495.0" layoutY="350.0" mnemonicParsing="false" onAction="#AfficherEvent" prefHeight="29.0" prefWidth="90.0" stylesheets="@affichage.css" text="afficher" textFill="#901515">
+      <Button fx:id="aff" layoutX="495.0" layoutY="350.0" mnemonicParsing="false" onAction="#AfficherEvent" prefHeight="29.0" prefWidth="90.0" stylesheets="@affichage.css" text="afficher" textFill="#901515">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>

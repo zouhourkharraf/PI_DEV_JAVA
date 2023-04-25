@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -91,43 +92,55 @@ public class CalendarController implements Initializable {
                 stackPane.getChildren().add(rectangle);
 
                 int calculatedDate = (j+1)+(7*i);
-                if(calculatedDate > dateOffset){
-                    int currentDate = calculatedDate - dateOffset;
-                    if(currentDate <= monthMaxDate){
-                        Text date = new Text(String.valueOf(currentDate));
-                        double textTranslationY = - (rectangleHeight / 2) * 0.75;
-                        date.setTranslateY(textTranslationY);
-                        stackPane.getChildren().add(date);
+               
+                
+                if (calculatedDate > dateOffset) {
+    int currentDate = calculatedDate - dateOffset;
+    if (currentDate <= monthMaxDate) {
+        Text date = new Text(String.valueOf(currentDate));
+        double textTranslationY = - (rectangleHeight / 2) * 0.75;
+        date.setTranslateY(textTranslationY);
+        stackPane.getChildren().add(date);
+    }
+    List<Evenement> events = eventsMap.get(currentDate);
+    if (events != null) {
+        
+        createEventsBox(events, rectangleHeight, rectangleWidth, stackPane);
+    }
+    if (today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate) {
+        rectangle.setFill(Color.LIGHTBLUE);
+    }
 
-                        List<Evenement> events = eventsMap.get(currentDate);
-                        if(events != null){
-                            createEventsBox(events, rectangleHeight, rectangleWidth, stackPane);
-                        }
-                    }
-                    if(today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate){
-
-                        rectangle.setFill(Color.LIGHTBLUE);
-                }
-            }
 
             calendar.getChildren().add(stackPane);
         }
+            }}
     }
-}
+
 
 private void createEventsBox(List<Evenement> events, double rectangleHeight, double rectangleWidth, StackPane stackPane){
     VBox vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER); // set the alignment to CENTER
+
     vBox.setSpacing(rectangleHeight/10);
+    
 
     for(Evenement event : events){
         Text eventText = new Text(event.getNom_ev());
         eventText.setWrappingWidth(rectangleWidth);
         vBox.getChildren().add(eventText);
     }
+    
+    Text dateText = new Text(String.valueOf(events.get(0).getDated_ev().getDayOfMonth()));
+    dateText.setFill(Color.BLACK);
+    dateText.setStyle("-fx-font-weight: bold;");
+    vBox.getChildren().add(0, dateText);
 
-    vBox.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1px;");
+    vBox.setStyle("-fx-background-color: pink; -fx-border-color: black; -fx-border-width: 1px;");
 
     stackPane.getChildren().add(vBox);
+
+   
 }
 
 private Map<Integer, List<Evenement>> getEventsMonth(LocalDate date){

@@ -18,6 +18,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,12 +54,17 @@ public class CardController implements Initializable {
     private Button participerBtn;
     @FXML
     private VBox VboxId;
-    @FXML
     private Button bloc;
     @FXML
     private Rating rating;
     
     private int id_event ;
+    @FXML
+    private Text lieuText;
+    @FXML
+    private Text datedText;
+    @FXML
+    private Text datefText;
 
     public int getId_event() {
         return id_event;
@@ -102,6 +109,19 @@ public class CardController implements Initializable {
         System.out.println("ccccccccccccccc");
         titreText.setText(event.getNom_ev());
         descriptionText.setText(event.getDesc_ev());
+        lieuText.setText(event.getLieu_ev());
+     //   datedText.setText(event.getDated_ev());
+        LocalDate dated_ev = event.getDated_ev();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = dated_ev.format(formatter);
+        datedText.setText(formattedDate);
+
+       // datefText.setText(event.getDatef_ev());
+        LocalDate datef_ev = event.getDatef_ev();
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate2 = datef_ev.format(formatter2);
+        datefText.setText(formattedDate2);
+
         setId_event(event.getId());
         System.out.println(id_event);
         //participerBtn.setOnAction(this::handleParticiperBtnAction);
@@ -130,6 +150,9 @@ private void handleParticiperBtnAction(ActionEvent event) {
     // Replace the phone number and message body with appropriate values for your use case
     sendSms("+21695173280", "Hello from JavaFX!");
 }*/
+    
+    
+    
     //////////////************map**************************
     public void start(Stage primaryStage) {
         // Créer une WebView et ajouter un bouton à la scène
