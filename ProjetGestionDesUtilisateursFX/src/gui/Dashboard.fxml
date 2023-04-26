@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,32 +12,32 @@
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DashboardController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#393935" height="80.0" layoutX="1.0" stroke="#40403a" strokeType="INSIDE" width="900.0" />
-      <Button fx:id="bouton_gestion_util" layoutX="318.0" layoutY="126.0" mnemonicParsing="false" onAction="#gerer_utilisateurs" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" text="Gestion des utilisateurs" textFill="WHITE">
+      <Button id="bo" fx:id="bouton_gestion_util" layoutX="318.0" layoutY="126.0" mnemonicParsing="false" onAction="#gerer_utilisateurs" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" stylesheets="@StyleBouton.css" text="Gestion des utilisateurs" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_gestion_ev" layoutX="318.0" layoutY="227.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" text="Gestion des évènements" textFill="WHITE">
+      <Button id="bo" fx:id="bouton_gestion_ev" layoutX="318.0" layoutY="227.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" stylesheets="@StyleBouton.css" text="Gestion des évènements" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_gestion_rec" layoutX="318.0" layoutY="324.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" text="Gestion des réclamations" textFill="WHITE">
+      <Button id="bo" fx:id="bouton_gestion_rec" layoutX="318.0" layoutY="324.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" stylesheets="@StyleBouton.css" text="Gestion des réclamations" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_gestion_cours" layoutX="318.0" layoutY="424.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" text="Gestion des cours" textFill="WHITE">
+      <Button id="bo" fx:id="bouton_gestion_cours" layoutX="318.0" layoutY="424.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" stylesheets="@StyleBouton.css" text="Gestion des cours" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_gestion_form" layoutX="318.0" layoutY="521.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" text="Gestion des formations" textFill="WHITE">
+      <Button id="bo" fx:id="bouton_gestion_form" layoutX="318.0" layoutY="521.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" stylesheets="@StyleBouton.css" text="Gestion des formations" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button fx:id="bouton_gestion_act" layoutX="318.0" layoutY="608.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" text="Gestion des activités" textFill="WHITE">
+      <Button id="bo" fx:id="bouton_gestion_act" layoutX="318.0" layoutY="608.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="265.0" style="-fx-background-color: #393935;" stylesheets="@StyleBouton.css" text="Gestion des activités" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -45,6 +46,9 @@
          <image>
             <Image url="@../images/logo_app.png" />
          </image>
+         <effect>
+            <Glow />
+         </effect>
       </ImageView>
       <Label layoutX="45.0" layoutY="80.0" prefHeight="107.0" prefWidth="265.0" text="Dashboard :" textAlignment="CENTER">
          <font>

@@ -4,6 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +15,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="900.0" styleClass="root" stylesheets="@LoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginController">
    <children>
-      <Button fx:id="bouton_login" layoutX="363.0" layoutY="470.0" mnemonicParsing="false" onAction="#SeConnecter" prefHeight="39.0" prefWidth="174.0" style="-fx-background-color: #338DB2; -fx-background-radius: 30;" text="Se connecter" textFill="#eaff70">
+      <Button id="line" fx:id="bouton_login" layoutX="363.0" layoutY="470.0" mnemonicParsing="false" onAction="#SeConnecter" prefHeight="39.0" prefWidth="174.0" style="-fx-background-radius: 30;" stylesheets="@StyleBouton.css" text="Se connecter" textFill="#eaff70">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -20,26 +24,62 @@
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </TextField>
       <PasswordField fx:id="champ_mp" layoutX="327.0" layoutY="377.0" prefHeight="50.0" prefWidth="246.0" promptText="Mot de passe">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </PasswordField>
       <ImageView fitHeight="215.0" fitWidth="201.0" layoutX="350.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/logo_app.png" />
          </image>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
       </ImageView>
-      <Button fx:id="bouton_incsi_eleve" layoutX="233.0" layoutY="136.0" mnemonicParsing="false" onAction="#CreerCompteEleve" prefHeight="39.0" prefWidth="261.0" style="-fx-background-color: #6CEC12;" text="Créer un compte élève" textFill="#1f4c53">
+      <Button id="re" fx:id="bouton_incsi_eleve" layoutX="233.0" layoutY="136.0" mnemonicParsing="false" onAction="#CreerCompteEleve" prefHeight="39.0" prefWidth="261.0" stylesheets="@StyleBouton.css" text="Créer un compte élève" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
+         <effect>
+            <Reflection />
+         </effect>
       </Button>
-      <Button fx:id="bouton_inscri_enseignant" layoutX="519.0" layoutY="136.0" mnemonicParsing="false" onAction="#CreerCompteEnseignant" prefHeight="39.0" prefWidth="261.0" style="-fx-background-color: #6CEC12;" text="Créer un compte enseignant" textFill="#1f4c53">
+      <Button id="re" fx:id="bouton_inscri_enseignant" layoutX="519.0" layoutY="136.0" mnemonicParsing="false" onAction="#CreerCompteEnseignant" prefHeight="39.0" prefWidth="261.0" stylesheets="@StyleBouton.css" text="Créer un compte enseignant" textFill="#1f4c53">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
+         <effect>
+            <Reflection />
+         </effect>
       </Button>
       <Label fx:id="erreur_globale" layoutX="294.0" layoutY="427.0" prefHeight="41.0" prefWidth="314.0" textFill="RED">
          <font>

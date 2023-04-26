@@ -9,6 +9,7 @@ import entities.Utilisateur;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -106,6 +107,8 @@ public class PageAdministrateurController implements Initializable {
     
     boolean CliqueSurLeLienRole=false; //cette varible globale indique si on a cliqué sur le lien rôle ou pas
     boolean CliqueSurLeLienAge=false; //cette varible globale indique si on a cliqué sur le lien age ou pas
+   
+    
     
     /**
      * Initializes the controller class.
@@ -182,8 +185,6 @@ public class PageAdministrateurController implements Initializable {
            colonne_genre.setCellValueFactory(new PropertyValueFactory<>("genre_util"));
         colonne_demande_suppression.setCellValueFactory(new PropertyValueFactory<>("demande_suppression"));
         
-             //obs.remove()
-            //obs.add()
             
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -335,14 +336,14 @@ public class PageAdministrateurController implements Initializable {
     }
 
     @FXML
-    private void Filtrer(ActionEvent event) {
+    private void Filtrer(ActionEvent event) throws SQLException {
         //afficher le bouton Annuler pour qu'on puisse annuler le filtre
         BoutonAnnuler.setVisible(true);
         
         erreur_filtre.setVisible(true);
         
         //initialiser les variables qui vont contenir les résultat
-         String role_choisi=""; //cette variable va contenir le role choisi 
+         String role_choisi="tous les utilisateurs"; //cette variable va contenir le role choisi 
          String age_max_choisi="",age_min_choisi=""; //ces 2 variables vont contenir l'age minimamle et l'age maximale choisis dans le cas ou l'utilisateur a rempli les 2 champs(agemin et agemax)
          String age_min_seuleument="";
          String age_max_seuleument="";
@@ -361,8 +362,10 @@ public class PageAdministrateurController implements Initializable {
       titre_resultat1.setVisible(true);
       label_resultat_role.setVisible(true);
       role_choisi=ChoiseBoxRole.getValue();
-      label_resultat_role.setText(role_choisi);
+          System.out.println(role_choisi); //*********************
+      label_resultat_role.setText(role_choisi);  // -----> enregister le choix 
       }
+     
    
        //traiter le critère age ( affichage des résultat dans la zone des résultat  + réccupération des choix )
       if(CliqueSurLeLienAge)
@@ -395,8 +398,8 @@ public class PageAdministrateurController implements Initializable {
          label_resultat_age_min.setText( champ_age_min.getText() );                        
          label_resultat_age_max.setText( champ_age_max.getText() ); 
          //enregistrer l'age minimale et l'age maximales choisies
-         age_min_choisi=champ_age_min.getText();
-         age_max_choisi=champ_age_max.getText();
+         age_min_choisi=champ_age_min.getText();  // -----> enregister le choix
+         age_max_choisi=champ_age_max.getText();  // -----> enregister le choix
                    }
                }
              }
@@ -424,11 +427,11 @@ public class PageAdministrateurController implements Initializable {
              titre_resultat2.setText("Plus que             ans");
              label_resultat_age_min.setLayoutX(610); //décaler le label pour qu'il soit adapté au nouveau titre
              label_resultat_age_min.setText(champ_age_min.getText());
-             age_min_seuleument=champ_age_min.getText();
+             age_min_seuleument=champ_age_min.getText();// -----> enregister le choix
              }    
          }
-         else
-         {   
+       else
+        {   
          if( (!champ_age_max.getText().isEmpty()) && (champ_age_min.getText().isEmpty()) ) // ******* si l'utilisateur a défini age_max seulement
          {
                 if(Integer.parseInt(champ_age_max.getText()) < 5 )
@@ -440,7 +443,7 @@ public class PageAdministrateurController implements Initializable {
                  titre_resultat2.setText("Moins de           ans");
                  label_resultat_age_min.setLayoutX(610); //décaler le label pour qu'il soit adapté au nouveau titre
                  label_resultat_age_min.setText(champ_age_max.getText());
-                 age_max_seuleument=champ_age_max.getText();
+                 age_max_seuleument=champ_age_max.getText();  // -----> enregister le choix
                 }
          }
          
@@ -468,22 +471,61 @@ public class PageAdministrateurController implements Initializable {
           // ***********************  FIN Afficher l'age minimale et l'age maximale choisi selon les champs que l'utilisateur a rempli  
           
        }
-    //afficher le résultat dans la table
-       
-       
-       
-    
-       
+         
       }
        
- 
-      
-      
+     // *************************** Afficher le résultat dans la table (selon les valeurs des variables qui enregistrent les choix)
+     if(erreur_filtre.getText().compareTo("") == 0) //si il n'y a pas d'erreur dans la saisie des champs de l'age --> on va afficher le résultat
+     {
+       ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
+      List<Utilisateur> liste_utilisateurs_avec_filtre=new ArrayList<Utilisateur>(); //déclarer la liste qui va contenir le résutat du filtre selon le cas
+    
+    // si l'utilisateur a choisi le role="tous les utilisateurs" (qui est le role par défaut) sans le critère age --> donc c'est le même affichage de la table(par défaut)
+    if((role_choisi.compareTo("tous les utilisateurs")==0) && (age_min_choisi.compareTo("")==0)&& (age_max_choisi.compareTo("")==0)&& (age_min_seuleument.compareTo("")==0)&& (age_max_seuleument.compareTo("")==0))
+    {
+    liste_utilisateurs_avec_filtre=util_service.recuperer_liste_utilisateur();
+        System.out.println("affffffffffffffffffffff");
+    }
+    
+     // si l'utilisateur a choisi un role différent de "tous les utilisateurs" mais sans le critère age --> donc on va appeler la méthode recuperer_liste_utilisateur_selon_role() et lui passer le role choisi 
+     if((role_choisi.compareTo("tous les utilisateurs")!=0) && (age_min_choisi.compareTo("")==0)&& (age_max_choisi.compareTo("")==0)&& (age_min_seuleument.compareTo("")==0)&& (age_max_seuleument.compareTo("")==0))
+    {
+     liste_utilisateurs_avec_filtre= util_service.recuperer_liste_utilisateur_selon_role(role_choisi);  //affecter le résultat de la requête à notre liste de résultat
+    }
+    
+     // si l'utilisateur a choisi le role="tous les utilisateurs" (qui est le role par défaut) ou n'a choisi aucun role et il a mentionné le critère age(que ce soit age_min et age_max ,age_min_seulement ou age_max_seulement)
+     //----> donc on va appeler la méthode recuperer_liste_utilisateur_selon_age() et lui passer en paramètes tous les variables qui sauvegardent les choix de l'age
+     if((role_choisi.compareTo("tous les utilisateurs")==0) && ( (age_min_choisi.compareTo("")!=0)|| (age_max_choisi.compareTo("")!=0)|| (age_min_seuleument.compareTo("")!=0)|| (age_max_seuleument.compareTo("")!=0) ) )
+    {
+     liste_utilisateurs_avec_filtre= util_service.recuperer_liste_utilisateur_selon_age(age_min_choisi, age_max_choisi, age_min_seuleument, age_max_seuleument); //affecter le résultat de la requête à notre liste de résultat
+    }  
+    
+     // si l'utilisateur a choisi un role différent de "tous les utilisateurs" et il a mentionné le critère age(que ce soit age_min et age_max ,age_min_seulement ou age_max_seulement)
+     //----> donc il a choisi 2 criètres role et age ---> donc on va appeler la méthode recuperer_liste_utilisateur_selon_age_et_role() et lui passer en paramètes tous les variables qui sauvegardent les choix de l'age+le paramètre qui sauvegarde le choix du role
+     if((role_choisi.compareTo("tous les utilisateurs")!=0) && ( (age_min_choisi.compareTo("")!=0)|| (age_max_choisi.compareTo("")!=0)|| (age_min_seuleument.compareTo("")!=0)|| (age_max_seuleument.compareTo("")!=0) ) )
+    {
+     liste_utilisateurs_avec_filtre= util_service.recuperer_liste_utilisateur_selon_age_et_role(role_choisi,age_min_choisi, age_max_choisi, age_min_seuleument, age_max_seuleument); //affecter le résultat de la requête à notre liste de résultat
+    }   
+    
+     // créer un ObservableList et l'affecter à la table
+           ObservableList<Utilisateur> obs=FXCollections.observableArrayList(liste_utilisateurs_avec_filtre);
        
-       
-       
-       
-      
+           table_util.setItems(obs);
+             
+           colonne_role.setCellValueFactory(new PropertyValueFactory<>("role_util"));
+           colonne_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+           colonne_nom.setCellValueFactory(new PropertyValueFactory<>("nom_util"));
+           colonne_prenom.setCellValueFactory(new PropertyValueFactory<>("prenom_util"));
+           colonne_pseudo.setCellValueFactory(new PropertyValueFactory<>("pseudo_util"));
+           colonne_mp.setCellValueFactory(new PropertyValueFactory<>("mot_de_passe_util"));
+           colonne_email.setCellValueFactory(new PropertyValueFactory<>("email_util"));
+           colonne_age.setCellValueFactory(new PropertyValueFactory<>("age_util"));
+           colonne_genre.setCellValueFactory(new PropertyValueFactory<>("genre_util"));
+           colonne_demande_suppression.setCellValueFactory(new PropertyValueFactory<>("demande_suppression"));
+          // *************************** FIN Afficher le résultat dans la table (selon les valeurs des variables qui enregistrent les choix)  
+      }
+          
+          
     }
 
     @FXML //cette méthode permet d'annuler tous les filtres appliqués et d'afficher la table sans filtre
@@ -505,7 +547,11 @@ public class PageAdministrateurController implements Initializable {
   // FIN cacher les options et les opération du filtrage des données    
    
    // afficher tous les utilisateurs 
-      AfficherTable(); //appeler la méthode AfficherTable     
+      AfficherTable(); //appeler la méthode AfficherTable  
+      
+      CliqueSurLeLienRole=false;
+      CliqueSurLeLienAge=false; //car on a annulé le filtrage complètement donc on a plus de cliques sur les liens du filtre
+      
     }
 
  

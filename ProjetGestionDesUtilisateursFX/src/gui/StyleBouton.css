@@ -419,3 +419,55 @@
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
 
+/*---------------------------------------Bouton dashboard------------------------------------*/
+  
+#bo{
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+  
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-background-radius: 0;
+}
+
+#bo:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+
+/*---------------------------------------Bouton login------------------------------------*/
+
+ 
+#line{
+    -fx-text-fill: graytext;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+  -fx-background-color: linear-gradient(#035F85, #1385B4);
+   -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#line:hover{     
+  -fx-background-color: linear-gradient(#1385B4, #035F85);
+  -fx-text-fill:whitesmoke;
+  -fx-font-weight:bold; 
+ 
+} 
+
+/* --------------------------------------------------- */
+
+#re{
+
+    -fx-background-color:  #6CEC12;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: #1f4c53;
+
+}
+#re:hover{
+
+    -fx-background-color: linear-gradient(#6CEC12,#ff5400);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+
+}

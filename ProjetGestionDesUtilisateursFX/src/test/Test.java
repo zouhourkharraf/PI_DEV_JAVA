@@ -66,6 +66,25 @@ public class Test {
     //testé -----------> ça marche pour tous les cas (age_min,age_max,age_min_seulement,age_max_seulement)
 
     */
+    
+    /*
+    
+    //affichage des utilisateurs selon age et role
+    
+                try {
+                      List<Utilisateur> liste_utilisateurs=util_service.recuperer_liste_utilisateur_selon_age_et_role("enseignant","","","","");
+           for (int i = 0; i < liste_utilisateurs.size(); i++) {
+               System.out.println(liste_utilisateurs.get(i).toString());
+           }
+        //    System.out.println(ps.recupererById(3));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+   
+
+    //testé -----------> ça marche pour tous les cas (role,age_min,age_max,age_min_seulement,age_max_seulement)
+    
+    */
 
      //ajout d'un tutilisateur
    /*
