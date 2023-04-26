@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="705.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.magicbook.controleurs.Gestion_coursController">
+    <stylesheets>
+        <URL value="@/tn/magicbook/styles/gestion_cours.css" />
+    </stylesheets>
+    <children>
+        <VBox layoutX="20.0" layoutY="20.0" prefHeight="480.0" prefWidth="660.0" spacing="10.0">
+            <Label text="Liste des cours" />
+            <TableView fx:id="courseTable" prefHeight="350.0" prefWidth="640.0">
+                <columns>
+                    <TableColumn fx:id="matiereIdColumn" prefWidth="120.0" text="Matiere ID" />
+                    <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
+                    <TableColumn fx:id="tempsColumn" prefWidth="80.0" text="Temps" />
+                    <TableColumn fx:id="titreColumn" prefWidth="355.0" text="Titre" />
+                </columns>
+            </TableView>
+            <HBox spacing="10.0">
+                <DatePicker fx:id="datePicker" prefWidth="100.0" promptText="Date" />
+                <TextField fx:id="titreField" prefWidth="200.0" promptText="Titre" />
+            <TextField fx:id="timer" promptText="Hours" />
+            </HBox>
+            <HBox spacing="10.0">
+            <Text fx:id="fileName" strokeType="OUTSIDE" strokeWidth="0.0" text="Upload Only PDF files" wrappingWidth="132.13671875" />
+                <Button fx:id="addButton" onAction="#onAdd" text="Ajouter" />
+                <Button fx:id="uploadButton" layoutX="382.0" layoutY="11.0" mnemonicParsing="false" onAction="#onUpload" text="Télécharger" />
+                <Button fx:id="resetButton" onAction="#OnReset" text="Reset" visible="false" />
+                <Button fx:id="deleteButton" text="Delete" visible="false" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

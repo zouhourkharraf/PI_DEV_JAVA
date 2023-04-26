@@ -1,0 +1,52 @@
+.mainFxmlClass {
+    -fx-background-color: #f5f5f5;
+}
+
+Label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+TextField {
+    -fx-prompt-text-fill: #888;
+}
+
+Button {
+    -fx-background-color: #4285f4;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+}
+
+DatePicker {
+    -fx-prompt-text-fill: #888;
+}
+
+#fileName {
+    -fx-font-size: 12px;
+    -fx-fill: #888;
+}
+
+#courseTable {
+    -fx-table-cell-border-color: transparent;
+    -fx-font-size: 14px;
+}
+
+#courseTable .table-column {
+    -fx-alignment: CENTER;
+}
+
+#courseTable .column-header-background {
+    -fx-background-color: #f5f5f5;
+}
+
+#courseTable .column-header .label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+#courseTable .table-row-cell:odd {
+    -fx-background-color: #f5f5f5;
+}
