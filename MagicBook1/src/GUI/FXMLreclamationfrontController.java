@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,6 +6,7 @@
 package GUI;
 
 import Entite.Reclamation;
+import Entite.Statut;
 import Service.ServiceReclamation;
 import magicbook1.FXMain;
 import java.io.IOException;
@@ -15,6 +16,9 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +33,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 /**
  * FXML Controller class
@@ -53,7 +60,8 @@ public class FXMLreclamationfrontController implements Initializable {
     private TextField tfstatut;
     @FXML
     private TextField tfusername;
-    
+      private static final String ACCOUNT_SID = "AC7a5eb816b1165309f12c5589afc6b543";
+    private static final String AUTH_TOKEN = "285d40520ef4fd61380f5cc126163dee";
     /**
      * Initializes the controller class.
      */
@@ -66,21 +74,26 @@ public class FXMLreclamationfrontController implements Initializable {
     @FXML
     private void ajouter(ActionEvent event) {
         
-          if(controleDeSaisie().length()>0){
-            Alert alert=new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("erreure ajout reclamation");
-            alert.setContentText(controleDeSaisie());
+          if (controleDeSaisie().length() > 0) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Erreur ajout reclamation");
+        alert.setContentText(controleDeSaisie());
+        alert.showAndWait();
+    } else {
+        LocalDate currentDate = LocalDate.now();
+        LocalDate localDate = tfdate.getValue();
+        if (localDate.compareTo(currentDate) < 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur ajout reclamation");
+            alert.setContentText("La date doit être supérieure ou égale à la date actuelle.");
             alert.showAndWait();
-        }
-        else{
+        } else {
         Reclamation r = new Reclamation();
         r.setTitre_rec(tftitre.getText());
         r.setContenu_rec(tadesc.getText());
         r.setType_rec(tftype.getText());
-        r.setStatut_rec(tfstatut.getText());
+        r.setStatut_rec(Statut.NON_TRAITE);
         r.setUsername(tfusername.getText());
-        
-        LocalDate localDate = tfdate.getValue();
         Date date = Date.valueOf(localDate);
         r.setDate_rec(date);
         
@@ -90,6 +103,13 @@ public class FXMLreclamationfrontController implements Initializable {
             alert.setTitle("Reclamation");
             alert.setContentText("ajout reclamation avec succes");
             alert.showAndWait();
+            //sms
+             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message.creator(
+                new PhoneNumber("+15676007363"),  // To phone number
+                new PhoneNumber("+21651111090"),  // From phone number (Twilio number)
+                "Une nouvelle reclamation a été ajouté merci de consulter la liste des reclamations pour plus de detail!"  // SMS body
+        ).create();
                tftitre.clear();
         tadesc.clear();
         tftype.clear();
@@ -100,7 +120,8 @@ public class FXMLreclamationfrontController implements Initializable {
         }
         
     }
-        public String controleDeSaisie(){
+    }
+       public String controleDeSaisie(){
         String erreur="";
         if(tftitre.getText().trim().isEmpty()){
             erreur+="Titre vide!\n";
@@ -110,9 +131,6 @@ public class FXMLreclamationfrontController implements Initializable {
         }
         if(tfusername.getText().trim().isEmpty()){
             erreur+="Username vide!\n";
-        }
-        if(tfstatut.getText().trim().isEmpty()){
-            erreur+="Status vide!\n";
         }
         if(tadesc.getText().trim().isEmpty()){
             erreur+="Description vide!\n";
@@ -135,5 +153,4 @@ public class FXMLreclamationfrontController implements Initializable {
             Logger.getLogger(FXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

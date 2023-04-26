@@ -13,15 +13,17 @@ import java.sql.Date;
  */
 public class Repons {
     private int id;
-    private int id_reclamation_id;
+    private int id_reclamation_id;//changer
     private Date date_rep;
+   // private Reclamation rec;
     private String contenu_rep;
-    private String status_rep; 
+    private Statut status_rep ;
 
     public Repons() {
+        
     }
 
-    public Repons(int id_reclamation_id, Date date_rep, String contenu_rep, String status_rep) {
+    public Repons(int id_reclamation_id, Date date_rep, String contenu_rep, Statut status_rep) {
         this.id_reclamation_id = id_reclamation_id;
         this.date_rep = date_rep;
         this.contenu_rep = contenu_rep;
@@ -60,11 +62,11 @@ public class Repons {
         this.contenu_rep = contenu_rep;
     }
 
-    public String getStatus_rep() {
+    public Statut getStatus_rep() {
         return status_rep;
     }
 
-    public void setStatus_rep(String status_rep) {
+    public void setStatus_rep(Statut status_rep) {
         this.status_rep = status_rep;
     }
 

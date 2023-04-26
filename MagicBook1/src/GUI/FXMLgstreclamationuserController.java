@@ -6,6 +6,11 @@
 package GUI;
 
 import Entite.Reclamation;
+import Entite.Statut;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import Service.MyListener;
 import java.net.URL;
 import java.sql.Date;
@@ -22,10 +27,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import Service.ServiceReclamation;
+import com.itextpdf.text.PageSize;
 import magicbook1.FXMain;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -34,6 +41,40 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Chunk;
+import javafx.scene.control.TableView;
+import Service.ServiceReclamation;
+import com.itextpdf.text.pdf.PdfPTable;
+import magicbook1.FXMain;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
 
 /**
  * FXML Controller class
@@ -41,7 +82,10 @@ import javafx.stage.Stage;
  * @author winxspace
  */
 public class FXMLgstreclamationuserController implements Initializable {
+  
 
+    @FXML
+    private ComboBox<String> statut;
     @FXML
     private AnchorPane anchore;
     @FXML
@@ -64,7 +108,24 @@ public class FXMLgstreclamationuserController implements Initializable {
     private TextField tfusername;
     @FXML
     private DatePicker tfdate;
-
+     @FXML
+    private TableView<Reclamation> tvtype;
+      ServiceReclamation str=new ServiceReclamation();
+    ObservableList<String> data=FXCollections.observableArrayList();
+      @FXML
+       private TableColumn<Reclamation, Integer> cid;
+       @FXML
+       private TableColumn<Reclamation, String> ctitre;
+        @FXML
+    private TableColumn<Reclamation, Date> ctype;
+        @FXML
+        private TableColumn<Reclamation, String> cstatus;
+        @FXML
+        private TableColumn<Reclamation, String> csusername;
+        @FXML
+        private TableColumn<Reclamation, String> cdesc;
+        @FXML
+        private TableColumn<Reclamation, Date> cdate;
     /**
      * Initializes the controller class.
      */
@@ -73,45 +134,77 @@ public class FXMLgstreclamationuserController implements Initializable {
         // TODO
         tfdate.setValue(LocalDate.now());
     }    
-
+   @FXML
+    private void tri(ActionEvent event) {
+            cid.setCellValueFactory(new PropertyValueFactory<>("id_rec"));
+    ctitre.setCellValueFactory(new PropertyValueFactory<>("titre_rec"));
+    ctype.setCellValueFactory(new PropertyValueFactory<>("type_rec"));
+    cstatus.setCellValueFactory(new PropertyValueFactory<>("statut_rec"));
+    csusername.setCellValueFactory(new PropertyValueFactory<>("username"));
+    cdesc.setCellValueFactory(new PropertyValueFactory<>("contenu_rec"));
+    cdate.setCellValueFactory(new PropertyValueFactory<>("date_rec"));
+            Reclamation p=new Reclamation();
+        ServiceReclamation sp = new ServiceReclamation();
+    }
 @FXML
-private void modifier(ActionEvent event) {
-    if(controleDeSaisie().length() > 0) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Erreur modification réclamation");
-        alert.setContentText(controleDeSaisie());
-        alert.showAndWait();
-    } else {     
-        ServiceReclamation sr = new ServiceReclamation();
-        Reclamation r = sr.getReclamationById(Integer.parseInt(tfid.getText()));
-        if (r == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Erreur modification réclamation");
-            alert.setContentText("La réclamation avec l'id " + tfid.getText() + " n'existe pas");
-            alert.showAndWait();
-            return;
-        }
-        r.setTitre_rec(tftitre.getText());
-        r.setType_rec(tftype.getText());
-        r.setDate_rec(Date.valueOf(tfdate.getValue()));
-        r.setContenu_rec(tfdescription.getText());
-        r.setStatut_rec(tfstatut.getText());
-        r.setUsername(tfusername.getText());
-        sr.modifier(r, Integer.valueOf(tfid.getText()));
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Réclamation");
-        alert.setContentText("Modification de la réclamation effectuée avec succès");
-        alert.showAndWait();
-        sr.afficher();
-        tfid.clear();
-        tftitre.clear();
-        tfdescription.clear();
-        tftype.clear();
-        tfdate.setValue(null);
-        tfstatut.clear();
-        tfusername.clear();
+private void display(ActionEvent event) {
+    Reclamation selectedReclamation = tvtype.getSelectionModel().getSelectedItem(); // Get selected item from table view
+    if (selectedReclamation != null) {
+        // Display selected row data in text fields
+       
+        tftitre.setText(selectedReclamation.getTitre_rec());
+        tftype.setText(selectedReclamation.getType_rec());
+        tfusername.setText(selectedReclamation.getUsername());
+        tfdescription.setText(selectedReclamation.getContenu_rec());
+        tfdate.setValue(selectedReclamation.getDate_rec().toLocalDate());
     }
 }
+    @FXML
+private void rechercher(ActionEvent event) {
+    String recherche = tfrecherche.getText();
+    // Call the search method in your ServiceReclamation class to search for Reclamation objects
+    // Replace "str" with the appropriate instance of your ServiceReclamation class
+    List<Reclamation> result = str.search("titre_rec", recherche); 
+    List<Reclamation> result1 = str.search("type_rec", recherche);
+    List<Reclamation> result2 = str.search("username", recherche);
+
+    // Update table view with search results
+    tvtype.setItems(FXCollections.observableArrayList(result));
+    tvtype.setItems(FXCollections.observableArrayList(result1));
+    tvtype.setItems(FXCollections.observableArrayList(result2));
+}
+@FXML
+private void modifier(ActionEvent event) {
+    
+    Reclamation selectedReclamation = tvtype.getSelectionModel().getSelectedItem(); // Get selected item from table view
+    if (selectedReclamation != null) {
+        // Update selected row data with values from text fields
+        selectedReclamation.setTitre_rec(tftitre.getText());
+        selectedReclamation.setType_rec(tftype.getText());
+        selectedReclamation.setStatut_rec(Statut.EN_ATTENTE);
+        selectedReclamation.setUsername(tfusername.getText());
+        selectedReclamation.setContenu_rec(tfdescription.getText());
+        selectedReclamation.setDate_rec(Date.valueOf(tfdate.getValue()));
+
+        // Call your update method to update the reclamation data in the database
+        // replace with the appropriate method call to update the data in your service/repo
+        str.modifier(selectedReclamation, selectedReclamation.getId());
+
+        // Clear text fields after update
+   
+        tftitre.clear();
+        tftype.clear();
+  
+        tfusername.clear();
+        tfdescription.clear();
+        tfdate.getEditor().clear();
+
+        // Refresh table view after update
+        tvtype.refresh();
+    }
+}
+
+
 
             
   public String controleDeSaisie(){
@@ -136,16 +229,80 @@ private void modifier(ActionEvent event) {
     @FXML
     private void supprimer(ActionEvent event) throws Exception {
         ServiceReclamation sr = new ServiceReclamation();
-        sr.supprimer(Integer.valueOf(tfid.getText()));
-        sr.afficher();
+        if(tvtype.getSelectionModel().getSelectedItem()!=null){
+            int id=tvtype.getSelectionModel().getSelectedItem().getId();
+            sr.supprimer(id);
+            displayData();
+        }
     }
     @FXML
-    private void generatepdf(ActionEvent event) {
+    private void displayData() {
+    ObservableList<Reclamation> dataList = FXCollections.observableArrayList(str.afficher());
+    cid.setCellValueFactory(new PropertyValueFactory<>("id_rec"));
+    ctitre.setCellValueFactory(new PropertyValueFactory<>("titre_rec"));
+    ctype.setCellValueFactory(new PropertyValueFactory<>("type_rec"));
+    cstatus.setCellValueFactory(new PropertyValueFactory<>("statut_rec"));
+    csusername.setCellValueFactory(new PropertyValueFactory<>("username"));
+    cdesc.setCellValueFactory(new PropertyValueFactory<>("contenu_rec"));
+    cdate.setCellValueFactory(new PropertyValueFactory<>("date_rec"));
+    tvtype.setItems(dataList);
+}
+@FXML
+private void generatepdf(ActionEvent event) throws FileNotFoundException {
+    try {
+        // Create a PDF document
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("reclamations.pdf"));
+        document.open();
+
+        // Add a title to the PDF document
+        Paragraph title = new Paragraph("Liste des Réclamations");
+        title.setAlignment(Element.ALIGN_CENTER);
+        document.add(title);
+
+        // Add a table to the PDF document
+        PdfPTable table = new PdfPTable(5); // 5 columns
+        table.setWidthPercentage(100); // Set table width to 100% of page width
+
+        // Add table headers
+        table.addCell("Titre");
+        table.addCell("Type");
+        table.addCell("Utilisateur");
+        table.addCell("Description");
+        table.addCell("Date");
+
+        // Add table data from the table view
+        for (Reclamation reclamation : tvtype.getItems()) {
+            table.addCell(reclamation.getTitre_rec());
+            table.addCell(reclamation.getType_rec());
+            table.addCell(reclamation.getUsername());
+            table.addCell(reclamation.getContenu_rec());
+            table.addCell(reclamation.getDate_rec().toString());
+        }
+
+        // Add the table to the PDF document
+        document.add(table);
+
+        // Close the PDF document
+        document.close();
+
+        // Show a success alert
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Succès");
+        alert.setHeaderText(null);
+        alert.setContentText("Le rapport des réclamations a été généré avec succès dans un fichier PDF.");
+        alert.showAndWait();
+
+    } catch (DocumentException | FileNotFoundException e) {
+        // Show an error alert if there's an exception while generating the PDF
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText("Une erreur s'est produite lors de la génération du rapport des réclamations en PDF.");
+        alert.showAndWait();
     }
-    
-    @FXML
-    private void tri(ActionEvent event) {
-    }
+}
+
 
     @FXML
     private void gotoajouterreclamation(ActionEvent event) {
@@ -164,38 +321,15 @@ private void modifier(ActionEvent event) {
     }
         @FXML
 private void afficher(ActionEvent event) {
-    // récupérer les réclamations
-    ServiceReclamation sr = new ServiceReclamation();
-    List<Reclamation> reclamations = sr.afficher();
-
-    // vider la grille
-    grid.getChildren().clear();
-
-    // afficher les réclamations dans la grille
-    int row = 1;
-    for (Reclamation r : reclamations) {
-        Label idLabel = new Label(String.valueOf(r.getId()));
-        idLabel.setPadding(new Insets(5));
-        grid.add(idLabel, 0, row);
-
-        Label titreLabel = new Label(r.getTitre_rec());
-        titreLabel.setPadding(new Insets(5));
-        grid.add(titreLabel, 1, row);
-
-        Label typeLabel = new Label(r.getType_rec());
-        typeLabel.setPadding(new Insets(5));
-        grid.add(typeLabel, 2, row);
-
-        Label dateLabel = new Label(r.getDate_rec().toString());
-        dateLabel.setPadding(new Insets(5));
-        grid.add(dateLabel, 3, row);
-
-        Label statutLabel = new Label(r.getStatut_rec());
-        statutLabel.setPadding(new Insets(5));
-        grid.add(statutLabel, 4, row);
-
-        row++;
-    }
+     ObservableList<Reclamation> dataList = FXCollections.observableArrayList(str.afficher());
+    cid.setCellValueFactory(new PropertyValueFactory<>("id"));
+    ctitre.setCellValueFactory(new PropertyValueFactory<>("titre_rec"));
+    ctype.setCellValueFactory(new PropertyValueFactory<>("type_rec"));
+    cstatus.setCellValueFactory(new PropertyValueFactory<>("Statut_rec"));
+    csusername.setCellValueFactory(new PropertyValueFactory<>("username"));  
+    cdate.setCellValueFactory(new PropertyValueFactory<>("date_rec"));
+    cdesc.setCellValueFactory(new PropertyValueFactory<>("contenu_rec"));
+    tvtype.setItems(dataList);
 }
  @FXML
     private void repondre (ActionEvent event) {
