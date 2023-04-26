@@ -104,12 +104,12 @@ public class FXMLreclamationfrontController implements Initializable {
             alert.setContentText("ajout reclamation avec succes");
             alert.showAndWait();
             //sms
-             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+            /* Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message.creator(
                 new PhoneNumber("+15676007363"),  // To phone number
-                new PhoneNumber("+21651111090"),  // From phone number (Twilio number)
+                new PhoneNumber("+21696869820"),  // From phone number (Twilio number)
                 "Une nouvelle reclamation a été ajouté merci de consulter la liste des reclamations pour plus de detail!"  // SMS body
-        ).create();
+        ).create();*/ 
                tftitre.clear();
         tadesc.clear();
         tftype.clear();

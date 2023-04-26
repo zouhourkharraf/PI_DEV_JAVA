@@ -148,7 +148,7 @@ public ObservableList<Reclamation> getAllTriTitre() {
             Logger.getLogger(ServiceReclamation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lr;    }
-    public Reclamation getReclamationById(int id) {
+  /*  public Reclamation getReclamationById(int id) {
     try {
         String req = "SELECT * FROM reclamation WHERE id=?";
         PreparedStatement pst = conn.prepareStatement(req);
@@ -169,7 +169,7 @@ public ObservableList<Reclamation> getAllTriTitre() {
         System.out.println(ex.getMessage());
     }
     return null;
-}
+}*/
     public List<String> getAllTitre(){
         List<String> ln=afficher().stream().map(tr->tr.getTitre_rec()).collect(Collectors.toList());
         return ln;

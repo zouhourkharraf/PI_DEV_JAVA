@@ -28,10 +28,6 @@ public class ServiceRepons implements Iservice<Repons>{
     public ServiceRepons(){
         conn=DataSource.getInstance().getConn();
     }
-
-    public ServiceRepons(LocalDate value, String text, String text0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     @Override
     public void ajouter(Repons t) {
         try{String query = "INSERT INTO `repons` "

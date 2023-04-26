@@ -16,7 +16,8 @@ import java.util.logging.Logger;
  * @author Home
  */
 public class DataSource {
-     final String URL ="jdbc:mysql://127.0.0.1:3306/magicbook1" ;
+    //config
+    final String URL ="jdbc:mysql://127.0.0.1:3306/magicbook1" ;
     final String USER ="root" ; 
     final String PWD ="" ; 
     private Connection conn ; 

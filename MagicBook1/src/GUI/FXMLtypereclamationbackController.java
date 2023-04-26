@@ -9,6 +9,9 @@ import Entite.Repons;
 import Entite.Statut;
 import Service.ServiceReclamation;
 import Service.ServiceRepons;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import magicbook1.FXMain;
 import java.io.IOException;
 import java.net.URL;
@@ -101,10 +104,12 @@ private void ajouter(ActionEvent event) {
 
     // Create a new Repons object with the entered values
     Repons newRepons = new Repons(reclamationId, dateRep, contenuRep,Statut.TRAITE);
+        sendSms("+21696869820", "Hello from JavaFX!");
     
     // Call the add method and refresh the table view
     sre.ajouter(newRepons);
     displayData();
+    
     
     // Clear the UI controls
     reclamant.getSelectionModel().clearSelection();
@@ -112,6 +117,8 @@ private void ajouter(ActionEvent event) {
     tfdesc.clear();
     tfdate.setValue(null);
 }
+        
+
 }
 
 
@@ -195,5 +202,26 @@ public String controleDeSaisie(){
             Logger.getLogger(FXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    //*********************SMS***********************************
+    public static final String ACCOUNT_SID = "ACf59b42860c72bbb9f62190343c7c3";
+
+    public static final String AUTH_TOKEN = "4a05e0d45442ff0dad819f130e49a79b";
+
+    public static void sendSms(String recipient, String messageBody) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message.creator(
+                new PhoneNumber("+21696869820"), // To number
+                new PhoneNumber("+12762862741"), // From number
+                messageBody) // SMS body
+                .create();
+
+        System.out.println("Message sent: " + message.getSid());
+    }
+
+   
+
+
+
     
 }
