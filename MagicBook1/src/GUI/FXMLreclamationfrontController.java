@@ -60,8 +60,9 @@ public class FXMLreclamationfrontController implements Initializable {
     private TextField tfstatut;
     @FXML
     private TextField tfusername;
-      private static final String ACCOUNT_SID = "AC7a5eb816b1165309f12c5589afc6b543";
-    private static final String AUTH_TOKEN = "285d40520ef4fd61380f5cc126163dee";
+        public static final String ACCOUNT_SID = "ACf59b42860c72bbb9f62190343c7c3";
+
+    public static final String AUTH_TOKEN = "4a05e0d45442ff0dad819f130e49a79b";
     /**
      * Initializes the controller class.
      */
@@ -103,13 +104,7 @@ public class FXMLreclamationfrontController implements Initializable {
             alert.setTitle("Reclamation");
             alert.setContentText("ajout reclamation avec succes");
             alert.showAndWait();
-            //sms
-            /* Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-        Message.creator(
-                new PhoneNumber("+15676007363"),  // To phone number
-                new PhoneNumber("+21696869820"),  // From phone number (Twilio number)
-                "Une nouvelle reclamation a été ajouté merci de consulter la liste des reclamations pour plus de detail!"  // SMS body
-        ).create();*/ 
+           
                tftitre.clear();
         tadesc.clear();
         tftype.clear();

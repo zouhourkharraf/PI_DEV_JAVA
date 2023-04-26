@@ -136,6 +136,11 @@ public class FXMLgstreclamationuserController implements Initializable {
     }    
    @FXML
     private void tri(ActionEvent event) {
+       /*  Reclamation p=new Reclamation();*/
+        ServiceReclamation sp = new ServiceReclamation();
+        List<Reclamation> Liste_rec= sp.affichage_trie();
+        ObservableList<Reclamation> obs=FXCollections.observableArrayList(Liste_rec);
+        tvtype.setItems(obs);
             cid.setCellValueFactory(new PropertyValueFactory<>("id_rec"));
     ctitre.setCellValueFactory(new PropertyValueFactory<>("titre_rec"));
     ctype.setCellValueFactory(new PropertyValueFactory<>("type_rec"));
@@ -143,8 +148,7 @@ public class FXMLgstreclamationuserController implements Initializable {
     csusername.setCellValueFactory(new PropertyValueFactory<>("username"));
     cdesc.setCellValueFactory(new PropertyValueFactory<>("contenu_rec"));
     cdate.setCellValueFactory(new PropertyValueFactory<>("date_rec"));
-            Reclamation p=new Reclamation();
-        ServiceReclamation sp = new ServiceReclamation();
+           
     }
 @FXML
 private void display(ActionEvent event) {
@@ -302,7 +306,6 @@ private void generatepdf(ActionEvent event) throws FileNotFoundException {
         alert.showAndWait();
     }
 }
-
 
     @FXML
     private void gotoajouterreclamation(ActionEvent event) {

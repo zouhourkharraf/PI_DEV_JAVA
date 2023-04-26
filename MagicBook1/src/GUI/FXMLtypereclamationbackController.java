@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Entite.Reclamation;
 import Entite.Repons;
 import Entite.Statut;
 import Service.ServiceReclamation;
@@ -89,23 +90,26 @@ public class FXMLtypereclamationbackController implements Initializable {
     
 @FXML
 private void ajouter(ActionEvent event) {
+    
+    ServiceReclamation service_rec=new ServiceReclamation();
     // Get the values from the UI controls
     if (controleDeSaisie().length() > 0) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Erreur ajout reclamation");
         alert.setContentText(controleDeSaisie());
         alert.showAndWait();
+        sendSms("+21696869820", "Hello , votre reclam a ete traité");
     } else {
     int reclamationId = str.getReclamationByTitre(reclamant.getSelectionModel().getSelectedItem().toString());
     
     String contenuRep = tfdesc.getText();
     LocalDate localDate = tfdate.getValue();
     java.sql.Date dateRep = java.sql.Date.valueOf(localDate);
-
+Reclamation rec= service_rec.getReclamationById(reclamationId);
+rec.setStatut_rec(Statut.TRAITE);
+    service_rec.modifier(rec, reclamationId);
     // Create a new Repons object with the entered values
-    Repons newRepons = new Repons(reclamationId, dateRep, contenuRep,Statut.TRAITE);
-        sendSms("+21696869820", "Hello from JavaFX!");
-    
+    Repons newRepons = new Repons(reclamationId, dateRep, contenuRep,Statut.TRAITE);           
     // Call the add method and refresh the table view
     sre.ajouter(newRepons);
     displayData();
@@ -207,7 +211,7 @@ public String controleDeSaisie(){
 
     public static final String AUTH_TOKEN = "4a05e0d45442ff0dad819f130e49a79b";
 
-    public static void sendSms(String recipient, String messageBody) {
+    public void sendSms(String recipient, String messageBody) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
         Message message = Message.creator(
