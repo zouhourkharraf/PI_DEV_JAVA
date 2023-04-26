@@ -209,6 +209,9 @@ public class AjouterEleveController implements Initializable {
               { genre1="H"; }
               
               int age1=Integer.parseInt(champ_age.getText()); //convertir L'age saisi en int
+              //faire le hachage du motde passe evec l'algorithme bcrypt  
+            //  String mp_hache= BCrypt.hashpw( champ_mp.getText() , BCrypt.gensalt());   
+              
              Utilisateur utilisateur1=new Utilisateur(age1,champ_nom.getText(),champ_prenom.getText(),"",champ_mp.getText(),champ_email.getText(),genre1,"élève","non"); //création de l'objet utilisateur sans pseudo
              
               try 
