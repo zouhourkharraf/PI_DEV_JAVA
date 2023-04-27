@@ -9,6 +9,7 @@ package test;
 import entities.Utilisateur;
 import java.sql.SQLException;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 import services.ServicesUtilisateur;
 
 
@@ -171,7 +172,37 @@ public class Test {
             System.out.println(ex.getMessage());
         }
    */  
-      
    
-    }  
+    /*
+    //  ***********************   le hachage des mots de passe
+          //faire le hachage du mot de passe evec l'algorithme bcrypt  
+     
+          String mp_hache1 = BCrypt.hashpw( "123456Aa" , BCrypt.gensalt(13));
+            
+         System.out.println(mp_hache1);
+
+     
+          
+   // Vérification d'un mot de passe à partir du hash
+	
+   if(BCrypt.checkpw("123456Aa","$2y$13$9h7A/O6JswYcrtrEt0mGeOFhSPBJTF/l/0zeNX84N9NSePDtOfAyu") )
+   {
+   System.out.println("It matches");
+   }
+   else
+   {
+       System.out.println("It does not match");
+   }
+*/
+     
+
+    //  ***********************  Fin hachage des mots de passe
+
+
+
+
+
+    } 
+    
+
 }

@@ -22,6 +22,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import org.mindrot.jbcrypt.BCrypt;
 import services.ServicesUtilisateur;
 
 /**
@@ -208,7 +209,11 @@ public class AjouterEnseignantController implements Initializable {
               { genre1="H"; }
               
               int age1=Integer.parseInt(champ_age.getText()); //convertir L'age saisi en int
-             Utilisateur utilisateur1=new Utilisateur(age1,champ_nom.getText(),champ_prenom.getText(),"",champ_mp.getText(),champ_email.getText(),genre1,"enseignant","non"); //création de l'objet utilisateur sans pseudo
+              
+                //faire le hachage du mot de passe avec l'algorithme bcrypt  
+               String mp_hache=BCrypt.hashpw( champ_mp.getText() , BCrypt.gensalt(13)); 
+               
+             Utilisateur utilisateur1=new Utilisateur(age1,champ_nom.getText(),champ_prenom.getText(),"", mp_hache ,champ_email.getText(),genre1,"enseignant","non"); //création de l'objet utilisateur sans pseudo
              
               try 
               {     

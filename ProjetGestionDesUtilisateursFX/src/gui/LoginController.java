@@ -19,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.mindrot.jbcrypt.BCrypt;
+
 import services.ServicesUtilisateur;
 
 /**
@@ -81,13 +83,21 @@ public class LoginController implements Initializable {
            else
            {
                 erreur_globale2.setText("");
-            Utilisateur utilisateur1=util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText());
-              if(champ_mp.getText().compareTo(utilisateur1.getMot_de_passe_util()) != 0)
-               {
+            Utilisateur utilisateur1=util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText()); //réccupérer l'utilisateur avec le pseudo déja saisi
+             String mot_de_passe_reccupere=utilisateur1.getMot_de_passe_util(); //le mot de l'utilisateur récupéré
+             //on va la transformer au fomat d'origine de l'algorithme Bcrypt (le format d'origine commence avec $2a et non pas avec $2y(c'est le format bogué)---> la partie web utilise le format bogué donc pour assuré l'intégration des 2 application on doit transformer $2y par $2a lors de l'authentification s'il existe )
+             if(mot_de_passe_reccupere.startsWith("$2y"))
+             { 
+                 mot_de_passe_reccupere=mot_de_passe_reccupere.replace("$2y", "$2a"); 
+             }
+             
+              if(!BCrypt.checkpw(champ_mp.getText(),mot_de_passe_reccupere) )  //si le hachage du mot de passe saisi ne correspond pas au hachage du mot de passe de l'util réccupéré (càd les mot de passe ne correspondent pas) 
+              {
                     erreur_globale2.setText("Mot de passe invalide !!!"); 
                }
-              else
+              else  //si le hachage du mot de passe saisi correspond au hachage du mot de passe de l'util réccupéré (càd les mot de passe correspondent) 
               {
+                  
                   try{
                   if( (utilisateur1.getRole_util().compareTo("élève")==0) || (utilisateur1.getRole_util().compareTo("enseignant")==0) )
                   {

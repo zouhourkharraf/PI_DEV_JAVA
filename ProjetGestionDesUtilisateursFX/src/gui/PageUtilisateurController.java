@@ -215,10 +215,7 @@ public class PageUtilisateurController implements Initializable {
                   }
                     
                     
-                    
-                    
-                    
-                    
+                
                
         
         } catch (SQLException ex) {
