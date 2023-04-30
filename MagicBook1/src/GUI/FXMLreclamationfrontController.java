@@ -60,18 +60,18 @@ public class FXMLreclamationfrontController implements Initializable {
     private TextField tfstatut;
     @FXML
     private TextField tfusername;
-        public static final String ACCOUNT_SID = "ACf59b42860c72bbb9f62190343c7c3";
-
-    public static final String AUTH_TOKEN = "4a05e0d45442ff0dad819f130e49a79b";
+   
+    
     /**
      * Initializes the controller class.
      */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
          tfdate.setValue(LocalDate.now());
-    }    
-
+    }  
+     
     @FXML
     private void ajouter(ActionEvent event) {
         
@@ -80,6 +80,7 @@ public class FXMLreclamationfrontController implements Initializable {
         alert.setTitle("Erreur ajout reclamation");
         alert.setContentText(controleDeSaisie());
         alert.showAndWait();
+        sms();
     } else {
         LocalDate currentDate = LocalDate.now();
         LocalDate localDate = tfdate.getValue();
@@ -88,6 +89,7 @@ public class FXMLreclamationfrontController implements Initializable {
             alert.setTitle("Erreur ajout reclamation");
             alert.setContentText("La date doit être supérieure ou égale à la date actuelle.");
             alert.showAndWait();
+            
         } else {
         Reclamation r = new Reclamation();
         r.setTitre_rec(tftitre.getText());
@@ -116,23 +118,8 @@ public class FXMLreclamationfrontController implements Initializable {
         
     }
     }
-       public String controleDeSaisie(){
-        String erreur="";
-        if(tftitre.getText().trim().isEmpty()){
-            erreur+="Titre vide!\n";
-        }
-        if(tftype.getText().trim().isEmpty()){
-            erreur+="Type vide!\n";
-        }
-        if(tfusername.getText().trim().isEmpty()){
-            erreur+="Username vide!\n";
-        }
-        if(tadesc.getText().trim().isEmpty()){
-            erreur+="Description vide!\n";
-        }
-        return erreur;
-    }
-
+        
+     
     @FXML
     private void gotousergstreclam(ActionEvent event) {
         Stage stageclose=(Stage)((Node)event.getSource()).getScene().getWindow();
@@ -147,5 +134,7 @@ public class FXMLreclamationfrontController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } 
+
 }
+

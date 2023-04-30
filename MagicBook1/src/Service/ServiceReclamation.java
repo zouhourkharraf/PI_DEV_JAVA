@@ -183,12 +183,15 @@ public ObservableList<Reclamation> getAllTriTitre() {
             return 0;
         }
     }
-    public List<Reclamation> search(String fieldName, String value) {
+    public List<Reclamation> search( String value) {
         List<Reclamation> result = new ArrayList<>();
         try {
-            String query = "SELECT * FROM `reclamation` WHERE " + fieldName + " LIKE ?";
+String query = "SELECT * FROM `reclamation` WHERE username LIKE ? OR type_rec LIKE ? OR titre_rec LIKE ? ";
             PreparedStatement st = conn.prepareStatement(query);
-            st.setString(1, "%" + value + "%");
+st.setString(1, "%" + value + "%");
+st.setString(2, "%" + value + "%");
+st.setString(3, "%" + value + "%");
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Reclamation r = new Reclamation();

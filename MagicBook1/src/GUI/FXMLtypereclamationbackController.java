@@ -21,7 +21,6 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -98,7 +97,7 @@ private void ajouter(ActionEvent event) {
         alert.setTitle("Erreur ajout reclamation");
         alert.setContentText(controleDeSaisie());
         alert.showAndWait();
-        sendSms("+21696869820", "Hello , votre reclam a ete traité");
+        
     } else {
     int reclamationId = str.getReclamationByTitre(reclamant.getSelectionModel().getSelectedItem().toString());
     
@@ -112,6 +111,7 @@ rec.setStatut_rec(Statut.TRAITE);
     Repons newRepons = new Repons(reclamationId, dateRep, contenuRep,Statut.TRAITE);           
     // Call the add method and refresh the table view
     sre.ajouter(newRepons);
+    sendSms("+21696869820", "votre reclamation a ete traiter");
     displayData();
     
     
@@ -206,12 +206,13 @@ public String controleDeSaisie(){
             Logger.getLogger(FXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    //*********************SMS***********************************
-    public static final String ACCOUNT_SID = "ACf59b42860c72bbb9f62190343c7c3";
+    
+   //envoie de sms 
+ public static final String ACCOUNT_SID = "ACf59b42860c7ac72bbb9f62190343c7c3";
 
-    public static final String AUTH_TOKEN = "4a05e0d45442ff0dad819f130e49a79b";
+        public static final String AUTH_TOKEN = "4a05e0d45442ff0dad819f130e49a79b";
 
-    public void sendSms(String recipient, String messageBody) {
+    public static void sendSms(String recipient, String messageBody) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
         Message message = Message.creator(
@@ -222,9 +223,6 @@ public String controleDeSaisie(){
 
         System.out.println("Message sent: " + message.getSid());
     }
-
-   
-
 
 
     

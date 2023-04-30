@@ -141,7 +141,7 @@ public class FXMLgstreclamationuserController implements Initializable {
         List<Reclamation> Liste_rec= sp.affichage_trie();
         ObservableList<Reclamation> obs=FXCollections.observableArrayList(Liste_rec);
         tvtype.setItems(obs);
-            cid.setCellValueFactory(new PropertyValueFactory<>("id_rec"));
+    cid.setCellValueFactory(new PropertyValueFactory<>("id"));
     ctitre.setCellValueFactory(new PropertyValueFactory<>("titre_rec"));
     ctype.setCellValueFactory(new PropertyValueFactory<>("type_rec"));
     cstatus.setCellValueFactory(new PropertyValueFactory<>("statut_rec"));
@@ -165,17 +165,32 @@ private void display(ActionEvent event) {
 }
     @FXML
 private void rechercher(ActionEvent event) {
+    
+    ServiceReclamation str = new ServiceReclamation();
+    
     String recherche = tfrecherche.getText();
     // Call the search method in your ServiceReclamation class to search for Reclamation objects
     // Replace "str" with the appropriate instance of your ServiceReclamation class
-    List<Reclamation> result = str.search("titre_rec", recherche); 
-    List<Reclamation> result1 = str.search("type_rec", recherche);
-    List<Reclamation> result2 = str.search("username", recherche);
+    List<Reclamation> result = str.search( recherche); 
+    //List<Reclamation> result1 = str.search("type_rec", recherche);
+   // List<Reclamation> result2 = str.search("username", recherche);
+
+   ObservableList<Reclamation> obs=FXCollections.observableArrayList(result);
+  // ObservableList<Reclamation> obs1=FXCollections.observableArrayList(result1);
+  // ObservableList<Reclamation> obs2=FXCollections.observableArrayList(result2);
 
     // Update table view with search results
-    tvtype.setItems(FXCollections.observableArrayList(result));
-    tvtype.setItems(FXCollections.observableArrayList(result1));
-    tvtype.setItems(FXCollections.observableArrayList(result2));
+    
+    tvtype.setItems(FXCollections.observableArrayList(obs));
+   // tvtype.setItems(FXCollections.observableArrayList(obs1));
+    //tvtype.setItems(FXCollections.observableArrayList(obs2));
+      cid.setCellValueFactory(new PropertyValueFactory<>("id"));
+    ctitre.setCellValueFactory(new PropertyValueFactory<>("titre_rec"));
+    ctype.setCellValueFactory(new PropertyValueFactory<>("type_rec"));
+    cstatus.setCellValueFactory(new PropertyValueFactory<>("statut_rec"));
+    csusername.setCellValueFactory(new PropertyValueFactory<>("username"));
+    cdesc.setCellValueFactory(new PropertyValueFactory<>("contenu_rec"));
+    //cdate.setCellValueFactory(new PropertyValueFactory<>("date_rec"));
 }
 @FXML
 private void modifier(ActionEvent event) {
@@ -242,7 +257,7 @@ private void modifier(ActionEvent event) {
     @FXML
     private void displayData() {
     ObservableList<Reclamation> dataList = FXCollections.observableArrayList(str.afficher());
-    cid.setCellValueFactory(new PropertyValueFactory<>("id_rec"));
+    cid.setCellValueFactory(new PropertyValueFactory<>("id"));
     ctitre.setCellValueFactory(new PropertyValueFactory<>("titre_rec"));
     ctype.setCellValueFactory(new PropertyValueFactory<>("type_rec"));
     cstatus.setCellValueFactory(new PropertyValueFactory<>("statut_rec"));
