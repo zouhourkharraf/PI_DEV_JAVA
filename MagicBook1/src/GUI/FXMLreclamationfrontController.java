@@ -80,7 +80,7 @@ public class FXMLreclamationfrontController implements Initializable {
         alert.setTitle("Erreur ajout reclamation");
         alert.setContentText(controleDeSaisie());
         alert.showAndWait();
-        sms();
+        
     } else {
         LocalDate currentDate = LocalDate.now();
         LocalDate localDate = tfdate.getValue();
@@ -119,7 +119,22 @@ public class FXMLreclamationfrontController implements Initializable {
     }
     }
         
-     
+          public String controleDeSaisie(){
+        String erreur="";
+        if(tftitre.getText().trim().isEmpty()){
+            erreur+="Titre vide!\n";
+        }
+        if(tftype.getText().trim().isEmpty()){
+            erreur+="Type vide!\n";
+        }
+        if(tfusername.getText().trim().isEmpty()){
+            erreur+="Username vide!\n";
+        }
+        if(tadesc.getText().trim().isEmpty()){
+            erreur+="Description vide!\n";
+        }
+        return erreur;
+    }
     @FXML
     private void gotousergstreclam(ActionEvent event) {
         Stage stageclose=(Stage)((Node)event.getSource()).getScene().getWindow();
