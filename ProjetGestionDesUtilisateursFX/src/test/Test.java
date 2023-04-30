@@ -9,7 +9,9 @@ package test;
 import entities.Utilisateur;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import org.mindrot.jbcrypt.BCrypt;
+import services.Mail;
 import services.ServicesUtilisateur;
 
 
@@ -198,8 +200,27 @@ public class Test {
 
     //  ***********************  Fin hachage des mots de passe
 
+    
+    
+  // ******************** Test : Envoyer un email avec GMAIL **********************
+ /*
+ //  String texte = "<H1>bonjour</H1><a href=\"mailto:moi@moi.fr\">mail</a>";
+  //String texte2 = "<h4>Bonjour Monsieur</h4><h4>Abbess Ali</h4><h4>Vore code est : 10000</h4><h4>L'équipe Magic Book</h4>";
+Mail.send("magicbook835@gmail.com", "yijfdvaakbioplfg", "zouhour.kharraf1@esprit.tn", "Magic Book : Récupération du mot de passe", texte2); //send est une méthode statique 
+*/
+//testé ---->ça marche avec le format html
 
 
+  // ******************** FIN Test : Envoyer un email avec GMAIL **********************  
+
+  
+  
+/*  
+  Random rand = new Random(); // créer un  objet de type Random
+   int Code = rand.nextInt(99999 - 10000 + 1) + 10000; //générer un nombre aléatoire entre 10000 et 99999
+        System.out.println(Code);
+
+*/
 
 
     } 

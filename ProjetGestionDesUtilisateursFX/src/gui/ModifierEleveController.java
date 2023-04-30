@@ -258,7 +258,7 @@ public class ModifierEleveController implements Initializable {
                  modification=true; //indiquer qu'on effectué une modification sur cet utilisateur (cette atrribut on va utilisateur que si la page précédente est l'espace utilisateur )
                utilisateur_modifie=util_service.recuperer_utilisateur_par_pseudo(util2.getPseudo_util()); //enregister l'utillisateur qu'on a modifié
                
-              this.RetourVersPagePrecedente(new ActionEvent()); //retourner à la page précédente en appelent la méhthode du controleur RetourVersPagePrecedente()
+              this.RetourVersPagePrecedente(new ActionEvent()); //retourner à la page précédente en appelent la méthode du controleur RetourVersPagePrecedente()
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Magic Book | Modifier Élève");
                         alert.setHeaderText("Notification !");
