@@ -6,6 +6,7 @@
 package gui;
 
 import entities.Utilisateur;
+import static gui.LoginController.SyntheseVocale;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,10 +29,14 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import services.ServicesUtilisateur;
+import t2s.son.LecteurTexte;
 
 /**
  * FXML Controller class
@@ -105,8 +111,11 @@ public class PageUtilisateurController implements Initializable {
     @FXML
     private Line ligne1;
     
+    private Boolean etat_synthese_vocale=false;
+    private String texte_proverbe="";
+    
      ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
-   
+
     
     /**
      * Initializes the controller class.
@@ -148,6 +157,7 @@ public class PageUtilisateurController implements Initializable {
 
     @FXML
     private void AfficherProfil(ActionEvent event) {
+        lire_menu1();
          //Montrer tous les éléments du profil 
     rectangle_vert.setVisible(true);
    rectangle_orange.setVisible(true);
@@ -177,6 +187,7 @@ public class PageUtilisateurController implements Initializable {
     
                 try {
              Utilisateur utilisateur_connecte=util_service.recuperer_utilisateur_par_pseudo(MenuButton1.getText());
+            // utilisateur_connecte1=utilisateur_connecte; //pour la synthèse vocale
                    label_nom.setText(utilisateur_connecte.getNom_util());
                    label_prenom.setText(utilisateur_connecte.getPrenom_util());
                     label_age.setText(String.valueOf(utilisateur_connecte.getAge_util()));
@@ -205,11 +216,13 @@ public class PageUtilisateurController implements Initializable {
                   if(utilisateur_connecte.getRole_util().compareTo("enseignant")==0)   
                   {
                   label_citation.setText("« Enseigner, c’est apprendre deux fois. »");
+                  texte_proverbe="Enseigner, c’est apprendre deux fois";
                   label_auteur_citation.setText(" – Joseph Joubert");
                   }
                   else
                   {
                   label_citation.setText("« La persévérance, c’est ce qui rend l’impossible possible, le possible probable et le probable réalisé. »");
+                  texte_proverbe="La persévérance, c’est ce qui rend l’impossible possible, le possible probable et le probable réalisé.";
                   label_citation.setWrapText(true); //répartir le texte sur 2 lignes
                   label_auteur_citation.setText(" – Léon Trotsky");
                   }
@@ -228,6 +241,7 @@ public class PageUtilisateurController implements Initializable {
 
     @FXML
     private void SeDeconnecter(ActionEvent event) {
+        lire_menu2();
             try{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Parent root = loader.load(); ///le container
@@ -240,9 +254,9 @@ public class PageUtilisateurController implements Initializable {
 
    
     
-      public void setUtilisateurConnecte(String pseudo_admin) {
+      public void setUtilisateurConnecte(String pseudo_admin,Boolean synthese_vocale) {
       MenuButton1.setText(pseudo_admin);
-      
+      etat_synthese_vocale=synthese_vocale;
           
             try {
              Utilisateur utilisateur_connecte=util_service.recuperer_utilisateur_par_pseudo(MenuButton1.getText());
@@ -317,7 +331,238 @@ public class PageUtilisateurController implements Initializable {
         
         
     }
+    
+        // ********************** Méthodes pour l'API synthèse vocale ****************************************
+      @FXML
+    private void lire_l1(MouseEvent event) {
+           if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Bonjour");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
 
+    @FXML
+    private void lire_l2(MouseEvent event) {
+             if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(texte_proverbe);
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_l3(MouseEvent event) {
+            if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(label_auteur_citation.getText());
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+    
+   
+    private void lire_menu1() {
+             if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Afficher votre profil");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+  
+    private void lire_menu2() {
+             if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Déconnexion");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_image(MouseEvent event) {
+             if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("un avatar");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_info_per(MouseEvent event) {
+             if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Informations personnelles");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+        
+    }
+
+    @FXML
+    private void lire_titre_nom(MouseEvent event) {
+             if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Votre nom");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+        
+    }
+
+    @FXML
+    private void lire_titre_prenom(MouseEvent event) {
+                if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Votre prénom");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_titre_age(MouseEvent event) {
+                if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Votre age");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_titre_genre(MouseEvent event) {
+                if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Votre genre");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_titre_pseudo(MouseEvent event) {
+                if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Votre pseudo");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_titre_email(MouseEvent event) {
+                if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Votre adressse mail");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_nom(MouseEvent event) {
+                if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(label_nom.getText());
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_prenom(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(label_prenom.getText());
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_age(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(label_age.getText()+"ans");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_genre(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(label_genre.getText());
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_pseudo(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(label_pseudo.getText());
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_email(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte(label_email.getText());
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_bouton_modifier(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Modifier mes information");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void bouton_envoyer(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Envoyer la demande");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void lire_demande(MouseEvent event) {
+              if(etat_synthese_vocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Effectuer une demande suppression");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    
+       // **********************fIN  Méthodes pour l'API synthèse vocale ****************************************
+
+   
+  
+    
+
+ 
    
     
 }

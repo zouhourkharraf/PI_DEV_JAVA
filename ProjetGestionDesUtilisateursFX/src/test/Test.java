@@ -14,6 +14,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import services.Mail;
 import services.ServicesUtilisateur;
 
+import t2s.son.LecteurTexte;
 
 /**
  *
@@ -221,6 +222,18 @@ Mail.send("magicbook835@gmail.com", "yijfdvaakbioplfg", "zouhour.kharraf1@esprit
         System.out.println(Code);
 
 */
+
+// *************** Test API syntétisuer vocal *************************
+/*
+ LecteurTexte lecteur = new LecteurTexte("bonjour");
+ lecteur.playAll();
+ lecteur.setTexte("je suis un synthétiseur vocal, qui êtes-vous?");
+ lecteur.playAll();
+*/
+ //testé ---->ça marche
+// *************** FIN Test API syntétisuer vocal *************************
+
+
 
 
     } 

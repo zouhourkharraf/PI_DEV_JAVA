@@ -112,11 +112,11 @@ public class ModifierEleveController implements Initializable {
              PageUtilisateurController page_utilisateur_controller=loader.getController();
              if(modification == false) //càd si on va retourner à l'espace utilisateur sans avoir validé la modification de cet utilisateur
              { //----> on va retourner le même pseudo(le pseudo de l'utilisateur qui a appeler cette page)         
-             page_utilisateur_controller.setUtilisateurConnecte(AdminConnecte3.getText());
+             page_utilisateur_controller.setUtilisateurConnecte(AdminConnecte3.getText(),false);
              }  
              else  //--> sinon càd si modifcation==true (on a effectué une modification sur l'utilisateur)
              {
-                 page_utilisateur_controller.setUtilisateurConnecte(utilisateur_modifie.getPseudo_util());
+                 page_utilisateur_controller.setUtilisateurConnecte(utilisateur_modifie.getPseudo_util(),false);
              }  
                  
                    AdminConnecte3.getScene().setRoot(root);

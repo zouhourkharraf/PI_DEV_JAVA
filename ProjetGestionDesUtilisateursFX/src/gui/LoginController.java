@@ -20,9 +20,17 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.InputMethodEvent;
+
+import javafx.scene.input.MouseEvent;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import services.ServicesUtilisateur;
+import t2s.son.LecteurTexte;
 
 /**
  * FXML Controller class
@@ -48,6 +56,13 @@ public class LoginController implements Initializable {
     @FXML
     private Hyperlink lien_mp_oublie;
     private Button bouton_test;
+    
+    public static Boolean SyntheseVocale=false; //cette variable teste si la synthèse vocale est activée par l'utilisateur ou pas
+    
+    @FXML
+    private ImageView activer_lecture;
+    @FXML
+    private ImageView desactiver_lecture;
 
     /**
      * Initializes the controller class.
@@ -60,17 +75,29 @@ public class LoginController implements Initializable {
 
     @FXML
     private void SeConnecter(ActionEvent event) {
+        LecteurTexte lecteur = new LecteurTexte(""); //initialiser le texte à lire par une chaine vide
         
           ServicesUtilisateur util_service= new ServicesUtilisateur(); //appel de la classe service
      if((champ_mp.getText().isEmpty()) && (champ_pseudo.getText().isEmpty()))
      {
+          if(SyntheseVocale)
+        { 
+         lecteur.setTexte("Les champs sont vides!"); //modifier le texte avec l'erreur affiché
+          lecteur.playAll();
+        }
         erreur_globale.setText("Les champs sont vides !!!");
+        
      }
      else
      {   
          erreur_globale.setText("");
          if( (!(champ_mp.getText().isEmpty()))&& (champ_pseudo.getText().isEmpty()))
          {
+           if(SyntheseVocale)
+        {
+             lecteur.setTexte("Veuillez saisir votre pseudo!"); //modifier le texte avec l'erreur affiché
+              lecteur.playAll();
+        }
          erreur_globale.setText("Veuillez saisir votre pseudo !");
          }
        if(!(champ_pseudo.getText().isEmpty()))
@@ -81,6 +108,11 @@ public class LoginController implements Initializable {
                Utilisateur util=util_service.recuperer_utilisateur_par_pseudo(champ_pseudo.getText());
            if(util==null) 
            {
+             if(SyntheseVocale)
+               {
+               lecteur.setTexte("Ce pseudo n'existe pas"); //modifier le texte avec l'erreur affiché
+                lecteur.playAll();
+               }
                 erreur_globale.setText("Ce pseudo n'existe pas");
               
            }
@@ -96,7 +128,12 @@ public class LoginController implements Initializable {
              }
              
               if(!BCrypt.checkpw(champ_mp.getText(),mot_de_passe_reccupere) )  //si le hachage du mot de passe saisi ne correspond pas au hachage du mot de passe de l'util réccupéré (càd les mot de passe ne correspondent pas) 
-              {
+              { 
+                 if(SyntheseVocale)
+                  {
+                  lecteur.setTexte("Mot de passe invalide!"); //modifier le texte avec l'erreur affiché
+                   lecteur.playAll();
+                   }
                     erreur_globale2.setText("Mot de passe invalide !!!"); 
                }
               else  //si le hachage du mot de passe saisi correspond au hachage du mot de passe de l'util réccupéré (càd les mot de passe correspondent) 
@@ -108,7 +145,7 @@ public class LoginController implements Initializable {
                    FXMLLoader loader = new FXMLLoader(getClass().getResource("PageUtilisateur.fxml"));
                     Parent root = loader.load(); //Un container
                    PageUtilisateurController page_utilisateur_controller=loader.getController();
-                   page_utilisateur_controller.setUtilisateurConnecte(champ_pseudo.getText());
+                   page_utilisateur_controller.setUtilisateurConnecte(champ_pseudo.getText(),SyntheseVocale);
                    champ_pseudo.getScene().setRoot(root);
                   }
                   else
@@ -162,6 +199,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void CliquerSurLeLienMpOublie(ActionEvent event) {
+          
            try{
            FXMLLoader loader = new FXMLLoader(getClass().getResource("VerifierPseudo.fxml"));  
                 Parent root = loader.load(); //Un container
@@ -171,6 +209,109 @@ public class LoginController implements Initializable {
         }
         
     }
+
+    // ********************** Méthodes pour l'API synthèse vocale ****************************************
+    
+    @FXML
+    private void ActiverSyntheseVocale(MouseEvent event) {
+        SyntheseVocale=true;
+ 
+    }
+
+    @FXML
+    private void DesactiverSyntheseVocale(MouseEvent event) {
+        SyntheseVocale=false;
+  
+    }
+
+    @FXML
+    private void LireActiverMicro(MouseEvent event) {
+         LecteurTexte lecteur = new LecteurTexte("Activer le mode lecture");
+          lecteur.playAll();
+       
+    }
+
+    @FXML
+    private void LireCouperMicro(MouseEvent event) {
+        LecteurTexte lecteur = new LecteurTexte("Désactiver le mode lecture");
+          lecteur.playAll();
+        
+    }
+
+  
+
+    @FXML
+    private void LireSeConnecter(MouseEvent event) {
+        if(SyntheseVocale)
+        {
+          LecteurTexte lecteur = new LecteurTexte("Se connecter");
+          lecteur.playAll();
+        }
+    }
+  
+
+    @FXML
+    private void LireMpOublie(MouseEvent event) {
+        if(SyntheseVocale)
+        {
+        LecteurTexte lecteur = new LecteurTexte("Mot de passe oublié ?");
+          lecteur.playAll();
+        }
+    }
+
+
+    @FXML
+    private void LireChampPseudo(MouseEvent event) {
+        if(SyntheseVocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Donnez votre pseudo");
+          lecteur.playAll();
+           lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void LireChampMP(MouseEvent event) {
+        if(SyntheseVocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Donnez votre mot de passe");
+          lecteur.playAll();
+          lecteur.muet();
+        }
+    }
+
+    @FXML
+    private void LireCompteEL(MouseEvent event) {
+        if(SyntheseVocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Créer un compte élève");
+          lecteur.playAll();
+        }
+    }
+
+    @FXML
+    private void LireCompteEn(MouseEvent event) {
+        if(SyntheseVocale)
+        {
+         LecteurTexte lecteur = new LecteurTexte("Créer un compte enseignant");
+          lecteur.playAll();
+        }
+    
+            // ********************** FIN Méthodes pour l'API synthèse vocale ****************************************
+        
+        
+        
+    }
+
+   
+    
+
+  
+
+ 
+
+
+  
 
 
     
